@@ -49,22 +49,27 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 - Melhorado o fluxo da avaliacao para abrir a tela do cliente com a recomendacao, compartilhar o estado via localStorage e canal de mensagens, e interromper a camera antes da apresentacao.
 - Corrigida a atualizacao do dashboard e do menu operacional depois do recebimento de parcela, usando refresh e evento local para atualizar os alertas.
 - Ajustada a busca de clientes/vendas para o caso pesquisado de Joao e incluida a acao para destruicao de duplicatas.
+- Concluida a segunda fatia do Passo 9 da Torre: criado endpoint autenticado por dispositivo para gerar snapshot versionado da configuracao da interface, catalogos ativos e prioridades comerciais.
+- O Electron passou a baixar esse snapshot no pareamento, na inicializacao, sob demanda e a cada cinco minutos; o conteudo fica cifrado pelo safeStorage e isolado no SQLite por loja e dispositivo.
+- A tela inicial da Torre passou a aplicar a configuracao local quando disponivel. Foram adicionados testes do cache cifrado, do IPC e do encadeamento entre as funcoes SQL v3 e v2.
 
 ## Problemas encontrados ou pendencias
 
 - O aviso de uso sincronico de cookies no dashboard da loja continua pendente de migracao da fabrica legada createClient() para createAsyncClient().
 - A validacao visual do radar e dos campos de grau ainda precisa ser feita no ambiente com mensagens reais e uma OS aberta.
-- A migration criada para a sincronizacao define apply_tower_device_sync_event_v2, mas a rota publicada chama apply_tower_device_sync_event_v3; e preciso confirmar a funcao existente no banco e alinhar os nomes antes de considerar o sync concluido.
-- Ainda nao foi confirmado neste registro que as migrations foram aplicadas no ambiente remoto, nem foi validado o fluxo completo no Electron com dispositivo pareado, sincronizacao posterior e catalogo baixado.
-- O escopo implementado cobre ativacao remota de catalogo e configuracao comercial, mas ainda precisa ser validado se desativacao, versionamento efetivo e sincronizacao dos dois blocos estao completos no cliente Electron.
+- A suspeita de divergencia entre apply_tower_device_sync_event_v2 e v3 era um falso negativo: a v3 trata hardware e delega os demais eventos para a v2 corrigida.
+- Ainda nao foi confirmado neste registro que as migrations foram aplicadas no ambiente remoto, nem foi validado o fluxo completo no Electron com dispositivo pareado real.
+- O snapshot local guarda configuracao e identidade das versoes ativas, mas nao todas as linhas do catalogo nem o motor de recomendacao; operacao integral sem rede depende do empacotamento previsto no Passo 10.
+- A desativacao de catalogo existe no backoffice, mas ainda nao esta exposta na configuracao comercial remota da Torre.
 
 ## Proximos passos
 
 1. Validar o radar com uma nova mensagem que gere handoff humano.
 2. Testar os campos de esferico e cilindro em todas as paginas filhas de OS.
 3. Migrar os usos restantes de createClient() sincronico no servidor.
-4. Alinhar e aplicar a funcao SQL de sincronizacao da Torre (v2/v3) e testar repeticao, conflito e dependencia de cliente.
-5. Validar a configuracao remota no Electron: autenticacao do dispositivo, ativacao do catalogo, aplicacao da configuracao comercial e funcionamento sem login humano.
+4. Confirmar as migrations no ambiente remoto e testar repeticao, conflito e dependencia de cliente em um dispositivo real.
+5. Validar no Electron o download, a recuperacao do cache e a aplicacao da configuracao apos queda e retorno da internet.
+6. Planejar o Passo 10 para empacotar a interface e definir o recorte local necessario a recomendacao totalmente offline.
 
 ## Ideias futuras
 

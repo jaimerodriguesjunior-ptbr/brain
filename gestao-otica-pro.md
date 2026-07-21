@@ -42,19 +42,32 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 - Corrigido o radar operacional do WhatsApp para atualizar o contador de pendencias automaticamente a cada 30 segundos, sem depender da abertura da central operacional.
 - Corrigida a consulta do radar para carregar expires_at antes de classificar handoffs; validado com a pendencia real da Regiana na loja 1.
 - Ajustados os campos de cilindro das OSs na Vendas Experimental para assumirem o sinal negativo ao receber foco; por exemplo, 025 passa a -0,25.
+- A Torre passou a autorizar a tela de avaliacao pela credencial do dispositivo pareado e pela loja, sem exigir sessao humana do dashboard; a busca de clientes e as recomendacoes de lentes tambem passaram a respeitar esse contexto operacional e o store_id.
+- Adicionadas protecoes de sincronizacao da Torre contra eventos repetidos, conflitos de payload e duplicacao de clientes por telefone ou nome, incluindo migration para o mapeamento entre cliente local e cliente remoto.
+- Criada a configuracao remota de catalogos globais por loja: a sessao comercial da Torre pode consultar versoes publicadas e ativar uma versao para a loja, com exibicao de familias, ofertas e tratamentos.
+- Disponibilizada na configuracao remota a edicao das prioridades comerciais das sugestoes de lentes, incluindo perfil de investimento, adocao tecnologica, prioridade estetica, laboratorios e marcas; os valores recebidos passam por saneamento.
+- Melhorado o fluxo da avaliacao para abrir a tela do cliente com a recomendacao, compartilhar o estado via localStorage e canal de mensagens, e interromper a camera antes da apresentacao.
+- Corrigida a atualizacao do dashboard e do menu operacional depois do recebimento de parcela, usando refresh e evento local para atualizar os alertas.
+- Ajustada a busca de clientes/vendas para o caso pesquisado de Joao e incluida a acao para destruicao de duplicatas.
 
 ## Problemas encontrados ou pendencias
 
 - O aviso de uso sincronico de cookies no dashboard da loja continua pendente de migracao da fabrica legada createClient() para createAsyncClient().
 - A validacao visual do radar e dos campos de grau ainda precisa ser feita no ambiente com mensagens reais e uma OS aberta.
+- A migration criada para a sincronizacao define apply_tower_device_sync_event_v2, mas a rota publicada chama apply_tower_device_sync_event_v3; e preciso confirmar a funcao existente no banco e alinhar os nomes antes de considerar o sync concluido.
+- Ainda nao foi confirmado neste registro que as migrations foram aplicadas no ambiente remoto, nem foi validado o fluxo completo no Electron com dispositivo pareado, sincronizacao posterior e catalogo baixado.
+- O escopo implementado cobre ativacao remota de catalogo e configuracao comercial, mas ainda precisa ser validado se desativacao, versionamento efetivo e sincronizacao dos dois blocos estao completos no cliente Electron.
 
 ## Proximos passos
 
 1. Validar o radar com uma nova mensagem que gere handoff humano.
 2. Testar os campos de esferico e cilindro em todas as paginas filhas de OS.
 3. Migrar os usos restantes de createClient() sincronico no servidor.
+4. Alinhar e aplicar a funcao SQL de sincronizacao da Torre (v2/v3) e testar repeticao, conflito e dependencia de cliente.
+5. Validar a configuracao remota no Electron: autenticacao do dispositivo, ativacao do catalogo, aplicacao da configuracao comercial e funcionamento sem login humano.
 
 ## Ideias futuras
 
 - Substituir o refresh periodico do radar por atualizacao em tempo real via evento ou polling dedicado de menor custo.
+- Criar uma rotina automatizada de auditoria para comparar a versao do catalogo/configuracao no servidor com a versao aplicada em cada Torre.
 

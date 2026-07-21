@@ -52,6 +52,9 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 - Concluida a segunda fatia do Passo 9 da Torre: criado endpoint autenticado por dispositivo para gerar snapshot versionado da configuracao da interface, catalogos ativos e prioridades comerciais.
 - O Electron passou a baixar esse snapshot no pareamento, na inicializacao, sob demanda e a cada cinco minutos; o conteudo fica cifrado pelo safeStorage e isolado no SQLite por loja e dispositivo.
 - A tela inicial da Torre passou a aplicar a configuracao local quando disponivel. Foram adicionados testes do cache cifrado, do IPC e do encadeamento entre as funcoes SQL v3 e v2.
+- Iniciado o Passo 10: configurado o empacotamento Windows x64 com electron-builder e instalador NSIS por maquina, usando a URL HTTPS de producao, modo kiosk e inicializacao automatica por padrao.
+- Gerado o instalador Torre-MB-Optical-Setup-0.1.0-x64.exe e validada a abertura do executavel empacotado em smoke test no Windows de desenvolvimento.
+- Criado o roteiro TOWER_WINDOWS_INSTALLATION.md com geracao, instalacao, pareamento da loja 7, homologacao fisica, preservacao dos dados locais e assinatura futura.
 
 ## Problemas encontrados ou pendencias
 
@@ -61,6 +64,9 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 - Ainda nao foi confirmado neste registro que as migrations foram aplicadas no ambiente remoto, nem foi validado o fluxo completo no Electron com dispositivo pareado real.
 - O snapshot local guarda configuracao e identidade das versoes ativas, mas nao todas as linhas do catalogo nem o motor de recomendacao; operacao integral sem rede depende do empacotamento previsto no Passo 10.
 - A desativacao de catalogo existe no backoffice, mas ainda nao esta exposta na configuracao comercial remota da Torre.
+- O instalador do primeiro piloto ainda nao possui assinatura de codigo e pode exibir alerta do Windows SmartScreen.
+- A cadeia de ferramentas de desenvolvimento do empacotador possui alertas de dependencia; o audit das dependencias de producao nao encontrou alertas altos ou criticos.
+- O backend com as rotas mais recentes ainda precisa ser publicado na Vercel antes da instalacao do piloto.
 
 ## Proximos passos
 
@@ -69,7 +75,9 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 3. Migrar os usos restantes de createClient() sincronico no servidor.
 4. Confirmar as migrations no ambiente remoto e testar repeticao, conflito e dependencia de cliente em um dispositivo real.
 5. Validar no Electron o download, a recuperacao do cache e a aplicacao da configuracao apos queda e retorno da internet.
-6. Planejar o Passo 10 para empacotar a interface e definir o recorte local necessario a recomendacao totalmente offline.
+6. Definir no Passo 10 o recorte local necessario a recomendacao totalmente offline, separado do instalador do primeiro piloto conectado.
+7. Publicar o backend atualizado e instalar o executavel no mini PC da Torre para homologar camera, touch, segunda tela, reinicio e sincronizacao real.
+8. Adquirir e configurar certificado de assinatura de codigo antes da distribuicao comercial.
 
 ## Ideias futuras
 

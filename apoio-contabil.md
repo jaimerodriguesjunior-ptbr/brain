@@ -48,6 +48,9 @@
 - Na validação de produção, o Equiplano retornou `8011` para o RPS 380. Foi implementada recuperação automática por `esConsultarNfsePorRps` para esse código na versão `77f7258`.
 - A consulta revelou que a configuração marcada como produção ainda apontava para `homologacaows`. O WSDL confirmou o endpoint de produção em `https://www.esnfs.com.br:8444/enfsws/services/Enfs.EnfsHttpsSoap11Endpoint/`.
 - A seleção de endpoint passou a ser obrigatoriamente separada por ambiente na versão `3bb94b1`. A produção da C S Pick foi corrigida e a sequência restaurada para RPS 380 e lote 1, pois o portal municipal indicava último RPS utilizado igual a zero.
+- Confirmado que o endpoint Equiplano de produção entrega apenas o certificado final `esnfs.com.br`, sem a intermediária `Sectigo Public Server Authentication CA DV R36`, causando `UNABLE_TO_VERIFY_LEAF_SIGNATURE` no Node.
+- A intermediária indicada pelo AIA do próprio certificado foi incorporada exclusivamente ao host `www.esnfs.com.br`, porta `8444` e caminho oficial `/enfsws/services/`, preservando validação TLS e hostname. A conexão mTLS real foi validada como `authorized: true`, sem envio SOAP/RPS.
+- Correção publicada e implantada na nuvem fiscal local na versão `3506225`; 118 testes, typecheck e build passaram, e o serviço permaneceu `ready` com persistência Supabase.
 
 ### Problemas encontrados ou pendências
 

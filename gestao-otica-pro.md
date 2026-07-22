@@ -55,18 +55,28 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 - Iniciado o Passo 10: configurado o empacotamento Windows x64 com electron-builder e instalador NSIS por maquina, usando a URL HTTPS de producao, modo kiosk e inicializacao automatica por padrao.
 - Gerado o instalador Torre-MB-Optical-Setup-0.1.0-x64.exe e validada a abertura do executavel empacotado em smoke test no Windows de desenvolvimento.
 - Criado o roteiro TOWER_WINDOWS_INSTALLATION.md com geracao, instalacao, pareamento da loja 7, homologacao fisica, preservacao dos dados locais e assinatura futura.
+- A Torre foi separada do MB Optical e renomeada para Neosmart. Foi criado o repositorio independente `G:\projetos\torre-neosmart`, com Next 14.2.35, React 18.2.0, Electron 43.1.1, identidade de pacote propria e sem os modulos administrativos do MB Optical.
+- O Electron da Neosmart passou a tratar separadamente a origem do renderer (`NEOSMART_RENDERER_URL`) e a origem das APIs centrais (`MB_OPTICAL_API_URL`). A credencial permanente permanece no processo principal e o renderer recebe apenas uma sessao curta em cookie HTTP-only.
+- Foram criados contratos autenticados e versionados `/api/tower/v1/web/*` no MB Optical. Busca de clientes, contexto, criacao/retomada, listagem, vinculo de cliente, vinculo de avaliacao, receita, conclusao e descarte de sessao passaram a ser consumidos pela Neosmart via HTTP.
+- O repositorio Neosmart ficou nos commits `505e4d9`, `a614bc4`, `4dbca02` e `fa043f4`. No MB Optical, os contratos ficaram em `99d110d` e `02f4653`.
+- Investigados seis deployments consecutivos com erro na Vercel. O ultimo deployment funcional, commit `8760a1d`, usava Next 14.2.33; o primeiro erro, commit `8653076`, usava Next 15.5.20. Ambos terminavam o build, mas o Next 15 falhava durante `Deploying outputs`.
+- O MB Optical foi restaurado para Next 14.2.35, patch seguro da linha 14, e a fabrica de Supabase voltou ao contrato sincrono de cookies compativel. Typecheck, 25 testes e build passaram. A restauracao ficou em `eb2cc3f`; o commit vazio `9f52470` repetiu o deploy, que chegou a `Ready`.
+- Criada a branch local `backup/mboptical-before-next14-rollback-2026-07-21` antes da regressao, preservando integralmente o estado anterior.
+- O `vercel build` local no Windows ainda acusou `Unable to find lambda for route: /demo/menu/atendimento`, mas isso foi confirmado como falso negativo local: a rota existia no ultimo deploy funcional e a publicacao remota com Next 14 concluiu normalmente.
 
 ## Problemas encontrados ou pendencias
 
 - O aviso de uso sincronico de cookies no dashboard da loja continua pendente de migracao da fabrica legada createClient() para createAsyncClient().
 - A validacao visual do radar e dos campos de grau ainda precisa ser feita no ambiente com mensagens reais e uma OS aberta.
 - A suspeita de divergencia entre apply_tower_device_sync_event_v2 e v3 era um falso negativo: a v3 trata hardware e delega os demais eventos para a v2 corrigida.
-- Ainda nao foi confirmado neste registro que as migrations foram aplicadas no ambiente remoto, nem foi validado o fluxo completo no Electron com dispositivo pareado real.
+- As migrations da etapa foram informadas como aplicadas no ambiente remoto. Ainda nao foi validado o fluxo completo da Neosmart com dispositivo pareado real.
 - O snapshot local guarda configuracao e identidade das versoes ativas, mas nao todas as linhas do catalogo nem o motor de recomendacao; operacao integral sem rede depende do empacotamento previsto no Passo 10.
 - A desativacao de catalogo existe no backoffice, mas ainda nao esta exposta na configuracao comercial remota da Torre.
 - O instalador do primeiro piloto ainda nao possui assinatura de codigo e pode exibir alerta do Windows SmartScreen.
 - A cadeia de ferramentas de desenvolvimento do empacotador possui alertas de dependencia; o audit das dependencias de producao nao encontrou alertas altos ou criticos.
-- O backend com as rotas mais recentes ainda precisa ser publicado na Vercel antes da instalacao do piloto.
+- O MB Optical voltou a publicar com status `Ready`. As novas APIs estao no codigo publicado, mas o fluxo integrado com um deploy separado da Neosmart ainda precisa ser testado.
+- O instalador antigo com nome Torre MB Optical deixou de ser candidato ao piloto depois da separacao. Um novo instalador Neosmart deve ser gerado somente ao final da nova validacao.
+- Medidas, heatmap, ativos e possiveis leituras compartilhadas de catalogo ainda precisam ser inventariados e migrados para contratos HTTP antes de considerar a separacao concluida.
 
 ## Proximos passos
 
@@ -79,8 +89,21 @@ A tentativa inicial com `armacao.dae` não produziu resultado aceitável porque 
 7. Publicar o backend atualizado e instalar o executavel no mini PC da Torre para homologar camera, touch, segunda tela, reinicio e sincronizacao real.
 8. Adquirir e configurar certificado de assinatura de codigo antes da distribuicao comercial.
 
+### Ordem de retomada em 22/07/2026
+
+1. Fazer smoke test curto do MB Optical restaurado: login, abertura de loja, atendimento, clientes e uma area critica. Consumo baixo.
+2. No repositorio Neosmart, confirmar o HEAD `fa043f4` e repetir `npm install`, typecheck, 19 testes e build como linha de base. Consumo baixo.
+3. Inventariar os acessos restantes ao Supabase e migrar medidas, heatmap e ativos, um dominio por vez, para APIs HTTP v1. Consumo alto.
+4. Auditar que o Neosmart nao contem service role, chave administrativa ou acesso amplo ao banco. Consumo medio.
+5. Criar o projeto Vercel exclusivo da Neosmart e configurar renderer e API em origens separadas. Consumo medio.
+6. Repetir os testes integrados afetados pela separacao: pareamento, sessao, cliente provisorio, medidas, outbox, queda/retorno da internet e reconciliacao. Consumo alto.
+7. So depois retomar o novo Passo 10, gerar o instalador Neosmart e homologar camera, touch, segunda tela, kiosk, reinicio e persistencia no mini PC da Loja 7. Consumo alto.
+
+Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os testes automatizados devem ser reexecutados como regressao depois de cada lote. Os testes manuais de integracao e hardware precisam ser repetidos porque o executavel, a origem do renderer e a fronteira entre os repositorios mudaram.
+
 ## Ideias futuras
 
 - Substituir o refresh periodico do radar por atualizacao em tempo real via evento ou polling dedicado de menor custo.
 - Criar uma rotina automatizada de auditoria para comparar a versao do catalogo/configuracao no servidor com a versao aplicada em cada Torre.
+- Criar um contrato compartilhado publicavel ou gerado para reduzir divergencias de tipos entre as APIs MB Optical e os clientes Neosmart, sem voltar a acoplar os repositorios.
 

@@ -51,6 +51,8 @@
 - Confirmado que o endpoint Equiplano de produção entrega apenas o certificado final `esnfs.com.br`, sem a intermediária `Sectigo Public Server Authentication CA DV R36`, causando `UNABLE_TO_VERIFY_LEAF_SIGNATURE` no Node.
 - A intermediária indicada pelo AIA do próprio certificado foi incorporada exclusivamente ao host `www.esnfs.com.br`, porta `8444` e caminho oficial `/enfsws/services/`, preservando validação TLS e hostname. A conexão mTLS real foi validada como `authorized: true`, sem envio SOAP/RPS.
 - Correção publicada e implantada na nuvem fiscal local na versão `3506225`; 118 testes, typecheck e build passaram, e o serviço permaneceu `ready` com persistência Supabase.
+- As 15 tentativas técnicas com erro da C S Pick anteriores à primeira autorização foram preservadas no banco e marcadas com `report_visibility: hidden` no payload de auditoria: 11 de homologação e 4 de produção. A nota autorizada de produção e a autorizada de homologação permaneceram visíveis.
+- O Apoio Contábil passou a excluir registros marcados como ocultos das listagens e do painel operacional no commit `eb7d995`; build, TypeScript e ESLint passaram. O `README.md` já alterado pelo usuário foi preservado fora do commit.
 
 ### Problemas encontrados ou pendências
 

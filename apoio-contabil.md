@@ -30,3 +30,31 @@
 - Exibir no Apoio Contábil o código municipal efetivamente configurado e o formato de envio (`nrServico` ou item/subitem) antes da emissão.
 - Registrar no histórico da empresa a resposta municipal e o código de serviço usado, para facilitar diagnóstico sem depender de consultas manuais.
 - Adicionar uma validação preventiva que destaque quando o código informado não está confirmado no cadastro municipal do prestador.
+
+## 2026-07-22
+
+### O que foi feito
+
+- Preparada a C S Pick para emissão NFS-e em produção após a autorização em homologação. Foi confirmada a liberação municipal de 1.000 RPS da série 1 e que nenhum RPS havia sido utilizado no ambiente de produção.
+- Diagnosticado erro interno recorrente `Falha ao salvar documentos fiscais: TypeError: fetch failed` antes da transmissão ao Equiplano.
+- Confirmado que a persistência reenviava todo o histórico fiscal a cada alteração: 470 documentos, totalizando aproximadamente 5,57 MB em uma única requisição ao Supabase.
+- Corrigida a persistência para gravar documentos em lotes de 25 registros e repetir somente falhas transitórias de rede.
+- Adicionado teste automatizado para garantir o particionamento dos registros. A suíte completa passou com 114 testes, além de typecheck e build.
+- Correção publicada e implantada na nuvem fiscal local na versão `c3cabdd`.
+- Validada a persistência real dos 470 documentos existentes sem criar ou transmitir nota fiscal. Os endpoints interno e público da VPS permaneceram com estado `ready`.
+
+### Problemas encontrados ou pendências
+
+- Ainda falta executar uma nova emissão controlada em homologação após o deploy para validar o fluxo completo pela aplicação cliente.
+- Após a homologação, validar a primeira emissão em produção usando a numeração liberada pela Prefeitura.
+
+### Próximos passos
+
+1. Baixo consumo de IA: emitir uma NFS-e de teste em homologação e confirmar autorização e persistência.
+2. Baixo consumo de IA: confirmar no portal municipal que a homologação não afetou a sequência de produção.
+3. Médio consumo de IA: emitir a primeira NFS-e em produção somente após a homologação pós-correção.
+
+### Ideias futuras
+
+- Alterar a persistência para salvar apenas registros modificados, evitando regravar todo o histórico mesmo em lotes.
+- Adicionar métricas de tamanho e duração das gravações no Supabase para detectar crescimento antes de atingir limites de conexão.

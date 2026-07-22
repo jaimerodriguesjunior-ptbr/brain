@@ -45,11 +45,15 @@
 - Identificado que o loteamento ainda regravava todo o histórico. A persistência foi substituída por gravação incremental: cada mutação envia ao Supabase somente o documento, evento, configuração, certificado ou inutilização alterado.
 - Adicionado teste que comprova que uma nova emissão persiste somente um documento. A suíte completa passou com 115 testes, além de typecheck e build.
 - Persistência incremental publicada e implantada na versão `c86aeb8`; os endpoints interno e público permaneceram com estado `ready`.
+- Na validação de produção, o Equiplano retornou `8011` para o RPS 380. Foi implementada recuperação automática por `esConsultarNfsePorRps` para esse código na versão `77f7258`.
+- A consulta revelou que a configuração marcada como produção ainda apontava para `homologacaows`. O WSDL confirmou o endpoint de produção em `https://www.esnfs.com.br:8444/enfsws/services/Enfs.EnfsHttpsSoap11Endpoint/`.
+- A seleção de endpoint passou a ser obrigatoriamente separada por ambiente na versão `3bb94b1`. A produção da C S Pick foi corrigida e a sequência restaurada para RPS 380 e lote 1, pois o portal municipal indicava último RPS utilizado igual a zero.
 
 ### Problemas encontrados ou pendências
 
 - Ainda falta executar uma nova emissão controlada em homologação após o deploy para validar o fluxo completo pela aplicação cliente.
 - Após a homologação, validar a primeira emissão em produção usando a numeração liberada pela Prefeitura.
+- Falta repetir a primeira emissão em produção após a correção do endpoint e confirmar no portal municipal o consumo do RPS 380.
 
 ### Próximos passos
 

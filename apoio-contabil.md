@@ -42,6 +42,9 @@
 - Adicionado teste automatizado para garantir o particionamento dos registros. A suíte completa passou com 114 testes, além de typecheck e build.
 - Correção publicada e implantada na nuvem fiscal local na versão `c3cabdd`.
 - Validada a persistência real dos 470 documentos existentes sem criar ou transmitir nota fiscal. Os endpoints interno e público da VPS permaneceram com estado `ready`.
+- Identificado que o loteamento ainda regravava todo o histórico. A persistência foi substituída por gravação incremental: cada mutação envia ao Supabase somente o documento, evento, configuração, certificado ou inutilização alterado.
+- Adicionado teste que comprova que uma nova emissão persiste somente um documento. A suíte completa passou com 115 testes, além de typecheck e build.
+- Persistência incremental publicada e implantada na versão `c86aeb8`; os endpoints interno e público permaneceram com estado `ready`.
 
 ### Problemas encontrados ou pendências
 
@@ -56,5 +59,4 @@
 
 ### Ideias futuras
 
-- Alterar a persistência para salvar apenas registros modificados, evitando regravar todo o histórico mesmo em lotes.
 - Adicionar métricas de tamanho e duração das gravações no Supabase para detectar crescimento antes de atingir limites de conexão.

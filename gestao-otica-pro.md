@@ -107,3 +107,46 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Criar uma rotina automatizada de auditoria para comparar a versao do catalogo/configuracao no servidor com a versao aplicada em cada Torre.
 - Criar um contrato compartilhado publicavel ou gerado para reduzir divergencias de tipos entre as APIs MB Optical e os clientes Neosmart, sem voltar a acoplar os repositorios.
 
+# Diario - 22/07/2026
+
+## O que foi feito
+
+- Publicados os ajustes de experiencia da Neosmart e do MB Optical, incluindo
+  narrativas de IA com fallback limpo, comparativos AR/polarizado e exibicao do
+  estado real de camera, touch e tela cliente.
+- Corrigida a continuidade de atendimento: ao retornar ao menu com uma sessao
+  existente, o UUID da URL agora sincroniza o estado interno e a experiencia
+  atualiza a mesma sessao em vez de criar outra.
+- Atualizados os tres documentos-base de contexto no MB Optical e registrados
+  os estados publicados da Neosmart.
+- Testes atuais aprovados: 26 no MB Optical e 30 na Neosmart; typecheck e
+  builds aprovados nos dois repositorios.
+
+## Problemas encontrados ou pendencias
+
+- Duas sessoes duplicadas criadas antes da correcao permanecem no banco. Elas
+  nao foram apagadas nem mescladas; a reconciliacao precisa de decisao
+  explicita para preservar o historico correto.
+- O instalador Windows Neosmart e a homologacao completa no mini PC ainda nao
+  foram concluídos.
+- O inventario de actions legadas e o roteiro de instalacao ainda precisam ser
+  mantidos alinhados com o estado publicado.
+
+## Proximos passos
+
+1. Reexecutar o smoke test integrado online e offline no Electron (consumo de
+   IA medio).
+2. Homologar camera, touch, segunda tela, kiosk, reinicio e outbox no mini PC
+   da Loja 7 (consumo de IA alto).
+3. Gerar o instalador Neosmart somente depois das validacoes (consumo de IA
+   medio).
+4. Decidir a reconciliacao das duas sessoes antigas (consumo de IA baixo).
+5. Classificar actions legadas por consumidor antes de qualquer remocao
+   (consumo de IA medio).
+
+## Ideias futuras
+
+- Criar uma auditoria automatica que compare sessoes, resultados e eventos de
+  outbox para detectar duplicacoes antes de chegarem ao operador.
+- Exibir no menu um estado resumido de sincronizacao da sessao atual.
+

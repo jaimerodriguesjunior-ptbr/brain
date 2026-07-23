@@ -109,6 +109,42 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 # Diario - 22/07/2026
 
+## Atualização Neosmart — experiência da Torre
+
+### O que foi feito
+
+- A continuidade de atendimento foi corrigida na Neosmart: primeiro o operador seleciona o atendimento aberto e depois escolhe a experiência, preservando o UUID da sessão.
+- A tela do cliente passou a ser persistente no Electron. Ao iniciar, acordar, reconectar o monitor ou ficar sem objetivo, exibe `public/abertura.mp4` em loop.
+- Após 30 minutos de inatividade, a tela do cliente entra em repouso preto; uma nova interação, desbloqueio ou retorno da suspensão restaura a abertura. Durante experiências ativas, o repouso não é aplicado.
+- Os controles das experiências deixaram de tratar a tela como uma janela descartável: os textos passaram a indicar apresentação ao cliente ou retorno à abertura.
+- O erro do monitor de inatividade foi corrigido para usar `powerMonitor.getSystemIdleTime()`.
+- O Visagismo em monitor retrato passou a preencher a tela com `object-cover`, com o mapeamento de coordenadas ajustado para manter rosto, armação e marcadores alinhados.
+- O carrossel de armações durante a pesquisa foi movido para perto do topo para não competir visualmente com o rosto.
+- A tela de espessura das lentes foi reorganizada para retrato: as vistas física e de perfil calculado recebem prioridade, e a lente frontal fica abaixo como explicação.
+- As vistas da espessura passaram a compartilhar pixels por milímetro; a área frontal foi ampliada para um canvas quadrado de `520 × 520` para permitir rotação sem cortes.
+
+### Problemas encontrados ou pendências
+
+- As alterações de espessura e apresentação em retrato foram validadas por TypeScript e diff, mas ainda precisam de uma nova conferência visual no Electron após reiniciar o processo.
+- A vista física usa Three.js e o perfil usa SVG; a escala foi alinhada por pixels por milímetro, mas a homologação deve confirmar a equivalência visual em diferentes graus, índices e tamanhos de armação.
+- A janela do Electron em desenvolvimento ainda pode exibir moldura/barra do Windows; o usuário decidiu manter isso por enquanto. O modo quiosque continua sendo prioridade do aplicativo empacotado.
+- A configuração do repouso está com padrão de 30 minutos por variável de ambiente; ainda não existe controle visual de configuração para o operador.
+- Câmera, touch, segunda tela, orientação retrato, inicialização, suspensão e reconexão ainda não foram homologados no mini PC real.
+
+### Próximos passos
+
+1. Reiniciar o Electron e conferir visualmente a tela de espessura em retrato, especialmente a rotação a 90 graus e a igualdade entre as três vistas. Consumo baixo.
+2. Validar o fluxo da tela persistente com duas telas reais, incluindo abertura, experiência, retorno à abertura, repouso e despertar. Consumo médio.
+3. Homologar câmera em retrato e confirmar o alinhamento da armação em posições variadas do rosto. Consumo médio.
+4. Criar, se necessário, uma configuração visual para o tempo de repouso da tela do cliente. Consumo médio.
+5. Gerar o instalador Neosmart somente depois da homologação física e dos testes integrados. Consumo médio.
+
+### Ideias futuras
+
+- Exibir na configuração da Torre o estado da tela do cliente e um botão de teste/reativação.
+- Permitir as opções Nunca, 10, 15, 30 e 60 minutos para repouso, mantendo atendimento ativo sempre protegido contra repouso.
+- Criar uma validação visual automatizada para comparar a escala das representações de espessura.
+
 ## O que foi feito
 
 - Publicados os ajustes de experiencia da Neosmart e do MB Optical, incluindo

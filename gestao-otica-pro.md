@@ -186,3 +186,48 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   outbox para detectar duplicacoes antes de chegarem ao operador.
 - Exibir no menu um estado resumido de sincronizacao da sessao atual.
 
+# Diário - 23/07/2026
+
+## O que foi feito
+
+- Atualizados os documentos de contexto compartilhado da Neosmart no MB
+  Optical: `TOWER_DEVELOPMENT_DECISIONS.md`,
+  `TOWER_AND_TABLET_VISION_CONTEXT.md` e
+  `HEATMAP_HEAD_SANDBOX_STATUS.md`.
+- Registrados os ajustes do protótipo em duas telas: abertura persistente,
+  repouso, câmera e composição em retrato, fullscreen somente no empacotado e
+  limpeza das mensagens operacionais da tela do cliente.
+- Documentada a apresentação de espessura com prioridade para as bordas,
+  canvas de 640 px e uma única escala em pixels por milímetro para vista física,
+  perfil calculado e lente frontal.
+- Documentado o segundo endurecimento da continuidade de sessões: modos
+  explícitos `new` e `resume`, retomada obrigatoriamente vinculada a UUID e
+  preservação do horário original ao importar uma sessão remota no SQLite.
+- Registrada a correção do dropdown para preservar o cliente retornado pelo MB
+  Optical durante a mesclagem com a sessão local.
+
+## Problemas encontrados ou pendências
+
+- Uma sessão indevida de espessura criada às 10h45 em 23/07/2026 permanece no
+  histórico. Nenhum dado foi removido ou reconciliado automaticamente.
+- A integração online/offline e a outbox ainda precisam de homologação completa
+  no mini PC, especialmente ao retomar sessões existentes apenas no servidor.
+- Não houve alteração de contrato nem deploy do MB Optical nesta etapa.
+
+## Próximos passos
+
+1. Testar a retomada de uma sessão remota com cliente no Electron e confirmar
+   que o MB Optical mantém UUID e `started_at` originais. Consumo médio.
+2. Decidir a reconciliação das sessões indevidas preservadas. Consumo baixo.
+3. Homologar queda e retorno da internet, retries e ausência de duplicação na
+   outbox. Consumo alto.
+4. Manter os contratos `/api/tower/v1/web/*` como autoridade central e revisar
+   qualquer acesso administrativo residual antes do piloto. Consumo médio.
+
+## Ideias futuras
+
+- Criar no MB Optical uma auditoria de sessões que destaque UUIDs criados ou
+  atualizados por retomadas inconsistentes, sem apagar dados automaticamente.
+- Expor no suporte uma comparação segura entre sessão local, sessão remota e
+  eventos da outbox para facilitar reconciliações.
+

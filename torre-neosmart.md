@@ -157,38 +157,67 @@
   manifesto, tela inicial e cabeçalho, divergindo do produto Neosmart.
 - Validação técnica concluída sem alterações funcionais: typecheck aprovado, 31
   testes aprovados, build de produção aprovado e `git diff --check` aprovado.
+- As sete frentes do diagnóstico foram corrigidas na Neosmart. Todas as
+  Informações Úteis agora criam ou retomam a sessão antes de abrir e carregam o
+  mesmo UUID na ida e no retorno; o caminho retomada → informação → menu não
+  muda mais silenciosamente para `new`.
+- O diagnóstico da segunda tela passou a construir `customerUrl` antes de
+  reutilizar a janela persistente. O helper compartilhado agora aguarda o
+  resultado do Electron tanto ao abrir quanto ao fechar, e os estados locais só
+  mudam após confirmação de sucesso.
+- Medidas e Seu Jeito de Olhar passaram a usar `clientReady`; foram removidos os
+  atrasos fixos de 500/700/800 ms que podiam perder o primeiro comando em
+  carregamento frio.
+- O menu e a apresentação das medidas passaram a usar estados assíncronos
+  explícitos. Botões ficam bloqueados durante a operação e falhas de
+  criação/retomada são exibidas ao operador em vez de cair em mock ou silêncio.
+- O Campo Visual agora aguarda a confirmação de persistência antes de liberar
+  avaliação ou encerramento, mostra o estado de gravação e oferece “Tentar
+  salvar novamente” em caso de erro.
+- Todas as rotas operacionais deixaram de enviar falhas de sessão para o
+  `/login` inexistente. A recuperação retorna para
+  `/torre/inicial?reason=session`, com orientação visível para reativar a Torre.
+  A página de falha ao preparar o Campo Visual também ganhou retry e retorno.
+- Título, manifesto, tela inicial, diagnóstico, cabeçalho e janela Electron
+  foram alinhados à identidade Torre Neosmart. A demonstração Opti Fog também
+  deixou de manter rótulos de comparação quando a comparação está desligada.
+- Adicionadas regressões para continuidade do UUID em todas as Informações
+  Úteis, handshake sem atraso fixo, persistência antes da progressão,
+  recuperação sem `/login` e inicialização do diagnóstico da segunda tela.
+  O `lint:tower` foi reparado para apontar apenas para arquivos existentes e
+  passou a cobrir os componentes operacionais alterados.
+- Validação final: typecheck aprovado, 36 testes aprovados, lint sem erros
+  (16 avisos antigos), build de produção aprovado, `git diff --check` aprovado
+  e smoke local do redirecionamento/aviso de recuperação aprovado.
 
 ### Problemas encontrados ou pendências
 
-- Corrigir primeiro o diagnóstico da segunda tela e o redirecionamento para o
-  `/login` inexistente, pois ambos bloqueiam fluxos inteiros.
-- A perda do UUID nas Informações Úteis transforma silenciosamente uma retomada
-  em novo atendimento e explica as novas sessões observadas durante o uso.
-- A suíte atual valida contratos e persistência, mas não cobre os handshakes,
-  estados de carregamento, retorno de navegação ou a correspondência entre o
-  rótulo dos botões e o estado real da segunda tela.
-- O fluxo completo autenticado ainda precisa ser repetido no Electron e no mini
-  PC após as correções, incluindo carregamento frio das experiências.
-- O working tree da Neosmart já continha alterações em `README.md`,
-  `electron/main.cjs`, `package.json` e `tests/electron-security.test.mjs`;
-  elas foram preservadas e não foram modificadas por este diagnóstico.
+- As correções de código e os testes automatizados estão concluídos, mas o
+  fluxo autenticado de duas telas ainda deve ser homologado no Electron e no
+  mini PC real, principalmente câmera, touch, monitor retrato, carregamento
+  frio, suspensão e reconexão.
+- Os 16 avisos do lint já existiam em componentes grandes do heatmap,
+  avaliação e visagismo; não impedem compilação nem testes, mas merecem limpeza
+  separada para que o gate possa futuramente usar tolerância zero a warnings.
+- O working tree da Neosmart continua contendo as alterações locais anteriores
+  em `README.md`, `electron/main.cjs`, `package.json` e
+  `tests/electron-security.test.mjs`; elas foram preservadas e integradas sem
+  reset ou sobrescrita.
 
 ### Próximos passos
 
-1. Corrigir `openCustomerDisplayTest`, retornar/aguardar resultados reais do
-   helper da tela cliente e exibir falhas no painel do operador. Consumo baixo.
-2. Substituir o redirecionamento para `/login` por recuperação própria da
-   Neosmart e adicionar teste de navegação. Consumo baixo.
-3. Padronizar handshake `clientReady` em Medidas e Seu Jeito de Olhar. Consumo
+1. Homologar no Electron autenticado a retomada de uma sessão existente
+   passando por cada Informação Útil e conferir que o UUID não muda. Consumo
    médio.
-4. Trocar os `useTransition` assíncronos por estados explícitos e mostrar erros
-   reais de criação/retomada de sessão. Consumo médio.
-5. Bloquear avaliação/encerramento até o mapa estar salvo e oferecer retry de
-   persistência. Consumo médio.
-6. Preservar o UUID ao entrar e sair de todas as Informações Úteis e alinhar a
-   identidade visual para Neosmart. Consumo baixo.
-7. Criar testes de fluxo para segunda tela, carregamento frio, retomada e falha
-   de API; depois repetir o smoke test no mini PC. Consumo alto.
+2. Testar no mini PC o primeiro clique de Medidas e Seu Jeito de Olhar com
+   carregamento frio, além de abrir/fechar a segunda tela repetidamente. Consumo
+   médio.
+3. Simular falha e retorno da API ao concluir o Campo Visual, confirmando o
+   bloqueio, o retry e a liberação após salvar. Consumo médio.
+4. Repetir o ciclo câmera, touch, monitor retrato, repouso, suspensão e
+   reconexão no equipamento real. Consumo alto.
+5. Limpar os avisos antigos do lint em uma mudança separada e então considerar
+   `--max-warnings=0`. Consumo médio.
 
 ### Ideias futuras
 

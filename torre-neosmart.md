@@ -142,9 +142,17 @@
 - Identificados erros silenciosos ao criar/retomar sessão no menu: experiências
   podem apenas exibir a mensagem de mock, e Espessura pode não reagir, em vez de
   mostrar o erro real.
-- Confirmado que várias Informações Úteis não preservam o UUID ao voltar, apesar
-  de poderem ser abertas dentro de um atendimento retomado. Espessura preserva,
-  mas AR, Opti Fog, Polarizadas, Seu Jeito de Olhar e Comparativo de Campos não.
+- Confirmada a causa de novas sessões após entrar em um atendimento existente:
+  AR, Opti Fog, Polarizadas, Seu Jeito de Olhar e Comparativo de Campos removem
+  o UUID ao abrir e ao voltar. O menu retorna com `menu=informacoes`, mas sem
+  `session`; nessa combinação, `TowerWelcomeMock` inicializa
+  `selectedAction = 'new'`. A experiência seguinte chama a criação em modo
+  `new` e gera outro UUID. Espessura é a única Informação Útil que preserva a
+  sessão atual.
+- Conferido o contrato central do MB Optical: com `sessionId`, ele localiza e
+  atualiza a sessão ativa; uma nova linha só é inserida quando o UUID não é
+  enviado. A duplicação, portanto, nasce na perda de contexto da navegação da
+  Neosmart, não no endpoint de sessões.
 - Confirmada identidade visual residual de Gestão Ótica/Ótica Pro no título,
   manifesto, tela inicial e cabeçalho, divergindo do produto Neosmart.
 - Validação técnica concluída sem alterações funcionais: typecheck aprovado, 31
@@ -154,6 +162,8 @@
 
 - Corrigir primeiro o diagnóstico da segunda tela e o redirecionamento para o
   `/login` inexistente, pois ambos bloqueiam fluxos inteiros.
+- A perda do UUID nas Informações Úteis transforma silenciosamente uma retomada
+  em novo atendimento e explica as novas sessões observadas durante o uso.
 - A suíte atual valida contratos e persistência, mas não cobre os handshakes,
   estados de carregamento, retorno de navegação ou a correspondência entre o
   rótulo dos botões e o estado real da segunda tela.

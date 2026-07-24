@@ -109,3 +109,84 @@
 - Diagnóstico de sessão mostrando, apenas ao suporte, UUID local/remoto, estado
   da outbox e origem do nome do cliente.
 - Configuração de repouso com opções Nunca/10/15/30/60 minutos.
+
+## 24/07/2026 — diagnóstico de fluxos e coerência da interface
+
+### O que foi feito
+
+- Revisados integralmente o documento canônico de decisões, o contexto de
+  produto, o status da sandbox do heatmap, o `CURRENT_STATUS.md`, o README da
+  Neosmart e a memória anterior.
+- Executado debug direcionado a fluxo, botões, navegação, estados de
+  carregamento, segunda tela e coerência entre a ação do operador e o resultado
+  apresentado, sem auditoria de segurança.
+- Reproduzido no renderer publicado que a perda de autorização envia a Torre
+  para `/login`, rota inexistente na Neosmart, resultando em página 404.
+- Confirmado no Electron que “Abrir teste na segunda tela” referencia
+  `customerUrl` antes de sua declaração quando a janela persistente do cliente
+  já existe; como essa janela é aberta na inicialização, o fluxo de diagnóstico
+  pode falhar justamente no uso normal.
+- Confirmado que o helper compartilhado da tela do cliente não aguarda o
+  resultado assíncrono do Electron. Assim, vários botões mudam para “Voltar à
+  abertura” mesmo sem confirmação de que a experiência foi aberta.
+- Identificados comandos por atraso fixo de 700 ms em Medidas e Seu Jeito de
+  Olhar, sem o handshake de cliente pronto já existente no Visagismo. Em
+  carregamento frio, o primeiro comando pode ser perdido.
+- Identificado uso de `useTransition` para operações assíncronas no React 18 no
+  menu de sessões e em Medidas. O estado visual de carregamento não acompanha
+  todo o `await`, deixando botões disponíveis e a lista de retomada sem feedback
+  confiável.
+- Identificado que o Campo Visual libera “Continuar para avaliação” e “Encerrar
+  atendimento” antes da confirmação de persistência do mapa; em erro de
+  salvamento, não existe ação de tentar salvar novamente.
+- Identificados erros silenciosos ao criar/retomar sessão no menu: experiências
+  podem apenas exibir a mensagem de mock, e Espessura pode não reagir, em vez de
+  mostrar o erro real.
+- Confirmado que várias Informações Úteis não preservam o UUID ao voltar, apesar
+  de poderem ser abertas dentro de um atendimento retomado. Espessura preserva,
+  mas AR, Opti Fog, Polarizadas, Seu Jeito de Olhar e Comparativo de Campos não.
+- Confirmada identidade visual residual de Gestão Ótica/Ótica Pro no título,
+  manifesto, tela inicial e cabeçalho, divergindo do produto Neosmart.
+- Validação técnica concluída sem alterações funcionais: typecheck aprovado, 31
+  testes aprovados, build de produção aprovado e `git diff --check` aprovado.
+
+### Problemas encontrados ou pendências
+
+- Corrigir primeiro o diagnóstico da segunda tela e o redirecionamento para o
+  `/login` inexistente, pois ambos bloqueiam fluxos inteiros.
+- A suíte atual valida contratos e persistência, mas não cobre os handshakes,
+  estados de carregamento, retorno de navegação ou a correspondência entre o
+  rótulo dos botões e o estado real da segunda tela.
+- O fluxo completo autenticado ainda precisa ser repetido no Electron e no mini
+  PC após as correções, incluindo carregamento frio das experiências.
+- O working tree da Neosmart já continha alterações em `README.md`,
+  `electron/main.cjs`, `package.json` e `tests/electron-security.test.mjs`;
+  elas foram preservadas e não foram modificadas por este diagnóstico.
+
+### Próximos passos
+
+1. Corrigir `openCustomerDisplayTest`, retornar/aguardar resultados reais do
+   helper da tela cliente e exibir falhas no painel do operador. Consumo baixo.
+2. Substituir o redirecionamento para `/login` por recuperação própria da
+   Neosmart e adicionar teste de navegação. Consumo baixo.
+3. Padronizar handshake `clientReady` em Medidas e Seu Jeito de Olhar. Consumo
+   médio.
+4. Trocar os `useTransition` assíncronos por estados explícitos e mostrar erros
+   reais de criação/retomada de sessão. Consumo médio.
+5. Bloquear avaliação/encerramento até o mapa estar salvo e oferecer retry de
+   persistência. Consumo médio.
+6. Preservar o UUID ao entrar e sair de todas as Informações Úteis e alinhar a
+   identidade visual para Neosmart. Consumo baixo.
+7. Criar testes de fluxo para segunda tela, carregamento frio, retomada e falha
+   de API; depois repetir o smoke test no mini PC. Consumo alto.
+
+### Ideias futuras
+
+- Um estado compartilhado da tela cliente, confirmado pelo Electron, para que
+  todos os botões usem `abrindo`, `apresentando`, `abertura` e `erro` em vez de
+  booleanos locais.
+- Testes com atraso artificial de carregamento e rede para capturar comandos
+  perdidos e cliques duplicados.
+- Um painel de recuperação do atendimento que mostre, ao operador, sessão,
+  persistência do mapa, resultado de medidas e situação da sincronização antes
+  de permitir avançar.

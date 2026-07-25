@@ -246,6 +246,11 @@
   `resolveOperationalTowerCustomer` confirma se um cliente provisório já
   recebeu ID remoto; se ainda não recebeu, a UI informa a pendência e não
   envia uma receita que poderia falhar ou ficar sem vínculo.
+- A Espessura passou a ler a receita do snapshot compartilhado da sessão e a
+  recuperar, como fallback, a receita registrada na avaliação do Campo Visual
+  quando sessões antigas ainda possuem snapshot zerado. Cada abertura do modal
+  reinicializa cliente e receita a partir do contexto persistido, sem herdar
+  uma edição cancelada.
 - Foi pesquisado o cadastro existente do Campo Visual. Não foi encontrado
   erro estrutural no fluxo; o cuidado necessário era não copiar a UI sem o
   tratamento do cliente provisório.

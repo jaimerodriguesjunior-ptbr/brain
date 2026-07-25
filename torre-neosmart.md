@@ -229,3 +229,59 @@
 - Um painel de recuperação do atendimento que mostre, ao operador, sessão,
   persistência do mapa, resultado de medidas e situação da sincronização antes
   de permitir avançar.
+
+## 25/07/2026 — contexto do cliente, cadastro na Espessura e ideia de página compartilhável
+
+### O que foi feito
+
+- Na Espessura de lentes, quando a sessão já possui cliente, a busca deixou de
+  ficar permanentemente visível. A UI mostra o cliente da sessão com nome e
+  telefone e oferece `Trocar cliente` para reabrir a pesquisa.
+- Foi adicionado `Cadastrar cliente rapidamente` dentro da busca da Espessura,
+  com nome completo e celular.
+- O cadastro reutiliza o fluxo operacional do Campo Visual por meio de
+  `createOperationalTowerCustomer`, mantendo o caminho web e o caminho
+  local-first do Electron.
+- O novo cliente é vinculado à sessão atual. Antes de salvar a receita,
+  `resolveOperationalTowerCustomer` confirma se um cliente provisório já
+  recebeu ID remoto; se ainda não recebeu, a UI informa a pendência e não
+  envia uma receita que poderia falhar ou ficar sem vínculo.
+- Foi pesquisado o cadastro existente do Campo Visual. Não foi encontrado
+  erro estrutural no fluxo; o cuidado necessário era não copiar a UI sem o
+  tratamento do cliente provisório.
+- Foram executados `npm run typecheck` e 29 testes de
+  `tests/mb-optical-contracts.test.mjs`, todos aprovados.
+- Foi discutida, sem implementação, uma futura página compartilhável do
+  cliente: selecionar dados da sessão, gerar um QR Code e permitir o download
+  de um PDF.
+
+### Problemas encontrados ou pendências
+
+- As alterações desta data estão no working tree da Neosmart e ainda não
+  foram commitadas, enviadas ou publicadas.
+- O cadastro novo precisa ser testado na Torre com internet disponível e,
+  separadamente, com sincronização pendente, para confirmar a mensagem e a
+  retomada após o ID remoto chegar.
+- A página do cliente, a seleção dos dados compartilháveis, o token de acesso,
+  o QR Code e o PDF ainda não existem no fluxo operacional.
+
+### Próximos passos
+
+1. Fazer commit e deploy web das alterações da Espessura e testar cadastro,
+   troca de cliente e salvamento da receita na sessão real. Consumo baixo.
+2. Testar a criação de cliente provisório no Electron com queda/retorno de
+   conexão e confirmar que a receita só é salva após sincronização. Consumo
+   médio.
+3. Homologar a UI em 1024 × 768, especialmente a área de cadastro rápido e o
+   modal de receita. Consumo baixo.
+4. Especificar os dados que podem ser compartilhados com o cliente antes de
+   implementar a página pública. Consumo médio.
+
+### Ideias futuras
+
+- Página pública da sessão com token opaco, expirável e revogável, sem expor o
+  UUID interno.
+- Botão na Torre para selecionar resumo, receita, mapa, indicações, armação e
+  comparativos antes de gerar o QR Code.
+- Geração de PDF para download pelo cliente, liberada somente após os dados
+  estarem sincronizados.

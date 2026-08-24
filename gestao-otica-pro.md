@@ -239,7 +239,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os IDs antigos desses alertas foram tratados como descontinuados para não aparecerem como pendências resolvidas no lifecycle.
 - A Loja 1 foi regenerada e passou a mostrar na operação somente os alertas ainda considerados relevantes: lente não pedida ao laboratório, lente não chegada até a data prometida e venda de lente sem OS.
 - Os quatro indicadores retirados também foram excluídos da entrada enviada à IA, evitando que reapareçam na narrativa por engano.
-- O release do MB Optical foi incrementado para 1.02.03.
+- Reativado o alerta de pedidos enviados ao laboratório sem chegada após 24 horas. Ele permanece visível no dia seguinte e informa que o assunto ainda não foi resolvido enquanto a pendência persistir.
+- O release do MB Optical foi incrementado para 1.02.04.
 
 ## Problemas encontrados ou pendências
 

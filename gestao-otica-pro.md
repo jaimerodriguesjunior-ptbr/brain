@@ -231,3 +231,27 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Expor no suporte uma comparação segura entre sessão local, sessão remota e
   eventos da outbox para facilitar reconciliações.
 
+# Diário - 24/08/2026
+
+## O que foi feito
+
+- A Central Diária deixou de exibir como atenção operacional pedidos sem atualização de chegada há 120 horas, OS sem data prometida, datas fora de sequência e múltiplas OS abertas.
+- Os IDs antigos desses alertas foram tratados como descontinuados para não aparecerem como pendências resolvidas no lifecycle.
+- A Loja 1 foi regenerada e passou a mostrar na operação somente os alertas ainda considerados relevantes: lente não pedida ao laboratório, lente não chegada até a data prometida e venda de lente sem OS.
+- O release do MB Optical foi incrementado para 1.02.03.
+
+## Problemas encontrados ou pendências
+
+- A análise confirmou que os quatro alertas removidos eram ruído operacional para a Loja 1 e que algumas situações decorrem de inconsistências de cadastro ou fluxo que serão corrigidas depois.
+- O histórico local de migrações do Supabase ainda não está conciliado com o banco remoto; nenhuma migração foi reaplicada nesta etapa.
+
+## Próximos passos
+
+1. Validar visualmente a nova leitura operacional na Loja 1 após o deploy. Consumo baixo.
+2. Corrigir na origem os fluxos que permitem datas ausentes ou múltiplas OS quando isso for priorizado. Consumo médio.
+3. Conciliar o histórico de migrações antes de qualquer `db push`. Consumo médio.
+
+## Ideias futuras
+
+- Reintroduzir análises de datas e OSs somente depois que os dados de origem forem confiáveis e com critérios que representem falhas reais para o gerente.
+

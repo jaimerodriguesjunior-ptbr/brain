@@ -238,6 +238,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A Central Diária deixou de exibir como atenção operacional pedidos sem atualização de chegada há 120 horas, OS sem data prometida, datas fora de sequência e múltiplas OS abertas.
 - Os IDs antigos desses alertas foram tratados como descontinuados para não aparecerem como pendências resolvidas no lifecycle.
 - A Loja 1 foi regenerada e passou a mostrar na operação somente os alertas ainda considerados relevantes: lente não pedida ao laboratório, lente não chegada até a data prometida e venda de lente sem OS.
+- Os quatro indicadores retirados também foram excluídos da entrada enviada à IA, evitando que reapareçam na narrativa por engano.
 - O release do MB Optical foi incrementado para 1.02.03.
 
 ## Problemas encontrados ou pendências

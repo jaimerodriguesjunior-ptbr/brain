@@ -248,11 +248,16 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O versionamento foi separado em mudanças pendentes e deploys concluídos: `PENDING_RELEASE_CHANGES` acumula cada implementação sem mudar a versão; depois do deploy, essas mudanças formam uma nova entrada de `RELEASE_HISTORY`.
 - Mudanças pendentes podem ser descartadas ou substituídas antes do deploy; nesses casos, `PENDING_RELEASE_CHANGES` deve ser corrigido para registrar apenas o código que permanece na entrega.
 - O modal agora mostra três versões de deploy por vez e libera as anteriores ao rolar ou acionar o carregamento. O histórico não será mais descartado.
+- A auditoria da Central impediu que um snapshot pronto seja sobrescrito por uma atualização manual posterior. A consulta de vendas de lentes agora respeita também o limite final da data de referência.
+- As validações de lente e grau da OS consultam `venda_itens` e só consideram vendas com produto `tipo_produto = Lente`; uma venda exclusiva de `LenteContato` não gera esse alerta.
+- A IA continua responsável apenas pela narrativa: os cards permanecem factuais, e textos gerados que tragam número, explicação causal ou orientação sem evidência são descartados em favor do texto determinístico.
+- A suíte padrão passou a executar os testes da Central, cobrindo imutabilidade de snapshot, exclusão de lente de contato e respostas adversariais da IA.
 
 ## Problemas encontrados ou pendências
 
 - A análise confirmou que os quatro alertas removidos eram ruído operacional para a Loja 1 e que algumas situações decorrem de inconsistências de cadastro ou fluxo que serão corrigidas depois.
 - O histórico local de migrações do Supabase ainda não está conciliado com o banco remoto; nenhuma migração foi reaplicada nesta etapa.
+- Um relatório inexistente ainda não pode reconstruir fielmente o estado passado apenas com as tabelas operacionais atuais. O job noturno precisa gerar o primeiro snapshot no horário previsto; recuperar esse caso no futuro exigirá armazenar histórico dos estados de origem.
 
 ## Próximos passos
 

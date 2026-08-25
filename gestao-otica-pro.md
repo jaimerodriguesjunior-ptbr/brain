@@ -244,7 +244,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Confirmado que “vendas de lentes sem OS” filtra apenas produtos `tipo_produto = Lente`; `LenteContato` fica fora. O texto da Central foi explicitado como lentes oftálmicas.
 - Reativado o alerta de OS sem data prometida como ponto operacional relevante; ele volta a aparecer e ser enviado à IA quando houver registros nessa condição.
 - Acrescentadas verificações de OS duplicadas, OS do fluxo óptico sem lente vinculada e OS com lente vinculada sem grau preenchido, sempre com os registros afetados como evidência. OS preliminares ou de lente de contato não entram automaticamente nessa inconsistência.
-- O release do MB Optical foi incrementado para 1.02.09.
+- As alterações desta etapa foram acumuladas na versão do último deploy, sem novo incremento de versão. O próximo incremento só deve ocorrer após o deploy.
 
 ## Problemas encontrados ou pendências
 

@@ -246,6 +246,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Acrescentadas verificações de OS do fluxo óptico sem lente vinculada e OS com lente vinculada sem grau preenchido, sempre com os registros afetados como evidência. OS preliminares ou de lente de contato não entram automaticamente nessa inconsistência.
 - A Central não alerta mais para mais de uma OS aberta na mesma venda: esse é um fluxo normal e não prova duplicidade ou erro.
 - O versionamento foi separado em mudanças pendentes e deploys concluídos: `PENDING_RELEASE_CHANGES` acumula cada implementação sem mudar a versão; depois do deploy, essas mudanças formam uma nova entrada de `RELEASE_HISTORY`.
+- Mudanças pendentes podem ser descartadas ou substituídas antes do deploy; nesses casos, `PENDING_RELEASE_CHANGES` deve ser corrigido para registrar apenas o código que permanece na entrega.
 - O modal agora mostra três versões de deploy por vez e libera as anteriores ao rolar ou acionar o carregamento. O histórico não será mais descartado.
 
 ## Problemas encontrados ou pendências

@@ -242,7 +242,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Corrigida a regra operacional: o prazo de 24 horas começa quando a lente chega à loja e termina quando a montagem local é registrada. Pedido antigo no laboratório não é, por si só, alerta de montagem.
 - Criado alerta separado para armação do cliente: a montagem só vira preocupação depois de 7 dias aguardando a armação, e a persistência informa que o assunto continua sem resolução.
 - Confirmado que “vendas de lentes sem OS” filtra apenas produtos `tipo_produto = Lente`; `LenteContato` fica fora. O texto da Central foi explicitado como lentes oftálmicas.
-- O release do MB Optical foi incrementado para 1.02.06.
+- Reativado o alerta de OS sem data prometida como ponto operacional relevante; ele volta a aparecer e ser enviado à IA quando houver registros nessa condição.
+- O release do MB Optical foi incrementado para 1.02.07.
 
 ## Problemas encontrados ou pendências
 

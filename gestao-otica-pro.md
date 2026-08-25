@@ -239,8 +239,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os IDs antigos desses alertas foram tratados como descontinuados para não aparecerem como pendências resolvidas no lifecycle.
 - A Loja 1 foi regenerada e passou a mostrar na operação somente os alertas ainda considerados relevantes: lente não pedida ao laboratório, lente não chegada até a data prometida e venda de lente sem OS.
 - Os quatro indicadores retirados também foram excluídos da entrada enviada à IA, evitando que reapareçam na narrativa por engano.
-- Reativado o alerta de pedidos enviados ao laboratório sem chegada após 24 horas. Ele permanece visível no dia seguinte e informa que o assunto ainda não foi resolvido enquanto a pendência persistir.
-- O release do MB Optical foi incrementado para 1.02.04.
+- Corrigida a regra operacional: o prazo de 24 horas começa quando a lente chega à loja e termina quando a montagem local é registrada. Pedido antigo no laboratório não é, por si só, alerta de montagem.
+- Criado alerta separado para armação do cliente: a montagem só vira preocupação depois de 7 dias aguardando a armação, e a persistência informa que o assunto continua sem resolução.
+- O release do MB Optical foi incrementado para 1.02.05.
 
 ## Problemas encontrados ou pendências
 
@@ -255,5 +256,5 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Ideias futuras
 
-- Reintroduzir análises de datas e OSs somente depois que os dados de origem forem confiáveis e com critérios que representem falhas reais para o gerente.
+- Manter a análise operacional concentrada em falhas reais do fluxo: lente chegada sem montagem local no prazo e espera prolongada pela armação do cliente.
 

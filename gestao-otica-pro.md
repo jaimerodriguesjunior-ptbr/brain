@@ -279,6 +279,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os recebimentos continuam sendo apurados pela data efetiva de `pagamentos.data_pagamento`, separando venda realizada de dinheiro que entrou no caixa.
 - A próxima versão foi aberta como `1.02.05` com essa alteração pendente, pois `1.02.04` já consta como deploy concluído.
 - A atualização manual da Central força novo cálculo do dia solicitado e substitui o snapshot anterior apenas depois que o novo cálculo termina; o job automático continua preservando snapshots prontos.
+- O Radar Operacional passou a excluir OS de vendas canceladas ou devolvidas e OS cujo fluxo de laboratório já foi encerrado; o ajuste também cobre registros históricos, como a venda 124, sem alterar seus dados de auditoria.
 
 ## Problemas encontrados ou pendências
 
@@ -287,8 +288,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Próximos passos
 
 1. Publicar e conferir o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
+2. Publicar o lote pendente `1.02.05` e conferir que a venda 124 não aparece mais no Radar. Consumo baixo.
 
 ## Ideias futuras
 
 - Adicionar teste automatizado de contrato das consultas financeiras para impedir que `created_at` volte a ser usado como data de venda.
+
+- Criar teste de integração do Radar com uma venda cancelada que mantenha a OS histórica aberta.
 

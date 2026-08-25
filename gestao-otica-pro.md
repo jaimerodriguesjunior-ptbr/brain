@@ -243,8 +243,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Criado alerta separado para armação do cliente: a montagem só vira preocupação depois de 7 dias aguardando a armação, e a persistência informa que o assunto continua sem resolução.
 - Confirmado que “vendas de lentes sem OS” filtra apenas produtos `tipo_produto = Lente`; `LenteContato` fica fora. O texto da Central foi explicitado como lentes oftálmicas.
 - Reativado o alerta de OS sem data prometida como ponto operacional relevante; ele volta a aparecer e ser enviado à IA quando houver registros nessa condição.
-- Acrescentadas verificações de OS duplicadas, OS sem lente vinculada e OS com lente vinculada sem grau preenchido, sempre com os registros afetados como evidência.
-- O release do MB Optical foi incrementado para 1.02.08.
+- Acrescentadas verificações de OS duplicadas, OS do fluxo óptico sem lente vinculada e OS com lente vinculada sem grau preenchido, sempre com os registros afetados como evidência. OS preliminares ou de lente de contato não entram automaticamente nessa inconsistência.
+- O release do MB Optical foi incrementado para 1.02.09.
 
 ## Problemas encontrados ou pendências
 

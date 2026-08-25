@@ -248,6 +248,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O versionamento foi separado em mudanças pendentes e deploys concluídos: `PENDING_RELEASE_CHANGES` acumula cada implementação sem mudar a versão; depois do deploy, essas mudanças formam uma nova entrada de `RELEASE_HISTORY`.
 - Mudanças pendentes podem ser descartadas ou substituídas antes do deploy; nesses casos, `PENDING_RELEASE_CHANGES` deve ser corrigido para registrar apenas o código que permanece na entrega.
 - O modal agora mostra três versões de deploy por vez e libera as anteriores ao rolar ou acionar o carregamento. O histórico não será mais descartado.
+- O lote atual foi fechado como versão `1.02.03`; `PENDING_RELEASE_VERSION` e `PENDING_RELEASE_CHANGES` ficaram vazios. A primeira alteração do próximo lote deve abrir `1.02.04`, e alterações seguintes apenas completam essa mesma versão até o deploy.
 - A auditoria da Central impediu que um snapshot pronto seja sobrescrito por uma atualização manual posterior. A consulta de vendas de lentes agora respeita também o limite final da data de referência.
 - As validações de lente e grau da OS consultam `venda_itens` e só consideram vendas com produto `tipo_produto = Lente`; uma venda exclusiva de `LenteContato` não gera esse alerta.
 - A IA continua responsável apenas pela narrativa: os cards permanecem factuais, e textos gerados que tragam número, explicação causal ou orientação sem evidência são descartados em favor do texto determinístico.

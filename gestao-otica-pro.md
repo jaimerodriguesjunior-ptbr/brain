@@ -279,6 +279,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os recebimentos continuam sendo apurados pela data efetiva de `pagamentos.data_pagamento`, separando venda realizada de dinheiro que entrou no caixa.
 - A próxima versão foi aberta como `1.02.05` com essa alteração pendente, pois `1.02.04` já consta como deploy concluído.
 - A atualização manual da Central força novo cálculo do dia solicitado e substitui o snapshot anterior apenas depois que o novo cálculo termina; o job automático continua preservando snapshots prontos.
+- O relacionamento passou a analisar notas 1 ou 2 mesmo quando o pós-venda já foi concluído, além de reclamações, insatisfação e dificuldade de adaptação nos relatos. Esses sinais geram atenção; números normais de mensagens, respostas e pós-vendas concluídos não entram mais na leitura do módulo.
 - O Radar Operacional passou a excluir OS de vendas canceladas ou devolvidas e OS cujo fluxo de laboratório já foi encerrado; o ajuste também cobre registros históricos, como a venda 124, sem alterar seus dados de auditoria.
 
 ## Problemas encontrados ou pendências

@@ -245,7 +245,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Reativado o alerta de OS sem data prometida como ponto operacional relevante; ele volta a aparecer e ser enviado à IA quando houver registros nessa condição.
 - Acrescentadas verificações de OS do fluxo óptico sem lente vinculada e OS com lente vinculada sem grau preenchido, sempre com os registros afetados como evidência. OS preliminares ou de lente de contato não entram automaticamente nessa inconsistência.
 - A Central não alerta mais para mais de uma OS aberta na mesma venda: esse é um fluxo normal e não prova duplicidade ou erro.
-- As alterações desta etapa foram acumuladas na versão do último deploy, sem novo incremento de versão. O próximo incremento só deve ocorrer após o deploy.
+- O versionamento foi separado em mudanças pendentes e deploys concluídos: `PENDING_RELEASE_CHANGES` acumula cada implementação sem mudar a versão; depois do deploy, essas mudanças formam uma nova entrada de `RELEASE_HISTORY`.
+- O modal agora mostra três versões de deploy por vez e libera as anteriores ao rolar ou acionar o carregamento. O histórico não será mais descartado.
 
 ## Problemas encontrados ou pendências
 
@@ -254,7 +255,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Validar visualmente a nova leitura operacional na Loja 1 após o deploy. Consumo baixo.
+1. Validar visualmente a nova leitura operacional e a paginação do histórico de versões após o deploy. Consumo baixo.
 2. Corrigir na origem os fluxos que permitem datas ausentes ou múltiplas OS quando isso for priorizado. Consumo médio.
 3. Conciliar o histórico de migrações antes de qualquer `db push`. Consumo médio.
 

@@ -270,3 +270,24 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Manter a análise operacional concentrada em falhas reais do fluxo: lente chegada sem montagem local no prazo e espera prolongada pela armação do cliente.
 
+# Diário - 25/08/2026
+
+## O que foi feito
+
+- O resumo financeiro da Central passou a contabilizar vendas pela `data_fechamento`, mantendo o filtro de status `Fechada`.
+- Os acumulados do mês, comparativo anual, cobertura de custos e venda de lente sem OS passaram a usar a mesma data de fechamento.
+- Os recebimentos continuam sendo apurados pela data efetiva de `pagamentos.data_pagamento`, separando venda realizada de dinheiro que entrou no caixa.
+- A próxima versão foi aberta como `1.02.04` com essa alteração pendente.
+
+## Problemas encontrados ou pendências
+
+- A alteração ainda precisa ser publicada para aparecer no ambiente online.
+
+## Próximos passos
+
+1. Publicar e conferir o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
+
+## Ideias futuras
+
+- Adicionar teste automatizado de contrato das consultas financeiras para impedir que `created_at` volte a ser usado como data de venda.
+

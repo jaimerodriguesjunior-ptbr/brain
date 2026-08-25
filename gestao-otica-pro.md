@@ -277,7 +277,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O resumo financeiro da Central passou a contabilizar vendas pela `data_fechamento`, mantendo o filtro de status `Fechada`.
 - Os acumulados do mês, comparativo anual, cobertura de custos e venda de lente sem OS passaram a usar a mesma data de fechamento.
 - Os recebimentos continuam sendo apurados pela data efetiva de `pagamentos.data_pagamento`, separando venda realizada de dinheiro que entrou no caixa.
-- A próxima versão foi aberta como `1.02.04` com essa alteração pendente.
+- A próxima versão foi aberta como `1.02.05` com essa alteração pendente, pois `1.02.04` já consta como deploy concluído.
+- A atualização manual da Central força novo cálculo do dia solicitado e substitui o snapshot anterior apenas depois que o novo cálculo termina; o job automático continua preservando snapshots prontos.
 
 ## Problemas encontrados ou pendências
 

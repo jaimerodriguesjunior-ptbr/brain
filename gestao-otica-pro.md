@@ -362,19 +362,18 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A função `undo_daily_health_record_merge` restaura os cadastros originais e devolve cada vínculo ao registro de origem em uma única transação. A recuperação é bloqueada se campos consolidados, vínculos transferidos ou IDs removidos mudaram depois da mesclagem.
 - A auditoria da mesclagem passou a preservar também o estado final do cadastro principal. A migration `20260826120000_daily_health_merge_recovery.sql` foi aplicada isoladamente; as funções de mesclar e desfazer foram confirmadas como `security definer`, acessíveis somente pelo `service_role`.
 - Typecheck, verificação de diff e os dez testes específicos de deduplicação e recuperação passaram. O banco permaneceu com zero eventos reais de mesclagem ou recuperação durante a implantação.
+- O modal foi validado visualmente no localhost com PIN de gerente: histórico, estado vazio, códigos, coincidências e cards permaneceram alinhados. O indicador vermelho observado pertence a uma extensão do Chrome; não houve erro de console originado pelo localhost.
 
 ## Problemas encontrados ou pendências
 
 - A regra ainda depende da qualidade dos três campos cadastrados. Produtos sem referência só podem ser comparados com outros também sem referência, portanto podem continuar exigindo revisão humana quando o cadastro for incompleto.
-- A validação visual da prévia ficou bloqueada pelo vencimento do PIN de gerente no navegador. A API e a leitura real do banco foram validadas, mas o modal ainda precisa de smoke test autenticado.
 - Nenhuma mesclagem real foi executada durante a implementação. O primeiro uso precisa ser acompanhado em um grupo de baixo risco, conferindo o cadastro principal e o evento de auditoria logo depois.
-- A conferência visual do histórico de mesclagens continua pendente porque o navegador solicitou novamente o PIN de gerente.
 
 ## Próximos passos
 
-1. Regenerar o snapshot da Loja 1 e conferir visualmente a fila, a prévia, a confirmação dupla e o histórico de mesclagens com PIN de gerente. Consumo baixo.
+1. Executar a primeira mesclagem acompanhada em um grupo de baixo risco, conferir vínculos e auditoria, e então testar o desfazer no mesmo caso. Consumo médio.
 2. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
-3. Executar a primeira mesclagem acompanhada em um grupo de baixo risco, conferir vínculos e auditoria, e então testar o desfazer no mesmo caso. Consumo médio.
+3. Regenerar o snapshot da Loja 1 depois do teste de mesclar e desfazer para confirmar a volta do grupo à fila. Consumo baixo.
 4. Avaliar casos bloqueadores individualmente antes de criar qualquer regra adicional de consolidação. Consumo alto.
 
 ## Ideias futuras

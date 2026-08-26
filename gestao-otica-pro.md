@@ -289,6 +289,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os mesmos cards receberam uma segunda compactação visual, reduzindo novamente o padding das linhas e do contêiner sem alterar os dados.
 - O título da seção de atenção passou a ser “Por favor dê atenção aos seguintes pontos:”, com orientação mais direta ao gerente.
 - Os cards de atenção passaram a ocupar duas colunas em telas médias e grandes, mantendo uma coluna no celular.
+- Os textos narrativos da IA passaram a usar mais largura e fonte maior, reduzindo quebras excessivas sem alterar os cards de evidência.
 
 ## Problemas encontrados ou pendências
 

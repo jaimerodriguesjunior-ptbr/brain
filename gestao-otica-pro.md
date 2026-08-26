@@ -350,20 +350,26 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A prévia mostra vínculos a transferir, dados que podem completar o cadastro principal, diferenças que exigem escolha e estoque resultante para produtos.
 - CPF, RG, nascimento, referência, código de barras e tipo de produto divergentes são tratados como bloqueadores. Duas ou mais carteiras de crédito também bloqueiam a futura execução até existir uma regra de consolidação.
 - A leitura real da Loja 1 foi validada sem exibir dados pessoais nem alterar registros: a primeira prévia de cliente encontrou dois vínculos e a primeira de produto encontrou três. Typecheck e 20 testes passaram.
+- Implementado o passo 5 da deduplicação para os casos sem bloqueadores. Depois de escolher o cadastro principal na prévia, o gerente recebe uma segunda confirmação antes de executar a mesclagem.
+- A API recalcula o grupo e a prévia imediatamente antes da execução, rejeitando alterações no lote ou novos conflitos. Uma chave de operação impede repetição inclusive em chamadas simultâneas.
+- A função `merge_daily_health_duplicate_records` transfere em uma única transação todas as referências estrangeiras atuais de clientes ou produtos, completa apenas campos vazios do principal, soma o estoque dos produtos e remove os cadastros secundários somente ao final.
+- A auditoria preserva os cadastros originais, as linhas dependentes transferidas, o destino, o gerente e a chave da operação. Qualquer erro provoca rollback integral; a função fica disponível somente ao `service_role`.
+- A migration `20260826100000_daily_health_transactional_record_merge.sql` foi aplicada isoladamente. Assinatura, `security definer`, colunas de auditoria e bloqueio para perfis autenticados foram confirmados no banco remoto sem executar uma mesclagem real.
+- Typecheck e os 22 testes específicos da Central passaram. A suíte geral ainda tem duas falhas preexistentes e alheias na Torre Electron, relacionadas ao contrato de rota e à URL empacotada.
 
 ## Problemas encontrados ou pendências
 
 - A regra ainda depende da qualidade dos três campos cadastrados. Produtos sem referência só podem ser comparados com outros também sem referência, portanto podem continuar exigindo revisão humana quando o cadastro for incompleto.
-- A mesclagem de produtos e clientes permanece fora do fluxo atual, aguardando o inventário transacional das dependências.
 - A validação visual da prévia ficou bloqueada pelo vencimento do PIN de gerente no navegador. A API e a leitura real do banco foram validadas, mas o modal ainda precisa de smoke test autenticado.
-- O passo 4 não executa mesclagem. A operação atômica, idempotência, auditoria completa e estratégia de reversão pertencem ao passo 5.
+- Nenhuma mesclagem real foi executada durante a implementação. O primeiro uso precisa ser acompanhado em um grupo de baixo risco, conferindo o cadastro principal e o evento de auditoria logo depois.
+- A auditoria contém os dados necessários para recuperação manual, mas ainda não existe um botão automatizado para desfazer uma mesclagem concluída.
 
 ## Próximos passos
 
-1. Regenerar o snapshot da Loja 1 e conferir visualmente a nova fila de produtos duplicados no modal. Consumo baixo.
+1. Regenerar o snapshot da Loja 1 e conferir visualmente a fila, a prévia e a confirmação dupla com PIN de gerente. Consumo baixo.
 2. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
-3. Validar visualmente a prévia com PIN de gerente em um grupo de cliente e um de produto, sem executar decisões. Consumo baixo.
-4. Projetar e implementar a execução transacional da mesclagem usando o mapa do passo 4, começando pelos casos sem bloqueadores. Consumo alto.
+3. Executar a primeira mesclagem acompanhada em um grupo de baixo risco e conferir vínculos, estoque e auditoria depois da operação. Consumo médio.
+4. Projetar um fluxo administrativo de recuperação a partir da auditoria antes de ampliar a mesclagem para casos com conflitos bloqueadores. Consumo alto.
 
 ## Ideias futuras
 

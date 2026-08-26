@@ -304,24 +304,34 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A leitura também separa os casos sem telefone válido e os casos com telefone, mas sem aviso de retirada enviado pelo botão da Gaveta registrado em `whatsapp_outbound_messages`. Isso indica lacuna de registro, não prova que o cliente não foi avisado.
 - Os cards operacionais com registros de OS agora exibem “Ver casos”. O modal protegido pelo mesmo PIN consulta somente as OS referenciadas no alerta e apresenta paciente, responsável, datas relevantes e link direto para a OS; os cards financeiros continuam sem ação nessa etapa.
 - Alertas de relacionamento com registros de pós-venda agora abrem “Ver respostas” para revisão humana ou “Ver casos” nas demais situações. O modal mostra paciente, responsável, motivo, último resumo e data; o link abre a fila de Pós-venda com a OS correspondente selecionada quando ela continua na fila ativa.
+- O módulo Cadastros ganhou filas protegidas pelo mesmo PIN em lotes de até dez: clientes e produtos suspeitos são apresentados lado a lado, produtos sem custo podem receber custo positivo no modal e vendas abertas antigas exibem os casos com link direto.
+- Suspeitas sobrepostas passaram a formar um único grupo em cascata. Assim, registros ligados por evidências diferentes, como telefone e nome, não geram decisões concorrentes em grupos separados.
+- O gerente pode marcar um grupo como registros distintos ou adiar a revisão por sete dias. As decisões são validadas novamente contra os registros atuais antes de serem aceitas; mesclagem de clientes e produtos permanece deliberadamente fora desta etapa.
+- A migration `20260825160000_daily_health_data_quality_reviews.sql` criou a decisão atual e o histórico de eventos, registrando loja, registros afetados, estado anterior e posterior, usuário e funcionário gerente. Ela foi aplicada isoladamente e as duas tabelas foram confirmadas no banco remoto.
+- A atualização de custo registra o valor anterior e o novo valor na auditoria. Ao fechar uma fila alterada, a Central recalcula uma única vez o snapshot para refletir os casos resolvidos.
+- O agrupamento cadastral recebeu dois testes específicos; o typecheck e os 15 testes relacionados à Central passaram.
 
 ## Problemas encontrados ou pendências
 
 - A alteração ainda precisa ser publicada para aparecer no ambiente online.
+- A conferência visual dos novos modais com dados reais ficou bloqueada porque o grant do PIN de gerente havia expirado no navegador; nenhuma decisão cadastral real foi executada durante a validação.
+- O comando de lint não executa neste repositório porque a configuração atual do ESLint 9 falha ao serializar uma estrutura circular antes de analisar os arquivos.
+- Mesclagem em cascata de clientes ou produtos ainda não existe. Ela exige inventário de dependências, transação atômica, prévia e estratégia de reversão antes de ser liberada.
 
 ## Próximos passos
 
 1. Publicar e conferir o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
 2. Publicar o lote pendente `1.02.05` e conferir que a venda 124 não aparece mais no Radar. Consumo baixo.
-3. Regenerar um snapshot da Loja 1 e validar os primeiros achados de cadastros com os registros reais antes de criar ações de correção ou mesclagem. Consumo médio.
+3. Validar visualmente os quatro fluxos cadastrais com PIN de gerente e dados reais, sem confirmar decisões de duplicidade durante o primeiro smoke test. Consumo baixo.
 4. Regenerar um snapshot da Loja 1 e conferir os alertas da Gaveta contra a tela operacional antes de adicionar ações assistidas de lembrete ou baixa retroativa. Consumo baixo.
 5. Validar visualmente o modal de casos em um alerta operacional real da Loja 1 e decidir os primeiros botões de correção dentro da OS. Consumo baixo.
 6. Validar visualmente o modal de respostas de pós-venda com casos reais e decidir as ações assistidas para cada motivo de contato pendente. Consumo baixo.
+7. Mapear todas as referências de clientes e produtos e desenhar a prévia transacional da mesclagem antes de implementar qualquer alteração destrutiva. Consumo alto.
 
 ## Ideias futuras
 
 - Adicionar teste automatizado de contrato das consultas financeiras para impedir que `created_at` volte a ser usado como data de venda.
 
 - Criar teste de integração do Radar com uma venda cancelada que mantenha a OS histórica aberta.
-- Criar uma fila assistida de saneamento para revisar, descartar ou iniciar mesclagem de cada suspeita cadastral com confirmação e auditoria.
+- Evoluir a fila assistida para uma mesclagem em cascata com registro sobrevivente, prévia das referências movidas, transação atômica, idempotência e trilha de reversão.
 

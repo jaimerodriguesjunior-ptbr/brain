@@ -357,6 +357,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A migration `20260826100000_daily_health_transactional_record_merge.sql` foi aplicada isoladamente. Assinatura, `security definer`, colunas de auditoria e bloqueio para perfis autenticados foram confirmados no banco remoto sem executar uma mesclagem real.
 - Typecheck e os 22 testes específicos da Central passaram. A suíte geral ainda tem duas falhas preexistentes e alheias na Torre Electron, relacionadas ao contrato de rota e à URL empacotada.
 - A escolha de cadastro principal ficou mais direta no modal: o botão de prévia agora aparece dentro de cada card com o rótulo "Prévia usando este como o principal", sem repetir o nome já visível. Os botões para adiar ou manter os registros separados continuam abaixo, pois decidem sobre o grupo inteiro.
+- Cada card de cadastro suspeito agora exibe seu código, permitindo identificar diretamente o destino citado na prévia. O resumo de dependentes foi reescrito para explicar quantos vínculos serão transferidos e quantos já existem no cadastro principal.
 
 ## Problemas encontrados ou pendências
 

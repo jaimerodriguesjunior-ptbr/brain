@@ -358,20 +358,24 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Typecheck e os 22 testes específicos da Central passaram. A suíte geral ainda tem duas falhas preexistentes e alheias na Torre Electron, relacionadas ao contrato de rota e à URL empacotada.
 - A escolha de cadastro principal ficou mais direta no modal: o botão de prévia agora aparece dentro de cada card com o rótulo "Prévia usando este como o principal", sem repetir o nome já visível. Os botões para adiar ou manter os registros separados continuam abaixo, pois decidem sobre o grupo inteiro.
 - Cada card de cadastro suspeito agora exibe seu código, permitindo identificar diretamente o destino citado na prévia. O resumo de dependentes foi reescrito para explicar quantos vínculos serão transferidos e quantos já existem no cadastro principal.
+- Implementado o passo 6 com recuperação assistida de mesclagens recentes. O gerente pode abrir o histórico no modal, identificar o cadastro principal e os incorporados e confirmar o desfazer.
+- A função `undo_daily_health_record_merge` restaura os cadastros originais e devolve cada vínculo ao registro de origem em uma única transação. A recuperação é bloqueada se campos consolidados, vínculos transferidos ou IDs removidos mudaram depois da mesclagem.
+- A auditoria da mesclagem passou a preservar também o estado final do cadastro principal. A migration `20260826120000_daily_health_merge_recovery.sql` foi aplicada isoladamente; as funções de mesclar e desfazer foram confirmadas como `security definer`, acessíveis somente pelo `service_role`.
+- Typecheck, verificação de diff e os dez testes específicos de deduplicação e recuperação passaram. O banco permaneceu com zero eventos reais de mesclagem ou recuperação durante a implantação.
 
 ## Problemas encontrados ou pendências
 
 - A regra ainda depende da qualidade dos três campos cadastrados. Produtos sem referência só podem ser comparados com outros também sem referência, portanto podem continuar exigindo revisão humana quando o cadastro for incompleto.
 - A validação visual da prévia ficou bloqueada pelo vencimento do PIN de gerente no navegador. A API e a leitura real do banco foram validadas, mas o modal ainda precisa de smoke test autenticado.
 - Nenhuma mesclagem real foi executada durante a implementação. O primeiro uso precisa ser acompanhado em um grupo de baixo risco, conferindo o cadastro principal e o evento de auditoria logo depois.
-- A auditoria contém os dados necessários para recuperação manual, mas ainda não existe um botão automatizado para desfazer uma mesclagem concluída.
+- A conferência visual do histórico de mesclagens continua pendente porque o navegador solicitou novamente o PIN de gerente.
 
 ## Próximos passos
 
-1. Regenerar o snapshot da Loja 1 e conferir visualmente a fila, a prévia e a confirmação dupla com PIN de gerente. Consumo baixo.
+1. Regenerar o snapshot da Loja 1 e conferir visualmente a fila, a prévia, a confirmação dupla e o histórico de mesclagens com PIN de gerente. Consumo baixo.
 2. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
-3. Executar a primeira mesclagem acompanhada em um grupo de baixo risco e conferir vínculos, estoque e auditoria depois da operação. Consumo médio.
-4. Projetar um fluxo administrativo de recuperação a partir da auditoria antes de ampliar a mesclagem para casos com conflitos bloqueadores. Consumo alto.
+3. Executar a primeira mesclagem acompanhada em um grupo de baixo risco, conferir vínculos e auditoria, e então testar o desfazer no mesmo caso. Consumo médio.
+4. Avaliar casos bloqueadores individualmente antes de criar qualquer regra adicional de consolidação. Consumo alto.
 
 ## Ideias futuras
 

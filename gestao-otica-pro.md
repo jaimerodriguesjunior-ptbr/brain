@@ -302,6 +302,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Quando ainda não houver snapshot salvo, a varredura semanal informa que a primeira leitura será disponibilizada na próxima segunda-feira e a mensal informa que será disponibilizada no primeiro dia do próximo mês.
 - A operação passou a analisar a Gaveta pela data de montagem (`dt_montado_em`), e não pela chegada da lente. Óculos montados, sem entrega e parados por mais de sete dias geram atenção; acima de 30 dias são críticos por possível abandono ou baixa de entrega esquecida.
 - A leitura também separa os casos sem telefone válido e os casos com telefone, mas sem aviso de retirada enviado pelo botão da Gaveta registrado em `whatsapp_outbound_messages`. Isso indica lacuna de registro, não prova que o cliente não foi avisado.
+- Os cards operacionais com registros de OS agora exibem “Ver casos”. O modal protegido pelo mesmo PIN consulta somente as OS referenciadas no alerta e apresenta paciente, responsável, datas relevantes e link direto para a OS; os cards financeiros continuam sem ação nessa etapa.
 
 ## Problemas encontrados ou pendências
 
@@ -313,6 +314,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 2. Publicar o lote pendente `1.02.05` e conferir que a venda 124 não aparece mais no Radar. Consumo baixo.
 3. Regenerar um snapshot da Loja 1 e validar os primeiros achados de cadastros com os registros reais antes de criar ações de correção ou mesclagem. Consumo médio.
 4. Regenerar um snapshot da Loja 1 e conferir os alertas da Gaveta contra a tela operacional antes de adicionar ações assistidas de lembrete ou baixa retroativa. Consumo baixo.
+5. Validar visualmente o modal de casos em um alerta operacional real da Loja 1 e decidir os primeiros botões de correção dentro da OS. Consumo baixo.
 
 ## Ideias futuras
 

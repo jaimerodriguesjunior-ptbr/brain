@@ -291,6 +291,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os cards de atenção passaram a ocupar duas colunas em telas médias e grandes, mantendo uma coluna no celular.
 - Os textos narrativos da IA passaram a usar mais largura e fonte maior, reduzindo quebras excessivas sem alterar os cards de evidência.
 - O destaque das narrativas deixou de colorir números automaticamente: a IA agora pode marcar trechos críticos ou de atenção com marcadores semânticos, renderizados pelo frontend; os subtítulos dos módulos ganharam ícones Lucide.
+- Os conteúdos de cada módulo passaram a ser expansíveis pelos subtítulos e começam fechados, deixando a página inicial mais limpa.
 
 ## Problemas encontrados ou pendências
 

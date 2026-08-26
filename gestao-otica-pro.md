@@ -299,6 +299,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A Central ganhou o módulo diário “Cadastros”, voltado à faxina de uso do sistema: possíveis clientes duplicados por CPF, telefone ou nome normalizado; possíveis produtos duplicados por marca mais referência ou nome; produtos efetivamente vendidos nos últimos 90 dias sem custo positivo; e vendas ainda abertas há mais de sete dias.
 - Cada suspeita preserva apenas os IDs dos registros afetados como evidência; a IA recebe fatos estruturados e gera a leitura amigável do módulo, enquanto regras auditáveis mantêm a prioridade e impedem conclusões quando uma fonte não pôde ser consultada.
 - A tela passou a exibir “Cadastros” como quarto módulo expansível, com ícone próprio. O lifecycle diário evita repetir uma pendência estável sem mudança material.
+- Quando ainda não houver snapshot salvo, a varredura semanal informa que a primeira leitura será disponibilizada na próxima segunda-feira e a mensal informa que será disponibilizada no primeiro dia do próximo mês.
 
 ## Problemas encontrados ou pendências
 

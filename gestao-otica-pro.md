@@ -294,6 +294,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os conteúdos de cada módulo passaram a ser expansíveis pelos subtítulos e começam fechados, deixando a página inicial mais limpa.
 - Os controles de expansão receberam indicação visual explícita de abrir/fechar, seta mais visível e estado de hover para deixar a área clicável clara.
 - Corrigida a renderização dos controles: o estado de expansão existia, mas o subtítulo ainda era um cabeçalho estático. Agora cada subtítulo renderiza um botão funcional com “Abrir/Fechar”.
+- As cores das narrativas deixaram de ser escolhidas pela IA: ela relaciona o trecho a um `id` de alerta, e o frontend usa a prioridade auditável desse alerta para aplicar vermelho ou amarelo. O rótulo “Operação” também foi corrigido.
+- O alerta de montagem passou a dizer que a data da montagem local ainda não foi preenchida, evitando a ideia incorreta de que existiria um registro separado de atraso.
 
 ## Problemas encontrados ou pendências
 

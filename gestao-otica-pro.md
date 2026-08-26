@@ -292,6 +292,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os textos narrativos da IA passaram a usar mais largura e fonte maior, reduzindo quebras excessivas sem alterar os cards de evidência.
 - O destaque das narrativas deixou de colorir números automaticamente: a IA agora pode marcar trechos críticos ou de atenção com marcadores semânticos, renderizados pelo frontend; os subtítulos dos módulos ganharam ícones Lucide.
 - Os conteúdos de cada módulo passaram a ser expansíveis pelos subtítulos e começam fechados, deixando a página inicial mais limpa.
+- Os controles de expansão receberam indicação visual explícita de abrir/fechar, seta mais visível e estado de hover para deixar a área clicável clara.
 
 ## Problemas encontrados ou pendências
 

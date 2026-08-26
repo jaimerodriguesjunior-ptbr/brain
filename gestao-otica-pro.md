@@ -287,6 +287,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O resumo financeiro passou a ocultar a comparação anual quando o histórico não existe, e os números das narrativas e alertas receberam destaque visual conforme a prioridade.
 - Os cards de vendas e valores que entraram foram compactados, reduzindo aproximadamente 60% do espaço vertical entre as linhas.
 - Os mesmos cards receberam uma segunda compactação visual, reduzindo novamente o padding das linhas e do contêiner sem alterar os dados.
+- O título da seção de atenção passou a ser “Por favor dê atenção aos seguintes pontos:”, com orientação mais direta ao gerente.
 
 ## Problemas encontrados ou pendências
 

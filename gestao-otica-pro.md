@@ -369,6 +369,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O analisador foi validado em modo somente leitura com a Loja 1 para julho: identificou queda de uso da cobrança e ausência histórica em contas a pagar e importação de XML. Typecheck, testes do classificador e verificação visual do estado inicial mensal passaram.
 - O botão Refazer da aba Mensal agora permite, somente para a Loja 1, gerar uma prévia do mês corrente usando os diários disponíveis até a última referência. A prévia inclui alertas e sub-uso do programa, fica apenas na tela e não é gravada como snapshot oficial; o fechamento automático mensal continua reservado ao fim do mês.
 - Os textos fixos visíveis da Central de Pontos de Atenção e dos modais de operação, relacionamento e cadastros foram revisados para português brasileiro, incluindo tabelas, estados vazios, mensagens de erro, cards e ações de mesclagem. Identificadores e textos gerados pelo backend foram preservados.
+- O acesso a “Sub-uso do programa” foi incluído de forma discreta abaixo da versão na tela inicial da loja. Ele encaminha a Central para a aba Mensal; a confirmação por PIN e a prévia manual da Loja 1 continuam no fluxo protegido existente.
 
 ## Problemas encontrados ou pendências
 

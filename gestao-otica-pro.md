@@ -296,6 +296,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Corrigida a renderização dos controles: o estado de expansão existia, mas o subtítulo ainda era um cabeçalho estático. Agora cada subtítulo renderiza um botão funcional com “Abrir/Fechar”.
 - As cores das narrativas deixaram de ser escolhidas pela IA: ela relaciona o trecho a um `id` de alerta, e o frontend usa a prioridade auditável desse alerta para aplicar vermelho ou amarelo. O rótulo “Operação” também foi corrigido.
 - O alerta de montagem passou a dizer que a data da montagem local ainda não foi preenchida, evitando a ideia incorreta de que existiria um registro separado de atraso.
+- A Central ganhou o módulo diário “Cadastros”, voltado à faxina de uso do sistema: possíveis clientes duplicados por CPF, telefone ou nome normalizado; possíveis produtos duplicados por marca mais referência ou nome; produtos efetivamente vendidos nos últimos 90 dias sem custo positivo; e vendas ainda abertas há mais de sete dias.
+- Cada suspeita preserva apenas os IDs dos registros afetados como evidência; a IA recebe fatos estruturados e gera a leitura amigável do módulo, enquanto regras auditáveis mantêm a prioridade e impedem conclusões quando uma fonte não pôde ser consultada.
+- A tela passou a exibir “Cadastros” como quarto módulo expansível, com ícone próprio. O lifecycle diário evita repetir uma pendência estável sem mudança material.
 
 ## Problemas encontrados ou pendências
 
@@ -305,10 +308,12 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 1. Publicar e conferir o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
 2. Publicar o lote pendente `1.02.05` e conferir que a venda 124 não aparece mais no Radar. Consumo baixo.
+3. Regenerar um snapshot da Loja 1 e validar os primeiros achados de cadastros com os registros reais antes de criar ações de correção ou mesclagem. Consumo médio.
 
 ## Ideias futuras
 
 - Adicionar teste automatizado de contrato das consultas financeiras para impedir que `created_at` volte a ser usado como data de venda.
 
 - Criar teste de integração do Radar com uma venda cancelada que mantenha a OS histórica aberta.
+- Criar uma fila assistida de saneamento para revisar, descartar ou iniciar mesclagem de cada suspeita cadastral com confirmação e auditoria.
 

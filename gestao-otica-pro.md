@@ -285,6 +285,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O Radar Operacional passou a excluir OS de vendas canceladas ou devolvidas e OS cujo fluxo de laboratório já foi encerrado; o ajuste também cobre registros históricos, como a venda 124, sem alterar seus dados de auditoria.
 - A tela da Central foi renomeada para “Pontos de Atenção”; o cabeçalho deixou de exibir “Central Diária”, os períodos ficaram discretos junto à referência e a atualização passou a ser representada apenas pelo ícone.
 - O resumo financeiro passou a ocultar a comparação anual quando o histórico não existe, e os números das narrativas e alertas receberam destaque visual conforme a prioridade.
+- Os cards de vendas e valores que entraram foram compactados, reduzindo aproximadamente 60% do espaço vertical entre as linhas.
 
 ## Problemas encontrados ou pendências
 

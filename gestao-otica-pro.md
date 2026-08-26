@@ -313,15 +313,14 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Problemas encontrados ou pendências
 
-- A alteração ainda precisa ser publicada para aparecer no ambiente online.
 - A conferência visual dos novos modais com dados reais ficou bloqueada porque o grant do PIN de gerente havia expirado no navegador; nenhuma decisão cadastral real foi executada durante a validação.
 - O comando de lint não executa neste repositório porque a configuração atual do ESLint 9 falha ao serializar uma estrutura circular antes de analisar os arquivos.
 - Mesclagem em cascata de clientes ou produtos ainda não existe. Ela exige inventário de dependências, transação atômica, prévia e estratégia de reversão antes de ser liberada.
 
 ## Próximos passos
 
-1. Publicar e conferir o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
-2. Publicar o lote pendente `1.02.05` e conferir que a venda 124 não aparece mais no Radar. Consumo baixo.
+1. Conferir no ambiente publicado o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
+2. Conferir no ambiente publicado que a venda 124 não aparece mais no Radar. Consumo baixo.
 3. Validar visualmente os quatro fluxos cadastrais com PIN de gerente e dados reais, sem confirmar decisões de duplicidade durante o primeiro smoke test. Consumo baixo.
 4. Regenerar um snapshot da Loja 1 e conferir os alertas da Gaveta contra a tela operacional antes de adicionar ações assistidas de lembrete ou baixa retroativa. Consumo baixo.
 5. Validar visualmente o modal de casos em um alerta operacional real da Loja 1 e decidir os primeiros botões de correção dentro da OS. Consumo baixo.
@@ -367,7 +366,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A aba Mensal ganhou o botão “Sub-uso do programa”. O snapshot mensal passa a salvar uma análise determinística de funções desabilitadas, nunca utilizadas ou com queda forte contra a média dos três meses anteriores.
 - O modal de sub-uso organiza os cards em Atendimento e vendas, Operação e laboratório, Relacionamento, Financeiro e fiscal e Estoque e catálogo. Funções sem configuração ou registros suficientes ficam silenciosas; a IA não participa dessa leitura.
 - O analisador foi validado em modo somente leitura com a Loja 1 para julho: identificou queda de uso da cobrança e ausência histórica em contas a pagar e importação de XML. Typecheck, testes do classificador e verificação visual do estado inicial mensal passaram.
-- O botão Refazer da aba Mensal agora permite, somente para a Loja 1, gerar uma prévia do mês corrente usando os diários disponíveis até a última referência. A prévia inclui alertas e sub-uso do programa, fica apenas na tela e não é gravada como snapshot oficial; o fechamento automático mensal continua reservado ao fim do mês.
+- O botão Refazer da aba Mensal agora permite gerar uma prévia do mês corrente usando os diários disponíveis até a última referência. A prévia inclui alertas e sub-uso do programa, fica apenas na tela e não é gravada como snapshot oficial; o fechamento automático mensal continua reservado ao fim do mês.
 - Os textos fixos visíveis da Central de Pontos de Atenção e dos modais de operação, relacionamento e cadastros foram revisados para português brasileiro, incluindo tabelas, estados vazios, mensagens de erro, cards e ações de mesclagem. Identificadores e textos gerados pelo backend foram preservados.
 - O acesso discreto abaixo da versão na tela inicial da loja agora se chama “Pontos de Atenção”. Ele abre a Central no resumo diário e solicita o PIN de gerente antes de exibir qualquer dado; o Sub-uso do programa permanece dentro da leitura mensal. Marca, versão e acesso têm brilho independente no hover, sem alterar os demais itens do rodapé.
 - Quando um módulo diário não tiver mudança material, a Central passa a oferecer “Ver última atualização relevante”. O modal protegido pelo mesmo PIN percorre os snapshots diários salvos até encontrar o último alerta realmente exibido naquele módulo, em vez de mostrar apenas o relatório de ontem.
@@ -377,6 +376,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O cabeçalho de Pontos de Atenção passou a exibir “Pontos de Atenção (Beta)” e uma descrição da leitura noturna com a referência dinâmica do relatório; quando ainda não há relatório, mostra que a análise noturna não foi gerada.
 - O módulo Pontos de Atenção deixou de ser restrito à Loja 1: a prévia mensal pode ser refeita em qualquer loja autorizada e o job noturno percorre todas as lojas cadastradas, gerando snapshots isolados por loja.
 - O histórico pendente ganhou o destaque em caixa alta “IMPLEMENTAÇÃO DO MÓDULO PONTOS DE ATENÇÃO - A IA VASCULHA OS REGISTROS E AJUDA NA GESTÃO DA EMPRESA”.
+- A versão `1.02.05` foi publicada. O histórico foi corrigido depois do deploy para mover todos os itens pendentes para `RELEASE_HISTORY`, limpar `PENDING_RELEASE_VERSION` e manter a próxima versão sem abertura até uma nova alteração.
 
 ## Problemas encontrados ou pendências
 

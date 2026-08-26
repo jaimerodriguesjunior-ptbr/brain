@@ -375,6 +375,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O lifecycle de Cadastros deixou de silenciar pendências estáveis: grupos ainda existentes permanecem visíveis todos os dias até receberem mesclagem, decisão de manter separado ou adiamento. Financeiro, Operação e Relacionamento continuam usando a regra de não repetir casos sem mudança material.
 - O cabeçalho de Pontos de Atenção passou a ter o botão de retorno à Central de Operações no padrão das páginas operacionais. A frase “Por favor dê atenção aos seguintes pontos:” agora usa a cor amarela de atenção.
 - O cabeçalho de Pontos de Atenção passou a exibir “Pontos de Atenção (Beta)” e uma descrição da leitura noturna com a referência dinâmica do relatório; quando ainda não há relatório, mostra que a análise noturna não foi gerada.
+- O módulo Pontos de Atenção deixou de ser restrito à Loja 1: a prévia mensal pode ser refeita em qualquer loja autorizada e o job noturno percorre todas as lojas cadastradas, gerando snapshots isolados por loja.
+- O histórico pendente ganhou o destaque em caixa alta “IMPLEMENTAÇÃO DO MÓDULO PONTOS DE ATENÇÃO - A IA VASCULHA OS REGISTROS E AJUDA NA GESTÃO DA EMPRESA”.
 
 ## Problemas encontrados ou pendências
 

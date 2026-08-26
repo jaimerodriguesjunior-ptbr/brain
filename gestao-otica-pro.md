@@ -373,6 +373,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Quando um módulo diário não tiver mudança material, a Central passa a oferecer “Ver última atualização relevante”. O modal protegido pelo mesmo PIN percorre os snapshots diários salvos até encontrar o último alerta realmente exibido naquele módulo, em vez de mostrar apenas o relatório de ontem.
 - O atalho “Pontos de Atenção” da tela inicial passou a pulsar de forma discreta até ser aberto uma vez no dia. O controle é local por loja e usa o dia de São Paulo; no dia seguinte o lembrete volta sem registrar dado operacional.
 - O lifecycle de Cadastros deixou de silenciar pendências estáveis: grupos ainda existentes permanecem visíveis todos os dias até receberem mesclagem, decisão de manter separado ou adiamento. Financeiro, Operação e Relacionamento continuam usando a regra de não repetir casos sem mudança material.
+- O cabeçalho de Pontos de Atenção passou a ter o botão de retorno ao Painel no padrão das páginas operacionais. A frase “Por favor dê atenção aos seguintes pontos:” agora usa a cor amarela de atenção.
 
 ## Problemas encontrados ou pendências
 

@@ -335,3 +335,29 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Criar teste de integração do Radar com uma venda cancelada que mantenha a OS histórica aberta.
 - Evoluir a fila assistida para uma mesclagem em cascata com registro sobrevivente, prévia das referências movidas, transação atômica, idempotência e trilha de reversão.
 
+# Diário - 26/08/2026
+
+## O que foi feito
+
+- Corrigido o critério de possíveis produtos duplicados da Central: nome, marca e referência agora são analisados em conjunto.
+- A referência é comparada em formato compacto, portanto `RB 7195` e `RB7195` são equivalentes, mas `RB7195L` continua sendo outro produto.
+- Nome e marca aceitam apenas equivalência normalizada ou erro simples de digitação, como `Ray Ban` e `Ray Bam`, sempre dentro da mesma referência; ausência de referência só combina com outra ausência.
+- Atualizado o texto do alerta e do modal para explicar que a coincidência vem do conjunto dos três campos.
+- Criados testes para referências diferentes, referência ausente versus informada e variações apenas de espaços ou de um caractere. Typecheck e 17 testes da Central passaram.
+- Conferida a Loja 1 sem alterar dados: a nova regra encontrou 11 grupos e nenhum grupo envolveu produtos Ray Ban/Ray Bam.
+
+## Problemas encontrados ou pendências
+
+- A regra ainda depende da qualidade dos três campos cadastrados. Produtos sem referência só podem ser comparados com outros também sem referência, portanto podem continuar exigindo revisão humana quando o cadastro for incompleto.
+- A mesclagem de produtos e clientes permanece fora do fluxo atual, aguardando o inventário transacional das dependências.
+
+## Próximos passos
+
+1. Regenerar o snapshot da Loja 1 e conferir visualmente a nova fila de produtos duplicados no modal. Consumo baixo.
+2. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
+3. Mapear referências de clientes e produtos antes de permitir qualquer mesclagem. Consumo alto.
+
+## Ideias futuras
+
+- Exibir no modal quais dos três campos coincidiram literalmente e qual foi tratado como provável erro de digitação, antes de oferecer uma decisão ao gerente.
+

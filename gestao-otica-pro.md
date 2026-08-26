@@ -283,6 +283,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os sinais de relacionamento agora são classificados por data: ocorrência de ontem, acumulado do mês e histórico antigo. O alerta de tendência mensal só aparece ao atingir três sinais e o lifecycle impede a repetição diária de um caso já comunicado.
 - A Central ganhou snapshots semanais e mensais imutáveis, consolidados a partir dos relatórios diários. Os botões de período apenas consultam o último snapshot salvo; o job cria a varredura no fechamento da semana ou do mês.
 - O Radar Operacional passou a excluir OS de vendas canceladas ou devolvidas e OS cujo fluxo de laboratório já foi encerrado; o ajuste também cobre registros históricos, como a venda 124, sem alterar seus dados de auditoria.
+- A tela da Central foi renomeada para “Pontos de Atenção”; o cabeçalho deixou de exibir “Central Diária”, os períodos ficaram discretos junto à referência e a atualização passou a ser representada apenas pelo ícone.
+- O resumo financeiro passou a ocultar a comparação anual quando o histórico não existe, e os números das narrativas e alertas receberam destaque visual conforme a prioridade.
 
 ## Problemas encontrados ou pendências
 

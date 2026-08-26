@@ -345,17 +345,25 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Atualizado o texto do alerta e do modal para explicar que a coincidência vem do conjunto dos três campos.
 - Criados testes para referências diferentes, referência ausente versus informada e variações apenas de espaços ou de um caractere. Typecheck e 17 testes da Central passaram.
 - Conferida a Loja 1 sem alterar dados: a nova regra encontrou 11 grupos e nenhum grupo envolveu produtos Ray Ban/Ray Bam.
+- Implementado o passo 4 da deduplicação como prévia somente leitura. Em cada grupo, o gerente pode escolher qual cadastro seria o principal e consultar o impacto antes de qualquer mesclagem.
+- O backend valida novamente o grupo e contabiliza as 24 relações de clientes e as seis relações de produtos existentes no banco, incluindo vendas, OS, financeiro, avaliações, WhatsApp, Torre, variantes e movimentos de estoque.
+- A prévia mostra vínculos a transferir, dados que podem completar o cadastro principal, diferenças que exigem escolha e estoque resultante para produtos.
+- CPF, RG, nascimento, referência, código de barras e tipo de produto divergentes são tratados como bloqueadores. Duas ou mais carteiras de crédito também bloqueiam a futura execução até existir uma regra de consolidação.
+- A leitura real da Loja 1 foi validada sem exibir dados pessoais nem alterar registros: a primeira prévia de cliente encontrou dois vínculos e a primeira de produto encontrou três. Typecheck e 20 testes passaram.
 
 ## Problemas encontrados ou pendências
 
 - A regra ainda depende da qualidade dos três campos cadastrados. Produtos sem referência só podem ser comparados com outros também sem referência, portanto podem continuar exigindo revisão humana quando o cadastro for incompleto.
 - A mesclagem de produtos e clientes permanece fora do fluxo atual, aguardando o inventário transacional das dependências.
+- A validação visual da prévia ficou bloqueada pelo vencimento do PIN de gerente no navegador. A API e a leitura real do banco foram validadas, mas o modal ainda precisa de smoke test autenticado.
+- O passo 4 não executa mesclagem. A operação atômica, idempotência, auditoria completa e estratégia de reversão pertencem ao passo 5.
 
 ## Próximos passos
 
 1. Regenerar o snapshot da Loja 1 e conferir visualmente a nova fila de produtos duplicados no modal. Consumo baixo.
 2. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
-3. Mapear referências de clientes e produtos antes de permitir qualquer mesclagem. Consumo alto.
+3. Validar visualmente a prévia com PIN de gerente em um grupo de cliente e um de produto, sem executar decisões. Consumo baixo.
+4. Projetar e implementar a execução transacional da mesclagem usando o mapa do passo 4, começando pelos casos sem bloqueadores. Consumo alto.
 
 ## Ideias futuras
 

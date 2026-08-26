@@ -293,6 +293,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O destaque das narrativas deixou de colorir números automaticamente: a IA agora pode marcar trechos críticos ou de atenção com marcadores semânticos, renderizados pelo frontend; os subtítulos dos módulos ganharam ícones Lucide.
 - Os conteúdos de cada módulo passaram a ser expansíveis pelos subtítulos e começam fechados, deixando a página inicial mais limpa.
 - Os controles de expansão receberam indicação visual explícita de abrir/fechar, seta mais visível e estado de hover para deixar a área clicável clara.
+- Corrigida a renderização dos controles: o estado de expansão existia, mas o subtítulo ainda era um cabeçalho estático. Agora cada subtítulo renderiza um botão funcional com “Abrir/Fechar”.
 
 ## Problemas encontrados ou pendências
 

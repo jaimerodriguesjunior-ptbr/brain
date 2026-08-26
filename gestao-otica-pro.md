@@ -300,6 +300,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Cada suspeita preserva apenas os IDs dos registros afetados como evidência; a IA recebe fatos estruturados e gera a leitura amigável do módulo, enquanto regras auditáveis mantêm a prioridade e impedem conclusões quando uma fonte não pôde ser consultada.
 - A tela passou a exibir “Cadastros” como quarto módulo expansível, com ícone próprio. O lifecycle diário evita repetir uma pendência estável sem mudança material.
 - Quando ainda não houver snapshot salvo, a varredura semanal informa que a primeira leitura será disponibilizada na próxima segunda-feira e a mensal informa que será disponibilizada no primeiro dia do próximo mês.
+- A operação passou a analisar a Gaveta pela data de montagem (`dt_montado_em`), e não pela chegada da lente. Óculos montados, sem entrega e parados por mais de sete dias geram atenção; acima de 30 dias são críticos por possível abandono ou baixa de entrega esquecida.
+- A leitura também separa os casos sem telefone válido e os casos com telefone, mas sem aviso de retirada enviado pelo botão da Gaveta registrado em `whatsapp_outbound_messages`. Isso indica lacuna de registro, não prova que o cliente não foi avisado.
 
 ## Problemas encontrados ou pendências
 
@@ -310,6 +312,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 1. Publicar e conferir o comparativo da Central com uma venda aberta em um dia e fechada em outro. Consumo baixo.
 2. Publicar o lote pendente `1.02.05` e conferir que a venda 124 não aparece mais no Radar. Consumo baixo.
 3. Regenerar um snapshot da Loja 1 e validar os primeiros achados de cadastros com os registros reais antes de criar ações de correção ou mesclagem. Consumo médio.
+4. Regenerar um snapshot da Loja 1 e conferir os alertas da Gaveta contra a tela operacional antes de adicionar ações assistidas de lembrete ou baixa retroativa. Consumo baixo.
 
 ## Ideias futuras
 

@@ -363,20 +363,26 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A auditoria da mesclagem passou a preservar também o estado final do cadastro principal. A migration `20260826120000_daily_health_merge_recovery.sql` foi aplicada isoladamente; as funções de mesclar e desfazer foram confirmadas como `security definer`, acessíveis somente pelo `service_role`.
 - Typecheck, verificação de diff e os dez testes específicos de deduplicação e recuperação passaram. O banco permaneceu com zero eventos reais de mesclagem ou recuperação durante a implantação.
 - O modal foi validado visualmente no localhost com PIN de gerente: histórico, estado vazio, códigos, coincidências e cards permaneceram alinhados. O indicador vermelho observado pertence a uma extensão do Chrome; não houve erro de console originado pelo localhost.
+- A primeira mesclagem real de clientes foi executada, conferida diretamente no banco e desfeita pelo histórico. O cadastro secundário, os dados complementados e o vínculo de dependente foram restaurados corretamente; mesclagem e reversão permaneceram auditadas.
+- A aba Mensal ganhou o botão “Sub-uso do programa”. O snapshot mensal passa a salvar uma análise determinística de funções desabilitadas, nunca utilizadas ou com queda forte contra a média dos três meses anteriores.
+- O modal de sub-uso organiza os cards em Atendimento e vendas, Operação e laboratório, Relacionamento, Financeiro e fiscal e Estoque e catálogo. Funções sem configuração ou registros suficientes ficam silenciosas; a IA não participa dessa leitura.
+- O analisador foi validado em modo somente leitura com a Loja 1 para julho: identificou queda de uso da cobrança e ausência histórica em contas a pagar e importação de XML. Typecheck, testes do classificador e verificação visual do estado inicial mensal passaram.
 
 ## Problemas encontrados ou pendências
 
 - A regra ainda depende da qualidade dos três campos cadastrados. Produtos sem referência só podem ser comparados com outros também sem referência, portanto podem continuar exigindo revisão humana quando o cadastro for incompleto.
-- Nenhuma mesclagem real foi executada durante a implementação. O primeiro uso precisa ser acompanhado em um grupo de baixo risco, conferindo o cadastro principal e o evento de auditoria logo depois.
+- A Loja 1 ainda não possui snapshot mensal salvo; por isso o modal mostra o estado inicial até o fechamento do primeiro período mensal após esta implementação.
 
 ## Próximos passos
 
-1. Executar a primeira mesclagem acompanhada em um grupo de baixo risco, conferir vínculos e auditoria, e então testar o desfazer no mesmo caso. Consumo médio.
-2. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
-3. Regenerar o snapshot da Loja 1 depois do teste de mesclar e desfazer para confirmar a volta do grupo à fila. Consumo baixo.
-4. Avaliar casos bloqueadores individualmente antes de criar qualquer regra adicional de consolidação. Consumo alto.
+1. Gerar o primeiro snapshot mensal com a análise de sub-uso e conferir os cards da Loja 1 no modal. Consumo baixo.
+2. Calibrar os limites de pouco uso depois de comparar os primeiros resultados mensais de lojas com perfis diferentes. Consumo médio.
+3. Validar alguns grupos reais de produtos para calibrar se o limite de um caractere para nome e marca está conservador o suficiente. Consumo baixo.
+4. Regenerar o snapshot diário da Loja 1 para confirmar que o grupo restaurado voltou à fila de duplicidades. Consumo baixo.
+5. Avaliar casos bloqueadores individualmente antes de criar qualquer regra adicional de consolidação. Consumo alto.
 
 ## Ideias futuras
 
 - Exibir no modal quais dos três campos coincidiram literalmente e qual foi tratado como provável erro de digitação, antes de oferecer uma decisão ao gerente.
+- Criar dicas contextuais opcionais dentro de cada página para ensinar recursos pequenos, como copiar grau, busca universal e consulta de XML, sem misturá-los à leitura gerencial mensal.
 

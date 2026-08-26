@@ -374,6 +374,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O atalho “Pontos de Atenção” da tela inicial passou a pulsar de forma discreta até ser aberto uma vez no dia. O controle é local por loja e usa o dia de São Paulo; no dia seguinte o lembrete volta sem registrar dado operacional.
 - O lifecycle de Cadastros deixou de silenciar pendências estáveis: grupos ainda existentes permanecem visíveis todos os dias até receberem mesclagem, decisão de manter separado ou adiamento. Financeiro, Operação e Relacionamento continuam usando a regra de não repetir casos sem mudança material.
 - O cabeçalho de Pontos de Atenção passou a ter o botão de retorno à Central de Operações no padrão das páginas operacionais. A frase “Por favor dê atenção aos seguintes pontos:” agora usa a cor amarela de atenção.
+- O cabeçalho de Pontos de Atenção passou a exibir “Pontos de Atenção (Beta)” e uma descrição da leitura noturna com a referência dinâmica do relatório; quando ainda não há relatório, mostra que a análise noturna não foi gerada.
 
 ## Problemas encontrados ou pendências
 

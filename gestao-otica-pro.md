@@ -396,3 +396,29 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Exibir no modal quais dos três campos coincidiram literalmente e qual foi tratado como provável erro de digitação, antes de oferecer uma decisão ao gerente.
 - Criar dicas contextuais opcionais dentro de cada página para ensinar recursos pequenos, como copiar grau, busca universal e consulta de XML, sem misturá-los à leitura gerencial mensal.
 
+# Diário - 27/08/2026
+
+## O que foi feito
+
+- A integração Pix Sicredi da branch `feature/integracao-pix-sicredi` foi migrada internamente de homologação para produção; não foi adicionada nenhuma escolha de ambiente à interface.
+- O cliente Sicredi agora exige as variáveis `SICREDI_PIX_PROD_*`, valida o endpoint oficial de produção e utiliza as mesmas credenciais em criação, consulta, cancelamento, recuperação e baixa de cobranças de parcelas e do PDV Express.
+- A liberação operacional permaneceu dupla: somente o CNPJ da Ótica Ocular e uma loja com `pix_provider = sicredi` podem acionar a integração.
+- O prazo de cobrança do PDV Express passou a respeitar a mesma configuração de produção já usada nas parcelas.
+- O teste de contrato, o typecheck e a autenticação OAuth mTLS em produção passaram. A autenticação retornou os escopos de cobrança e Pix; nenhuma cobrança de produção foi criada neste trabalho.
+- A próxima versão pendente foi aberta como `1.02.06` com a migração da integração Sicredi para produção.
+
+## Problemas encontrados ou pendências
+
+- Os certificados ficam em pasta local ignorada pelo Git. Para o deploy, eles não podem depender de caminhos do computador; será necessário definir armazenamento seguro para os PEMs no ambiente de execução antes de publicar a integração.
+- Ainda falta o primeiro teste financeiro controlado em produção com valor mínimo, em venda criada exclusivamente para esse fim.
+
+## Próximos passos
+
+1. Definir a estratégia segura de certificados no ambiente de deploy e configurar as variáveis de produção no provedor de hospedagem, sem versionar segredos. Consumo médio.
+2. Fazer um smoke test de produção com cobrança de valor mínimo e conta própria, confirmando QR Code, pagamento, webhook ou consulta, baixa automática e recibo. Consumo médio.
+3. Revisar a tela de status depois do primeiro pagamento confirmado em produção. Consumo baixo.
+
+## Ideias futuras
+
+- Evoluir a configuração de credenciais para suportar provedores Pix por loja por meio de um cofre de segredos, sem expor uma credencial de uma loja a outra.
+

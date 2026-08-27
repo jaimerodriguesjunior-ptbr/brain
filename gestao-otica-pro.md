@@ -406,15 +406,16 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O prazo de cobrança do PDV Express passou a respeitar a mesma configuração de produção já usada nas parcelas.
 - O teste de contrato, o typecheck e a autenticação OAuth mTLS em produção passaram. A autenticação retornou os escopos de cobrança e Pix; nenhuma cobrança de produção foi criada neste trabalho.
 - A próxima versão pendente foi aberta como `1.02.06` com a migração da integração Sicredi para produção.
+- O cliente Pix Sicredi passou a aceitar certificado, chave privada e cadeia em PEM codificados em Base64 para o ambiente hospedado, mantendo arquivos locais apenas como fallback de desenvolvimento. Nenhum segredo foi registrado no repositório.
 
 ## Problemas encontrados ou pendências
 
-- Os certificados ficam em pasta local ignorada pelo Git. Para o deploy, eles não podem depender de caminhos do computador; será necessário definir armazenamento seguro para os PEMs no ambiente de execução antes de publicar a integração.
+- Os três segredos Base64 dos PEMs ainda precisam ser configurados no ambiente de produção da Vercel e aplicados por um novo deploy; caminhos locais não funcionam na função hospedada.
 - Ainda falta o primeiro teste financeiro controlado em produção com valor mínimo, em venda criada exclusivamente para esse fim.
 
 ## Próximos passos
 
-1. Definir a estratégia segura de certificados no ambiente de deploy e configurar as variáveis de produção no provedor de hospedagem, sem versionar segredos. Consumo médio.
+1. Configurar os três segredos Base64 dos PEMs no ambiente Production da Vercel e fazer um novo deploy, sem versionar segredos. Consumo baixo.
 2. Fazer um smoke test de produção com cobrança de valor mínimo e conta própria, confirmando QR Code, pagamento, webhook ou consulta, baixa automática e recibo. Consumo médio.
 3. Revisar a tela de status depois do primeiro pagamento confirmado em produção. Consumo baixo.
 

@@ -407,6 +407,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O teste de contrato, o typecheck e a autenticação OAuth mTLS em produção passaram. A autenticação retornou os escopos de cobrança e Pix; nenhuma cobrança de produção foi criada neste trabalho.
 - A próxima versão pendente foi aberta como `1.02.06` com a migração da integração Sicredi para produção.
 - O cliente Pix Sicredi passou a aceitar certificado, chave privada e cadeia em PEM codificados em Base64 para o ambiente hospedado, mantendo arquivos locais apenas como fallback de desenvolvimento. Nenhum segredo foi registrado no repositório.
+- A baixa confirmada de uma parcela via consulta Sicredi agora encontra os pagamentos vinculados, abre o recibo automaticamente, atualiza o financeiro e fecha o modal Pix. A tabela de contas a receber mostra “Pix Sicredi” abaixo do valor recebido, sem afirmar que uma parcela parcialmente paga foi quitada.
 
 ## Problemas encontrados ou pendências
 

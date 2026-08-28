@@ -452,18 +452,27 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O estado de erro de uma cobrança Pix passou a explicar que o sistema irá conferir se o QR Code chegou a existir. O botão agora se chama “Conferir situação do QR Code” e, após a verificação, informa explicitamente quando o operador já pode gerar uma nova cobrança.
 - O botão que consulta o Sicredi para confirmar uma cobrança pendente passou a se chamar “Conferir pagamento”, incluindo a orientação exibida quando a confirmação já ocorreu, mas a baixa precisa ser reprocessada.
 - Corrigida a baixa de recebimentos Pix sucessivos na mesma parcela. O índice de idempotência do PDV estava alcançando também pagamentos parcelados e bloqueou uma segunda baixa válida; a migration `20260828100000_scope_pix_sale_payment_uniqueness.sql` restringiu a proteção aos pagamentos diretos da venda e foi aplicada no banco remoto.
+- A auditoria confirmou que as cobranças reais de R$ 1,00 e R$ 9,00 ficaram `PAID` e `COMPLETED`, sem inconsistência financeira aberta. A migration `20260818150000_sicredi_pix_sale_charges.sql` foi aplicada manualmente e a tabela `pix_sale_charges` foi confirmada em leitura com seus cinco índices.
+- A criação de Pix de parcela e de venda passou a bloquear uma nova emissão quando a cobrança mais recente está paga com baixa pendente ou em estado de erro. Cobranças já marcadas como `PAID` podem concluir a baixa diretamente, sem depender de nova consulta ao Sicredi.
+- A expiração local agora atualiza somente cobranças ainda `PENDING` e relê o estado quando uma confirmação concorrente vence a disputa. A liberação de uma cobrança com erro e HTTP 404 passou a exigir duas consultas separadas por pelo menos 30 segundos.
+- O carnê da venda passou a usar as mesmas ações dinâmicas da lista de parcelas. O modal Pix da venda experimental ganhou carregamento explícito, reemissão após cobrança encerrada e o contexto `sale:` foi aceito na autorização por PIN.
+- A versão pendente permaneceu em `1.02.06`. Typecheck, 3 testes de contrato Pix, 15 testes de saldo/apresentação, `git diff --check` e o build de produção passaram.
 
 ## Problemas encontrados ou pendências
 
 - A versão `1.02.06` continua aguardando o próximo deploy; a lista ainda será consolidada antes da publicação.
-- Uma cobrança já confirmada pelo Sicredi permanece marcada para reprocessamento e deve ter a baixa concluída pelo botão “Conferir pagamento” após a publicação desta correção.
+- A autenticação do webhook Sicredi e a restrição da rota de impressão de recibos continuam pendentes de uma decisão de contrato e de escopo; não foram alteradas neste lote.
+- O ESLint não iniciou a análise por uma falha circular da configuração atual (`Converting circular structure to JSON`); typecheck e build não apresentaram erros.
 
 ## Próximos passos
 
-1. Reprocessar a cobrança confirmada pelo botão “Conferir pagamento” e conferir parcela, pagamento e recibo. Consumo baixo.
-2. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
+1. Testar manualmente o botão Pix na venda experimental: abrir modal, informar PIN, gerar QR Code e cancelar uma cobrança de teste não paga. Consumo baixo.
+2. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
+3. Definir a autenticação compatível com o contrato do webhook Sicredi e proteger a rota de impressão por sessão e loja. Consumo médio.
+4. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
 
 ## Ideias futuras
 
 - Manter o histórico de versões focado em funcionalidades e correções percebidas pelo usuário, deixando detalhes técnicos na documentação interna.
+- Extrair a autenticação e a conciliação dos fluxos Pix de parcela e venda para utilitários compartilhados, reduzindo diferenças futuras entre os dois caminhos.
 

@@ -412,6 +412,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O recebimento Pix de parcelas passou a compartilhar com a baixa manual o cálculo de principal e juros, a escolha entre manter o saldo ou transferi-lo à próxima parcela e a amortização automática das parcelas seguintes. Antes de criar o QR Code, o servidor bloqueia valores que ultrapassem todo o saldo ainda alocável no carnê.
 - O login agora remove a preferência temporária de versão desktop depois de autenticar. Em celulares, cada novo acesso volta a permitir o redirecionamento automático ao menu tablet; o desktop não é afetado pela regra de toque e largura.
 - Após uma baixa Pix parcial, a cobrança já paga permanece somente como histórico: ao reabrir a parcela, o modal passa a iniciar uma nova emissão com o saldo restante. O atendimento recarrega as parcelas do cliente na mesma sessão e a listagem de contas a receber calcula “A receber” pelos pagamentos e ajustes atuais, em vez do snapshot anterior à primeira baixa.
+- Corrigida a escolha de transferir o saldo de uma baixa Pix parcial: a busca de parcelas preserva o financiamento e o modal usa a indicação de próxima parcela pendente calculada no servidor, sem misturar carnês do mesmo cliente.
 
 ## Problemas encontrados ou pendências
 

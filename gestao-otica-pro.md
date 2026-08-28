@@ -444,6 +444,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## O que foi feito
 
 - O changelog pendente da versão `1.02.06` foi revisado para não expor restaurações internas ou detalhes temporários que não fazem parte da comunicação ao usuário.
+- O aviso histórico exibido ao reabrir uma parcela com Pix já baixado foi removido; o modal continua iniciando uma nova cobrança pelo saldo restante.
 
 ## Problemas encontrados ou pendências
 

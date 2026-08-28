@@ -450,14 +450,17 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A Vercel publicou com sucesso o commit `268c964` pela integração Git. Por solicitação expressa, a versão pendente `1.02.06` e seu changelog não foram fechados ou alterados neste deploy.
 - O estado de erro de uma cobrança Pix passou a explicar que o sistema irá conferir se o QR Code chegou a existir. O botão agora se chama “Conferir situação do QR Code” e, após a verificação, informa explicitamente quando o operador já pode gerar uma nova cobrança.
 - O botão que consulta o Sicredi para confirmar uma cobrança pendente passou a se chamar “Conferir pagamento”, incluindo a orientação exibida quando a confirmação já ocorreu, mas a baixa precisa ser reprocessada.
+- Corrigida a baixa de recebimentos Pix sucessivos na mesma parcela. O índice de idempotência do PDV estava alcançando também pagamentos parcelados e bloqueou uma segunda baixa válida; a migration `20260828100000_scope_pix_sale_payment_uniqueness.sql` restringiu a proteção aos pagamentos diretos da venda e foi aplicada no banco remoto.
 
 ## Problemas encontrados ou pendências
 
 - A versão `1.02.06` continua aguardando o próximo deploy; a lista ainda será consolidada antes da publicação.
+- Uma cobrança já confirmada pelo Sicredi permanece marcada para reprocessamento e deve ter a baixa concluída pelo botão “Conferir pagamento” após a publicação desta correção.
 
 ## Próximos passos
 
-1. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
+1. Reprocessar a cobrança confirmada pelo botão “Conferir pagamento” e conferir parcela, pagamento e recibo. Consumo baixo.
+2. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
 
 ## Ideias futuras
 

@@ -410,16 +410,19 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A baixa confirmada de uma parcela via consulta Sicredi agora encontra os pagamentos vinculados, abre o recibo automaticamente, atualiza o financeiro e fecha o modal Pix. A tabela de contas a receber mostra “Pix Sicredi” abaixo do valor recebido, sem afirmar que uma parcela parcialmente paga foi quitada.
 - O primeiro teste financeiro controlado em produção foi concluído com uma cobrança de R$ 1,00: o QR Code foi pago na conta correta e a consulta confirmou “Pago e baixado”.
 - O recebimento Pix de parcelas passou a compartilhar com a baixa manual o cálculo de principal e juros, a escolha entre manter o saldo ou transferi-lo à próxima parcela e a amortização automática das parcelas seguintes. Antes de criar o QR Code, o servidor bloqueia valores que ultrapassem todo o saldo ainda alocável no carnê.
+- O login agora remove a preferência temporária de versão desktop depois de autenticar. Em celulares, cada novo acesso volta a permitir o redirecionamento automático ao menu tablet; o desktop não é afetado pela regra de toque e largura.
 
 ## Problemas encontrados ou pendências
 
 - Ainda falta validar visualmente, em um novo cenário controlado, as duas escolhas de pagamento parcial e a amortização de um valor superior ao saldo da parcela.
+- O card e a rota do Modo Maquininha Pix ainda aparecem para lojas do mesmo tenant sem Sicredi. A criação de cobranças já é bloqueada, mas a interface, a página e a API de exibição ainda precisam da mesma trava.
 
 ## Próximos passos
 
-1. Testar uma baixa Pix parcial mantendo o restante na parcela atual. Consumo baixo.
-2. Testar uma baixa Pix parcial transferindo o restante para a próxima parcela. Consumo baixo.
-3. Testar uma cobrança superior ao saldo da parcela, mas dentro do saldo total do carnê, e conferir a amortização das parcelas seguintes. Consumo médio.
+1. Restringir card, rota e API do Modo Maquininha Pix somente à Ótica Ocular com Sicredi habilitado. Consumo baixo.
+2. Testar uma baixa Pix parcial mantendo o restante na parcela atual. Consumo baixo.
+3. Testar uma baixa Pix parcial transferindo o restante para a próxima parcela. Consumo baixo.
+4. Testar uma cobrança superior ao saldo da parcela, mas dentro do saldo total do carnê, e conferir a amortização das parcelas seguintes. Consumo médio.
 
 ## Ideias futuras
 

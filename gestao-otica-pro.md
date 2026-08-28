@@ -456,19 +456,20 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A criação de Pix de parcela e de venda passou a bloquear uma nova emissão quando a cobrança mais recente está paga com baixa pendente ou em estado de erro. Cobranças já marcadas como `PAID` podem concluir a baixa diretamente, sem depender de nova consulta ao Sicredi.
 - A expiração local agora atualiza somente cobranças ainda `PENDING` e relê o estado quando uma confirmação concorrente vence a disputa. A liberação de uma cobrança com erro e HTTP 404 passou a exigir duas consultas separadas por pelo menos 30 segundos.
 - O carnê da venda passou a usar as mesmas ações dinâmicas da lista de parcelas. O modal Pix da venda experimental ganhou carregamento explícito, reemissão após cobrança encerrada e o contexto `sale:` foi aceito na autorização por PIN.
+- A rota de impressão de recibos passou a exigir sessão válida e restringir os pagamentos à empresa e à loja autorizadas. O fallback que interpretava um ID de pagamento inexistente como código de venda foi removido.
 - A versão pendente permaneceu em `1.02.06`. Typecheck, 3 testes de contrato Pix, 15 testes de saldo/apresentação, `git diff --check` e o build de produção passaram.
 
 ## Problemas encontrados ou pendências
 
 - A versão `1.02.06` continua aguardando o próximo deploy; a lista ainda será consolidada antes da publicação.
-- A autenticação do webhook Sicredi e a restrição da rota de impressão de recibos continuam pendentes de uma decisão de contrato e de escopo; não foram alteradas neste lote.
+- A autenticação do webhook Sicredi continua pendente de uma decisão compatível com o contrato aceito pelo provedor; não foi alterada neste lote.
 - O ESLint não iniciou a análise por uma falha circular da configuração atual (`Converting circular structure to JSON`); typecheck e build não apresentaram erros.
 
 ## Próximos passos
 
 1. Testar manualmente o botão Pix na venda experimental: abrir modal, informar PIN, gerar QR Code e cancelar uma cobrança de teste não paga. Consumo baixo.
 2. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
-3. Definir a autenticação compatível com o contrato do webhook Sicredi e proteger a rota de impressão por sessão e loja. Consumo médio.
+3. Definir a autenticação compatível com o contrato do webhook Sicredi. Consumo médio.
 4. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
 
 ## Ideias futuras

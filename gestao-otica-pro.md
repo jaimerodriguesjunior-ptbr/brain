@@ -411,7 +411,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O primeiro teste financeiro controlado em produção foi concluído com uma cobrança de R$ 1,00: o QR Code foi pago na conta correta e a consulta confirmou “Pago e baixado”.
 - O recebimento Pix de parcelas passou a compartilhar com a baixa manual o cálculo de principal e juros, a escolha entre manter o saldo ou transferi-lo à próxima parcela e a amortização automática das parcelas seguintes. Antes de criar o QR Code, o servidor bloqueia valores que ultrapassem todo o saldo ainda alocável no carnê.
 - O login agora remove a preferência temporária de versão desktop depois de autenticar. Em celulares, cada novo acesso volta a permitir o redirecionamento automático ao menu tablet; o desktop não é afetado pela regra de toque e largura.
-- Após uma baixa Pix parcial, a cobrança já paga permanece somente como histórico: ao reabrir a parcela, o modal passa a iniciar uma nova emissão com o saldo restante. A listagem de contas a receber também passou a calcular “A receber” pelos pagamentos e ajustes atuais, em vez do snapshot anterior à primeira baixa.
+- Após uma baixa Pix parcial, a cobrança já paga permanece somente como histórico: ao reabrir a parcela, o modal passa a iniciar uma nova emissão com o saldo restante. O atendimento recarrega as parcelas do cliente na mesma sessão e a listagem de contas a receber calcula “A receber” pelos pagamentos e ajustes atuais, em vez do snapshot anterior à primeira baixa.
 
 ## Problemas encontrados ou pendências
 

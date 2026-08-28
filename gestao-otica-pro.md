@@ -464,6 +464,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A versão `1.02.06` foi fechada e publicada pela integração Git/Vercel no commit `1003e07`. O status remoto confirmou a conclusão do deploy; a lista pendente foi limpa e o próximo lote deverá abrir `1.02.07`.
 - Localmente, antes de uma nova publicação, a venda experimental passou a destacar uma cobrança Pix ainda ativa diretamente na área de pagamentos, com a ação “Acompanhar pagamento”. Ao escolher Pix Sicredi em “Novo pagamento”, o formulário identifica a cobrança ativa, fixa o valor correspondente e troca a ação para “Acompanhar Pix existente”, evitando que um valor digitado para um novo QR Code pareça ser usado na cobrança anterior. Essa correção permanece sem versão pendente por solicitação do usuário.
 - A correção de retomada da cobrança Pix foi publicada no commit `987ccc9`; a Vercel confirmou o deploy de produção como pronto. Por solicitação expressa, o histórico e a versão exibida não foram alterados: não há versão pendente aberta.
+- Regra financeira confirmada e documentada no README: o carnê assinado substitui o saldo da venda pelo valor financiado. A venda deve ficar com saldo zero quando pagamentos diretos mais o carnê cobrem seu total; parcelas pagas não podem ser somadas novamente como pagamentos diretos. Um novo Pix direto após carnê integral assinado só poderia ocorrer se o acordo do carnê fosse previamente ajustado de modo auditável.
 
 ## Problemas encontrados ou pendências
 
@@ -473,10 +474,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Validar visualmente a retomada de uma cobrança Pix ativa na venda experimental, tanto pelo atalho “Acompanhar pagamento” quanto por “Novo pagamento”. Consumo baixo.
-2. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
-3. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
-4. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
+1. Corrigir o recálculo de saldo para não deduzir pagamentos de parcela como pagamento direto e bloquear Pix direto quando o carnê já cobre integralmente a venda. Consumo médio.
+2. Validar visualmente a retomada de uma cobrança Pix ativa na venda experimental, tanto pelo atalho “Acompanhar pagamento” quanto por “Novo pagamento”. Consumo baixo.
+3. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
+4. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
+5. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
 
 ## Ideias futuras
 

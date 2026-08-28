@@ -439,3 +439,21 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Evoluir a configuração de credenciais para suportar provedores Pix por loja por meio de um cofre de segredos, sem expor uma credencial de uma loja a outra.
 
+# Diário - 28/08/2026
+
+## O que foi feito
+
+- O changelog pendente da versão `1.02.06` foi revisado para não expor restaurações internas ou detalhes temporários que não fazem parte da comunicação ao usuário.
+
+## Problemas encontrados ou pendências
+
+- A versão `1.02.06` continua aguardando o próximo deploy; a lista ainda será consolidada antes da publicação.
+
+## Próximos passos
+
+1. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
+
+## Ideias futuras
+
+- Manter o histórico de versões focado em funcionalidades e correções percebidas pelo usuário, deixando detalhes técnicos na documentação interna.
+

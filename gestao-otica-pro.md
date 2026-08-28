@@ -472,6 +472,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O Modo Maquininha Pix passou a manter na fila QR Codes recentes por 30 minutos durante os testes, sem alterar a validade bancária da cobrança. Se a leitura da fila falhar, a tela agora informa a falha e continua tentando a cada dois segundos, em vez de exibir “Aguardando Pix” como se não houvesse cobrança. A API também passou a devolver erro quando uma das consultas ao banco falha. A regra de versionamento foi documentada no README: correções de implementação ainda não publicada ou sem usuários não abrem versão nem alteram o histórico; o commit corretivo `abc11ed` foi enviado para preservar a exibição em `1.02.06`.
 - A primeira porta de PIN da maquininha foi publicada, mas o tablet continuou piscando porque a página ainda estava aninhada em dois layouts de `/dashboard` que redirecionam usuários sem sessão antes de renderizar o PIN. A correção local moveu o acesso do tablet para `/tablet/[storeId]/pix-maquininha`, fora da árvore autenticada, preservou a rota do desktop e manteve o cookie HTTP-only assinado por loja. O link também deixou de fazer prefetch da rota. Typecheck, teste de contrato Pix e `git diff --check` passaram; a correção aguarda publicação.
 - A UX de Pix Sicredi da Venda Express foi alinhada à Venda Experimental: a ação passou a comunicar “Gerar Pix da venda” e os campos que não participam da cobrança ficam ocultos. Apenas na Venda Express, um QR Code pendente impede fechar o fluxo sem escolha explícita: para voltar ao carrinho, o operador confirma o cancelamento, informa o PIN, cancela a cobrança no Sicredi e descarta a venda provisória sem pagamentos. A Venda Experimental e as parcelas permanecem livres para manter cobranças abertas. Typecheck, teste de contrato Pix e `git diff --check` passaram; não há versão pendente.
+- A venda de teste 13547 da loja 2 foi removida diretamente do banco, a pedido do usuário. A transação excluiu o item, a cobrança Pix, o registro técnico de criação Pix Express e a venda; a verificação posterior confirmou zero referências em pagamentos, carnês, estoque, comissões ou operações de recebimento. O cliente compartilhado não foi removido.
 
 ## Problemas encontrados ou pendências
 
@@ -481,8 +482,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Validar visualmente, na venda experimental com um Pix já pago, que “Gerar Pix da venda” cria um QR novo (não reabre o antigo) e que o aviso “Pix aguardando pagamento” aparece ao sair do modal, inclusive após F5. Consumo baixo.
-2. Validar visualmente na venda de teste que o rodapé mostra “Pago/Sinal R$ 1,00” e “A receber -R$ 1,00”, enquanto o carnê continua mostrando sua primeira parcela paga. Consumo baixo.
+1. Criar uma nova venda de teste, se necessário, para validar visualmente que “Gerar Pix da venda” cria um QR novo (não reabre o antigo) e que o aviso “Pix aguardando pagamento” aparece ao sair do modal, inclusive após F5. A venda 13547 não está mais disponível. Consumo baixo.
+2. Validar em uma nova venda de teste que o rodapé soma somente pagamentos diretos em “Pago/Sinal”, sem incluir recebimentos de parcelas. Consumo baixo.
 3. Validar visualmente a retomada de uma cobrança Pix ativa na venda experimental, tanto pelo atalho “Acompanhar pagamento” quanto por “Novo pagamento”. Consumo baixo.
 4. Validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
 5. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.

@@ -447,6 +447,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O aviso histórico exibido ao reabrir uma parcela com Pix já baixado foi removido; o modal continua iniciando uma nova cobrança pelo saldo restante.
 - Uma tentativa controlada de emissão recebeu timeout durante a autenticação mTLS no Sicredi, antes da criação remota da cobrança. A autenticação foi repetida localmente e respondeu normalmente; a emissão pode ser tentada novamente sem risco de baixa ou QR duplicado daquela falha.
 - A emissão passou a validar a autenticação do Sicredi antes de reservar ou enviar a cobrança. Timeout, falha de conexão e respostas temporárias (HTTP 408, 429 ou 5xx) nessa etapa informam explicitamente que nenhuma cobrança foi criada e orientam tentar novamente em alguns instantes; falhas posteriores continuam exigindo conferência de status por poderem ter resultado remoto incerto.
+- A Vercel publicou com sucesso o commit `268c964` pela integração Git. Por solicitação expressa, a versão pendente `1.02.06` e seu changelog não foram fechados ou alterados neste deploy.
 
 ## Problemas encontrados ou pendências
 

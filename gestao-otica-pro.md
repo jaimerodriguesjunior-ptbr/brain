@@ -462,6 +462,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Corrigida a geração de Pix na venda experimental: o modal de cobrança estava abrindo atrás da janela “Registrar pagamento” por usar uma camada inferior. O Pix agora fica acima dessa janela e o PIN acima dos dois modais.
 - O fluxo foi simplificado para a venda experimental: selecionar Pix Sicredi não emite nem abre uma cobrança; o botão “Gerar Pix da venda” consulta primeiro a cobrança existente e, se não houver uma ativa, solicita o PIN antes de gerar o QR Code.
 - A versão `1.02.06` foi fechada e publicada pela integração Git/Vercel no commit `1003e07`. O status remoto confirmou a conclusão do deploy; a lista pendente foi limpa e o próximo lote deverá abrir `1.02.07`.
+- Localmente, antes de uma nova publicação, a venda experimental passou a destacar uma cobrança Pix ainda ativa diretamente na área de pagamentos, com a ação “Acompanhar pagamento”. Ao escolher Pix Sicredi em “Novo pagamento”, o formulário identifica a cobrança ativa, fixa o valor correspondente e troca a ação para “Acompanhar Pix existente”, evitando que um valor digitado para um novo QR Code pareça ser usado na cobrança anterior. Essa correção permanece sem versão pendente por solicitação do usuário.
 
 ## Problemas encontrados ou pendências
 
@@ -471,9 +472,10 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
-2. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
-3. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
+1. Validar visualmente a retomada de uma cobrança Pix ativa na venda experimental, tanto pelo atalho “Acompanhar pagamento” quanto por “Novo pagamento”. Consumo baixo.
+2. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
+3. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
+4. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
 
 ## Ideias futuras
 

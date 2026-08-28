@@ -420,6 +420,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A criação concorrente de um novo QR Code agora devolve a cobrança já paga e baixada em vez de orientar uma baixa manual duplicada. Se a consulta de pagamentos do recibo falhar depois da baixa, a baixa confirmada continua válida e o operador é orientado a usar Recibos.
 - O atendimento aguarda a atualização das parcelas antes de fechar o modal Pix; quando a última parcela do cliente é quitada, a busca abandona o snapshot antigo e retorna à lista atualizada.
 - O Modo Maquininha Pix passou a exigir o mesmo duplo critério do Sicredi (CNPJ piloto e `pix_provider = sicredi`) no card tablet, na página e na API, impedindo a exibição para outras lojas do tenant.
+- Com a migração da hospedagem principal para a Vercel Pro, foram restauradas as limitações temporárias de consumo: cron de limpeza de relatórios da Torre, atualização manual de Pontos de Atenção, alerta sonoro do WhatsApp e consulta periódica de suporte.
+- As otimizações de intervalo do WhatsApp em segundo plano foram preservadas; elas reduzem chamadas desnecessárias sem retirar recursos do operador.
 
 ## Problemas encontrados ou pendências
 

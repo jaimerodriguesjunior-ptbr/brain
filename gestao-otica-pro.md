@@ -467,6 +467,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Regra financeira confirmada e documentada no README: o carnê assinado substitui o saldo da venda pelo valor financiado. A venda deve ficar com saldo zero quando pagamentos diretos mais o carnê cobrem seu total; parcelas pagas não podem ser somadas novamente como pagamentos diretos. Um novo Pix direto após carnê integral assinado só poderia ocorrer se o acordo do carnê fosse previamente ajustado de modo auditável.
 - A migration `20260828193000_exclude_installment_payments_from_sale_balance.sql` corrigiu a função compartilhada `update_venda_financeiro` para somar somente pagamentos diretos da venda (`parcela_id is null`) e foi aplicada no banco remoto. A auditoria de todas as lojas encontrou uma única venda divergente; após o reparo, ela passou de saldo `-11,00` para `-1,00`, mantendo separados o pagamento direto de R$ 1,00 e os R$ 10,00 recebidos no carnê. A nova auditoria retornou zero divergências.
 - As telas normal e experimental agora calculam “Pago/Sinal” pelos pagamentos diretos, sem inferir esse total pelo saldo da venda. A venda coberta pelo carnê bloqueia novos pagamentos diretos, mas as parcelas pendentes continuam recebíveis; criação e exclusão manual de carnê e comissão individual usam a mesma fronteira. A versão pendente `1.02.07` foi aberta para essa correção; typecheck, testes de contrato Pix, quatro testes da fronteira financeira, `git diff --check` e build passaram.
+- A venda experimental deixou de reabrir um QR Code `PAID/COMPLETED` como se fosse uma cobrança nova. Ao pedir um novo Pix, o modal ignora cobranças já concluídas, cria outra cobrança `PENDING` quando há saldo e avisa a tela imediatamente com “Pix aguardando pagamento”. O servidor também recusa Pix direto se `valor_restante` não tiver saldo. Essa correção permanece local, sem item de versão; a `1.02.07` continua descrevendo somente a correção da fronteira venda/carnê.
+- Correção operacional na loja 1: a OS 727 / venda 13416 estava entregue e em aberto por falta de baixa de R$ 250,00. Foi registrado pagamento em dinheiro nessa data de 17/08/2026, assinado pelo Ozias, e a venda foi fechada com `data_fechamento` em 17/08/2026. O saldo zerou, a reserva da lente foi confirmada como saída e o ranking do cliente foi atualizado pelo mesmo critério do fechamento. Comissão individual não foi gerada porque o Ozias tem 0% nas taxas garantida/risco; o 1% sobre recebidos continua na comissão global do período, recalculada ao abrir o relatório de agosto.
+- O Modo Maquininha Pix passou a manter na fila QR Codes recentes por 30 minutos durante os testes, sem alterar a validade bancária da cobrança. Se a leitura da fila falhar, a tela agora informa a falha e continua tentando a cada dois segundos, em vez de exibir “Aguardando Pix” como se não houvesse cobrança. A API também passou a devolver erro quando uma das consultas ao banco falha.
 
 ## Problemas encontrados ou pendências
 
@@ -476,11 +479,13 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Validar visualmente na venda de teste que o rodapé mostra “Pago/Sinal R$ 1,00” e “A receber -R$ 1,00”, enquanto o carnê continua mostrando sua primeira parcela paga. Consumo baixo.
-2. Validar visualmente a retomada de uma cobrança Pix ativa na venda experimental, tanto pelo atalho “Acompanhar pagamento” quanto por “Novo pagamento”. Consumo baixo.
-3. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
-4. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
-5. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
+1. Validar visualmente, na venda experimental com um Pix já pago, que “Gerar Pix da venda” cria um QR novo (não reabre o antigo) e que o aviso “Pix aguardando pagamento” aparece ao sair do modal, inclusive após F5. Consumo baixo.
+2. Validar visualmente na venda de teste que o rodapé mostra “Pago/Sinal R$ 1,00” e “A receber -R$ 1,00”, enquanto o carnê continua mostrando sua primeira parcela paga. Consumo baixo.
+3. Validar visualmente a retomada de uma cobrança Pix ativa na venda experimental, tanto pelo atalho “Acompanhar pagamento” quanto por “Novo pagamento”. Consumo baixo.
+4. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
+5. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
+6. Publicar e validar no tablet da mesma loja a exibição de um QR Code gerado há menos de 30 minutos e o aviso de falha caso a API não possa carregar a fila. Consumo baixo.
+7. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
 
 ## Ideias futuras
 

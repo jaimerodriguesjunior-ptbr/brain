@@ -463,6 +463,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O fluxo foi simplificado para a venda experimental: selecionar Pix Sicredi não emite nem abre uma cobrança; o botão “Gerar Pix da venda” consulta primeiro a cobrança existente e, se não houver uma ativa, solicita o PIN antes de gerar o QR Code.
 - A versão `1.02.06` foi fechada e publicada pela integração Git/Vercel no commit `1003e07`. O status remoto confirmou a conclusão do deploy; a lista pendente foi limpa e o próximo lote deverá abrir `1.02.07`.
 - Localmente, antes de uma nova publicação, a venda experimental passou a destacar uma cobrança Pix ainda ativa diretamente na área de pagamentos, com a ação “Acompanhar pagamento”. Ao escolher Pix Sicredi em “Novo pagamento”, o formulário identifica a cobrança ativa, fixa o valor correspondente e troca a ação para “Acompanhar Pix existente”, evitando que um valor digitado para um novo QR Code pareça ser usado na cobrança anterior. Essa correção permanece sem versão pendente por solicitação do usuário.
+- A correção de retomada da cobrança Pix foi publicada no commit `987ccc9`; a Vercel confirmou o deploy de produção como pronto. Por solicitação expressa, o histórico e a versão exibida não foram alterados: não há versão pendente aberta.
 
 ## Problemas encontrados ou pendências
 

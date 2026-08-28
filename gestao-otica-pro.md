@@ -414,6 +414,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Após uma baixa Pix parcial, a cobrança já paga permanece somente como histórico: ao reabrir a parcela, o modal passa a iniciar uma nova emissão com o saldo restante. O atendimento recarrega as parcelas do cliente na mesma sessão e a listagem de contas a receber calcula “A receber” pelos pagamentos e ajustes atuais, em vez do snapshot anterior à primeira baixa.
 - Corrigida a escolha de transferir o saldo de uma baixa Pix parcial: a busca de parcelas preserva o financiamento e o modal usa a indicação de próxima parcela pendente calculada no servidor, sem misturar carnês do mesmo cliente.
 - A baixa atômica de parcelas ganhou a migration `20260827170000_installment_receipt_effective_balance.sql`: o banco agora desconta também `valor_renegociado_saida` ao calcular saldo, selecionar a próxima parcela e restaurar snapshots em estornos, igualando a regra já usada na interface.
+- A migration de saldo efetivo foi aplicada. Contas a receber passou a calcular “A receber” pelo principal persistido na parcela, sem somar juros registrados em `pagamentos`.
+- Quando o operador tenta cancelar um QR Code que o Sicredi já confirmou como pago, o sistema agora conclui a baixa automática, atualiza a tela e abre o recibo, em vez de apenas informar que o cancelamento não é possível.
+- A conciliação simultânea entre webhook e atualização manual passou a reconhecer a resposta transitória de operação já em processamento, sem marcar a baixa como erro; a finalização da cobrança também busca o estado mais recente caso outra requisição tenha terminado primeiro.
 - A criação concorrente de um novo QR Code agora devolve a cobrança já paga e baixada em vez de orientar uma baixa manual duplicada. Se a consulta de pagamentos do recibo falhar depois da baixa, a baixa confirmada continua válida e o operador é orientado a usar Recibos.
 - O atendimento aguarda a atualização das parcelas antes de fechar o modal Pix; quando a última parcela do cliente é quitada, a busca abandona o snapshot antigo e retorna à lista atualizada.
 - O Modo Maquininha Pix passou a exigir o mesmo duplo critério do Sicredi (CNPJ piloto e `pix_provider = sicredi`) no card tablet, na página e na API, impedindo a exibição para outras lojas do tenant.
@@ -421,11 +424,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Problemas encontrados ou pendências
 
 - Ainda falta validar visualmente, em um novo cenário controlado, as duas escolhas de pagamento parcial e a amortização de um valor superior ao saldo da parcela.
-- A migration `20260827170000_installment_receipt_effective_balance.sql` ainda precisa ser aplicada antes de validar em dados reais uma parcela que tenha saldo removido por renegociação.
+- Ainda falta validar em dados reais uma parcela que tenha saldo removido por renegociação, agora que a migration `20260827170000_installment_receipt_effective_balance.sql` já foi aplicada.
 
 ## Próximos passos
 
-1. Aplicar `20260827170000_installment_receipt_effective_balance.sql` e validar uma baixa ou estorno em parcela com `valor_renegociado_saida`. Consumo baixo.
+1. Validar uma baixa ou estorno em parcela com `valor_renegociado_saida`. Consumo baixo.
 2. Validar visualmente a reemissão de QR Code após uma baixa Pix parcial, conferindo que o valor sugerido é somente o saldo restante. Consumo baixo.
 3. Testar uma baixa Pix parcial transferindo o restante para a próxima parcela. Consumo baixo.
 4. Testar uma cobrança superior ao saldo da parcela, mas dentro do saldo total do carnê, e conferir a amortização das parcelas seguintes. Consumo médio.

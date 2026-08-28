@@ -461,10 +461,10 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Os fluxos Pix usam dois componentes de cobrança em três contextos: parcelas, venda experimental e venda expressa. Enquanto uma cobrança permanece aberta, os modais agora consultam silenciosamente o Sicredi a cada cinco segundos; estados ainda em geração continuam sendo acompanhados apenas na base local. Ao confirmar o pagamento, o mesmo fluxo idempotente do botão “Conferir pagamento” conclui a baixa, atualiza a venda e abre o recibo quando aplicável.
 - Corrigida a geração de Pix na venda experimental: o modal de cobrança estava abrindo atrás da janela “Registrar pagamento” por usar uma camada inferior. O Pix agora fica acima dessa janela e o PIN acima dos dois modais.
 - O fluxo foi simplificado para a venda experimental: selecionar Pix Sicredi não emite nem abre uma cobrança; o botão “Gerar Pix da venda” consulta primeiro a cobrança existente e, se não houver uma ativa, solicita o PIN antes de gerar o QR Code.
+- A versão `1.02.06` foi fechada e publicada pela integração Git/Vercel no commit `1003e07`. O status remoto confirmou a conclusão do deploy; a lista pendente foi limpa e o próximo lote deverá abrir `1.02.07`.
 
 ## Problemas encontrados ou pendências
 
-- A versão `1.02.06` continua aguardando o próximo deploy; a lista ainda será consolidada antes da publicação.
 - A autenticação do webhook Sicredi continua pendente de uma decisão compatível com o contrato aceito pelo provedor; o processamento e o acompanhamento automático do resultado foram implementados sem mudar essa autenticação.
 - Um pagamento real de R$ 1,00 da venda experimental foi confirmado pelo banco, mas permaneceu pendente na tela porque o webhook não atualizou a cobrança local. A consulta silenciosa ao Sicredi foi adicionada como contingência; a causa da ausência dessa entrega do webhook ainda não foi identificada.
 - O ESLint não iniciou a análise por uma falha circular da configuração atual (`Converting circular structure to JSON`); typecheck e build não apresentaram erros.
@@ -474,7 +474,6 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 1. Publicar e validar uma cobrança controlada nos três contextos, confirmando que a baixa acontece em até cinco segundos sem clicar em “Conferir pagamento”. Consumo baixo.
 2. Conferir no carnê os rótulos “Conferir pagamento”, “Conferir situação” e “Gerar novo QR Code” nos estados correspondentes. Consumo baixo.
 3. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
-4. Consolidar o changelog final da versão `1.02.06` antes do deploy. Consumo baixo.
 
 ## Ideias futuras
 

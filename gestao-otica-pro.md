@@ -449,6 +449,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A emissão passou a validar a autenticação do Sicredi antes de reservar ou enviar a cobrança. Timeout, falha de conexão e respostas temporárias (HTTP 408, 429 ou 5xx) nessa etapa informam explicitamente que nenhuma cobrança foi criada e orientam tentar novamente em alguns instantes; falhas posteriores continuam exigindo conferência de status por poderem ter resultado remoto incerto.
 - A Vercel publicou com sucesso o commit `268c964` pela integração Git. Por solicitação expressa, a versão pendente `1.02.06` e seu changelog não foram fechados ou alterados neste deploy.
 - O estado de erro de uma cobrança Pix passou a explicar que o sistema irá conferir se o QR Code chegou a existir. O botão agora se chama “Conferir situação do QR Code” e, após a verificação, informa explicitamente quando o operador já pode gerar uma nova cobrança.
+- O botão que consulta o Sicredi para confirmar uma cobrança pendente passou a se chamar “Conferir pagamento”, incluindo a orientação exibida quando a confirmação já ocorreu, mas a baixa precisa ser reprocessada.
 
 ## Problemas encontrados ou pendências
 

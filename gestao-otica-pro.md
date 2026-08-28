@@ -445,6 +445,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - O changelog pendente da versão `1.02.06` foi revisado para não expor restaurações internas ou detalhes temporários que não fazem parte da comunicação ao usuário.
 - O aviso histórico exibido ao reabrir uma parcela com Pix já baixado foi removido; o modal continua iniciando uma nova cobrança pelo saldo restante.
+- Uma tentativa controlada de emissão recebeu timeout durante a autenticação mTLS no Sicredi, antes da criação remota da cobrança. A autenticação foi repetida localmente e respondeu normalmente; a emissão pode ser tentada novamente sem risco de baixa ou QR duplicado daquela falha.
 
 ## Problemas encontrados ou pendências
 

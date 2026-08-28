@@ -408,17 +408,18 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A próxima versão pendente foi aberta como `1.02.06` com a migração da integração Sicredi para produção.
 - O cliente Pix Sicredi passou a aceitar certificado, chave privada e cadeia em PEM codificados em Base64 para o ambiente hospedado, mantendo arquivos locais apenas como fallback de desenvolvimento. Nenhum segredo foi registrado no repositório.
 - A baixa confirmada de uma parcela via consulta Sicredi agora encontra os pagamentos vinculados, abre o recibo automaticamente, atualiza o financeiro e fecha o modal Pix. A tabela de contas a receber mostra “Pix Sicredi” abaixo do valor recebido, sem afirmar que uma parcela parcialmente paga foi quitada.
+- O primeiro teste financeiro controlado em produção foi concluído com uma cobrança de R$ 1,00: o QR Code foi pago na conta correta e a consulta confirmou “Pago e baixado”.
+- O recebimento Pix de parcelas passou a compartilhar com a baixa manual o cálculo de principal e juros, a escolha entre manter o saldo ou transferi-lo à próxima parcela e a amortização automática das parcelas seguintes. Antes de criar o QR Code, o servidor bloqueia valores que ultrapassem todo o saldo ainda alocável no carnê.
 
 ## Problemas encontrados ou pendências
 
-- Os três segredos Base64 dos PEMs ainda precisam ser configurados no ambiente de produção da Vercel e aplicados por um novo deploy; caminhos locais não funcionam na função hospedada.
-- Ainda falta o primeiro teste financeiro controlado em produção com valor mínimo, em venda criada exclusivamente para esse fim.
+- Ainda falta validar visualmente, em um novo cenário controlado, as duas escolhas de pagamento parcial e a amortização de um valor superior ao saldo da parcela.
 
 ## Próximos passos
 
-1. Configurar os três segredos Base64 dos PEMs no ambiente Production da Vercel e fazer um novo deploy, sem versionar segredos. Consumo baixo.
-2. Fazer um smoke test de produção com cobrança de valor mínimo e conta própria, confirmando QR Code, pagamento, webhook ou consulta, baixa automática e recibo. Consumo médio.
-3. Revisar a tela de status depois do primeiro pagamento confirmado em produção. Consumo baixo.
+1. Testar uma baixa Pix parcial mantendo o restante na parcela atual. Consumo baixo.
+2. Testar uma baixa Pix parcial transferindo o restante para a próxima parcela. Consumo baixo.
+3. Testar uma cobrança superior ao saldo da parcela, mas dentro do saldo total do carnê, e conferir a amortização das parcelas seguintes. Consumo médio.
 
 ## Ideias futuras
 

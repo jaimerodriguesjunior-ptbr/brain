@@ -506,6 +506,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A frase de abertura passou a ser exibida entre aspas; a instrução da IA exige português brasileiro humano e acentuado, sem reproduzir literalmente grafias técnicas sem acento. O fallback permanece somente para indisponibilidade ou resposta inválida da IA.
 - Corrigida a atualização manual da Central: a frase principal estava sendo enviada como coluna inexistente no snapshot. Ela agora é salva dentro do JSON `metrics`, já previsto pela tabela, e relatórios anteriores continuam recebendo fallback ao serem lidos.
 - A validação da frase principal passou a rejeitar resumos genéricos da IA: para cada alerta escolhido, a frase deve preservar a quantidade e o problema concreto. A instrução também recebeu exemplo explícito de densidade informativa.
+- O fallback factual da frase principal passou a normalizar a grafia em português dos títulos operacionais antes de exibi-los, incluindo óculos, não, há, laboratório, armação, revisão e pós-venda.
 - A IA pode apenas redigir a frase do alerta já escolhido; o texto é validado contra o título e o detalhe do caso e volta ao fallback auditável se trouxer fato, número ou causa não suportados.
 - A frase mantém o ID e o destino do alerta de origem, abrindo a mesma lista de casos ou rota já usada nos cards. Relatórios antigos recebem o fallback ao serem lidos.
 - `npm run typecheck` e os 17 testes de `daily-store-health` passaram.

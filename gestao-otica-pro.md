@@ -497,3 +497,25 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Manter o histórico de versões focado em funcionalidades e correções percebidas pelo usuário, deixando detalhes técnicos na documentação interna.
 - Extrair a autenticação e a conciliação dos fluxos Pix de parcela e venda para utilitários compartilhados, reduzindo diferenças futuras entre os dois caminhos.
 
+# Diário - 29/08/2026
+
+## O que foi feito
+
+- A Central de Pontos de Atenção passou a salvar e exibir uma leitura executiva no topo do relatório diário. O alerta principal é selecionado de forma determinística por criticidade, evolução, impacto, quantidade de registros e tempo em aberto.
+- A IA pode apenas redigir a frase do alerta já escolhido; o texto é validado contra o título e o detalhe do caso e volta ao fallback auditável se trouxer fato, número ou causa não suportados.
+- A frase mantém o ID e o destino do alerta de origem, abrindo a mesma lista de casos ou rota já usada nos cards. Relatórios antigos recebem o fallback ao serem lidos.
+- `npm run typecheck` e os 17 testes de `daily-store-health` passaram.
+
+## Problemas encontrados ou pendências
+
+- A suíte completa ainda falha em dois testes preexistentes do Electron: uma expectativa desatualizada de validação de URL e outra de URL de produção da Torre. Não foram alterados neste trabalho.
+
+## Próximos passos
+
+1. Após a próxima varredura ou atualização manual, conferir visualmente a frase executiva e a abertura do caso principal em uma loja autorizada. Consumo baixo.
+2. Observar uma geração com `OPENAI_API_KEY` para confirmar a redação validada e o fallback em caso de resposta inválida. Consumo baixo.
+
+## Ideias futuras
+
+- Permitir que o gerente marque a leitura executiva como revisada sem ocultar o alerta operacional de origem.
+

@@ -512,6 +512,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O registro da versão 1.02.06 foi reescrito como entrega da integração com o PIX Sicredi e seus comportamentos atuais, sem referência a loja-piloto nem a correções intermediárias. A regra de versionamento no README agora determina que novas implementações não geram histórico; apenas correções de funcionalidades já em produção abrem uma versão pendente.
 - O registro da versão 1.02.05 foi consolidado como a entrega final do módulo Pontos de Atenção, listando somente suas capacidades atuais e removendo a sequência de etapas, ajustes e correções intermediárias.
 - A pedido do usuário, a versão pendente 1.02.07 foi reaberta para o deploy com as entregas de frase executiva nos Pontos de Atenção e aviso NFC por WhatsApp; a solicitação é a exceção expressa à regra de não registrar novas implementações no histórico.
+- O modal de histórico passou a incluir a versão pendente como primeira entrada, identificada como “Em preparação”; antes ele carregava somente versões já concluídas e ocultava a 1.02.07 aguardando deploy. Typecheck passou.
 - A IA pode apenas redigir a frase do alerta já escolhido; o texto é validado contra o título e o detalhe do caso e volta ao fallback auditável se trouxer fato, número ou causa não suportados.
 - A frase mantém o ID e o destino do alerta de origem, abrindo a mesma lista de casos ou rota já usada nos cards. Relatórios antigos recebem o fallback ao serem lidos.
 - `npm run typecheck` e os 19 testes de `daily-store-health` passaram.

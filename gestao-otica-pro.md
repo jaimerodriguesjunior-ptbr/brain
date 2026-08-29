@@ -474,6 +474,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A UX de Pix Sicredi da Venda Express foi alinhada à Venda Experimental: a ação passou a comunicar “Gerar Pix da venda” e os campos que não participam da cobrança ficam ocultos. Apenas na Venda Express, um QR Code pendente impede fechar o fluxo sem escolha explícita: para voltar ao carrinho, o operador confirma o cancelamento, informa o PIN, cancela a cobrança no Sicredi e descarta a venda provisória sem pagamentos. A Venda Experimental e as parcelas permanecem livres para manter cobranças abertas. Typecheck, teste de contrato Pix e `git diff --check` passaram; não há versão pendente.
 - A venda de teste 13547 da loja 2 foi removida diretamente do banco, a pedido do usuário. A transação excluiu o item, a cobrança Pix, o registro técnico de criação Pix Express e a venda; a verificação posterior confirmou zero referências em pagamentos, carnês, estoque, comissões ou operações de recebimento. O cliente compartilhado não foi removido.
 - A venda de teste 13548 da loja 2, que estava cancelada, também foi removida diretamente do banco. Foram excluídos o item, a cobrança Pix, o registro técnico de criação Pix Express e a venda; a verificação posterior confirmou zero referências em pagamentos, carnês, estoque, comissões ou operações de recebimento. O cliente compartilhado não foi removido.
+- Na leitura NFC do celular, a tela de óculos pronto passou a oferecer aviso no WhatsApp somente quando há sessão da mesma loja da tag. A mensagem é a do laboratório (titular ou dependente), o envio usa a VPS da loja com fallback `wa.me`, e nome/telefone não são enviados ao celular sem login. A versão pendente abriu em `1.02.07`.
 
 ## Problemas encontrados ou pendências
 
@@ -491,6 +492,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 6. Publicar e validar a Venda Express com Pix: gerar QR, tentar fechar, cancelar com PIN, voltar ao carrinho e concluir com outra forma de pagamento. Consumo baixo.
 7. Validar no tablet a rota própria da maquininha: PIN, permanência da tela e exibição de um QR Code gerado há menos de 30 minutos, além do aviso de falha caso a API não possa carregar a fila. Consumo baixo.
 7. Definir a autenticação compatível com o contrato do webhook Sicredi e adicionar rastreabilidade das entregas para diagnosticar ausências futuras. Consumo médio.
+8. Validar no celular logado da loja o botão NFC “Avisar no WhatsApp” após marcar o óculos como pronto, e confirmar que a tag sem login continua sem nome, telefone ou botão. Consumo baixo.
 
 ## Ideias futuras
 
@@ -531,4 +533,24 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Ideias futuras
 
 - Permitir que o gerente marque a leitura executiva como revisada sem ocultar o alerta operacional de origem.
+
+# Diário - 29/08/2026 (atualização)
+
+## O que foi feito
+
+- A lista de tags NFC do laboratório passou a exibir, no topo do modal, a URL de cadastro da próxima bandeja numerada da loja e um botão para copiar o endereço.
+- O próximo número é calculado a partir do maior identificador `NFC-BANDEJA-xxxxx` cadastrado na loja; a versão pendente foi aberta em `1.02.08`.
+- `npm run typecheck` passou.
+
+## Problemas encontrados ou pendências
+
+- Nenhum problema novo encontrado durante a implementação.
+
+## Próximos passos
+
+1. Validar visualmente no laboratório uma loja com tags cadastradas e copiar a URL gerada. Consumo baixo.
+
+## Ideias futuras
+
+- Avaliar uma ação de cadastro/impressão da próxima tag diretamente a partir do modal, caso o fluxo operacional passe a exigir isso.
 

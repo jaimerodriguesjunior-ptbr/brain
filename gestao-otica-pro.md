@@ -514,6 +514,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A pedido do usuário, a versão pendente 1.02.07 foi reaberta para o deploy com as entregas de frase executiva nos Pontos de Atenção e aviso NFC por WhatsApp; a solicitação é a exceção expressa à regra de não registrar novas implementações no histórico.
 - O modal de histórico passou a incluir a versão pendente como primeira entrada, identificada como “Em preparação”; antes ele carregava somente versões já concluídas e ocultava a 1.02.07 aguardando deploy. Typecheck passou.
 - Após a confirmação do usuário de que o deploy foi concluído, a 1.02.07 foi movida para o histórico concluído com a data de 29/08/2026 e a pendência foi limpa. A interface publicada anteriormente só refletirá essa data depois de uma nova publicação contendo esse fechamento.
+- A regra de versionamento foi redefinida: toda alteração aprovada acumula na versão pendente; somente a frase explícita “mude a versão” fecha a pendência, move seus itens para o histórico com a data atual e prepara o código para deploy.
 - A IA pode apenas redigir a frase do alerta já escolhido; o texto é validado contra o título e o detalhe do caso e volta ao fallback auditável se trouxer fato, número ou causa não suportados.
 - A frase mantém o ID e o destino do alerta de origem, abrindo a mesma lista de casos ou rota já usada nos cards. Relatórios antigos recebem o fallback ao serem lidos.
 - `npm run typecheck` e os 19 testes de `daily-store-health` passaram.

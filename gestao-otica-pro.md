@@ -509,6 +509,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O fallback factual da frase principal passou a normalizar a grafia em português dos títulos operacionais antes de exibi-los, incluindo óculos, não, há, laboratório, armação, revisão e pós-venda.
 - A revisão de português foi estendida somente aos Pontos de Atenção: títulos e detalhes de alertas, resumos de fallback, casos detalhados e mensagens de erro agora usam acentuação correta; a normalização do fallback também cobre termos como válido, confiável, oftálmicas, referência e pós-vendas.
 - O histórico pendente da versão 1.02.07 foi consolidado para apresentar a entrega final dos Pontos de Atenção, sem listar correções internas ocorridas durante a implementação.
+- O registro da versão 1.02.06 foi reescrito como entrega da integração com o PIX Sicredi e seus comportamentos atuais, sem referência a loja-piloto nem a correções intermediárias. A regra de versionamento no README agora determina que novas implementações não geram histórico; apenas correções de funcionalidades já em produção abrem uma versão pendente.
 - A IA pode apenas redigir a frase do alerta já escolhido; o texto é validado contra o título e o detalhe do caso e volta ao fallback auditável se trouxer fato, número ou causa não suportados.
 - A frase mantém o ID e o destino do alerta de origem, abrindo a mesma lista de casos ou rota já usada nos cards. Relatórios antigos recebem o fallback ao serem lidos.
 - `npm run typecheck` e os 19 testes de `daily-store-health` passaram.

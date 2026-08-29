@@ -502,6 +502,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## O que foi feito
 
 - A Central de Pontos de Atenção passou a salvar e exibir uma leitura executiva no topo do relatório diário. O alerta principal é selecionado de forma determinística por criticidade, evolução, impacto, quantidade de registros e tempo em aberto.
+- A apresentação foi ajustada: a abertura agora é apenas um subtítulo em frase curta, sem card, barra ou rótulo, reunindo até três alertas críticos (ou até dois alertas de atenção quando não há críticos) e orientando a consultar os detalhes abaixo.
 - A IA pode apenas redigir a frase do alerta já escolhido; o texto é validado contra o título e o detalhe do caso e volta ao fallback auditável se trouxer fato, número ou causa não suportados.
 - A frase mantém o ID e o destino do alerta de origem, abrindo a mesma lista de casos ou rota já usada nos cards. Relatórios antigos recebem o fallback ao serem lidos.
 - `npm run typecheck` e os 17 testes de `daily-store-health` passaram.

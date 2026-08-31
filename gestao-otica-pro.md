@@ -558,7 +558,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## O que foi feito
 
-- Implementado cadastro explícito de cliente PF/PJ, com migration que preserva clientes existentes como PF e adiciona CNPJ, tipo de pessoa e índice único para CNPJ.
+- Implementado cadastro explícito de cliente PF/PJ, com migration que preserva clientes existentes como PF e adiciona CNPJ, razão social, nome fantasia, tipo de pessoa e índice único para CNPJ.
 - Cadastro, busca, parcelamento e emissão de NFC-e passaram a usar CPF ou CNPJ conforme o tipo de cliente; a emissão PJ envia CNPJ, inscrição estadual e endereço do destinatário quando cadastrados.
 - A Nuvem Local Fiscal recebeu teste de XML de NFC-e com destinatário CNPJ; a suíte completa passou.
 - `npm run typecheck` passou no backoffice; `npm run typecheck` e `npm test` passaram na Nuvem Local Fiscal.

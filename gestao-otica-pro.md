@@ -554,3 +554,24 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Avaliar uma ação de cadastro/impressão da próxima tag diretamente a partir do modal, caso o fluxo operacional passe a exigir isso.
 
+# Diário - 31/08/2026
+
+## O que foi feito
+
+- Implementado cadastro explícito de cliente PF/PJ, com migration que preserva clientes existentes como PF e adiciona CNPJ, tipo de pessoa e índice único para CNPJ.
+- Cadastro, busca, parcelamento e emissão de NFC-e passaram a usar CPF ou CNPJ conforme o tipo de cliente; a emissão PJ envia CNPJ, inscrição estadual e endereço do destinatário quando cadastrados.
+- A Nuvem Local Fiscal recebeu teste de XML de NFC-e com destinatário CNPJ; a suíte completa passou.
+- `npm run typecheck` passou no backoffice; `npm run typecheck` e `npm test` passaram na Nuvem Local Fiscal.
+
+## Problemas encontrados ou pendências
+
+- A migration precisa ser aplicada no Supabase antes de cadastrar ou emitir para clientes PJ em produção.
+
+## Próximos passos
+
+1. Aplicar a migration e homologar uma NFC-e de cliente PJ com CNPJ válido no ambiente fiscal de homologação. Consumo baixo.
+
+## Ideias futuras
+
+- Avaliar consulta automática de CNPJ para preencher razão social e endereço no cadastro PJ.
+

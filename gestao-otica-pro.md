@@ -567,11 +567,12 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Problemas encontrados ou pendências
 
-- A migration precisa ser aplicada no Supabase antes de cadastrar ou emitir para clientes PJ em produção.
+- O schema PJ foi confirmado no Supabase, inclusive um cliente PJ na store 1; as migrations foram executadas manualmente e ainda precisam ter o histórico reparado antes de um futuro `supabase db push`.
 
 ## Próximos passos
 
-1. Aplicar a migration e homologar uma NFC-e de cliente PJ com CNPJ válido no ambiente fiscal de homologação. Consumo baixo.
+1. Homologar uma NFC-e de cliente PJ com CNPJ válido no ambiente fiscal de homologação. Consumo baixo.
+2. Reparar o histórico remoto das migrations executadas manualmente antes de um futuro `supabase db push`. Consumo baixo.
 
 ## Ideias futuras
 

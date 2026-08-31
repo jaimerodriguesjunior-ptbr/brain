@@ -562,6 +562,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Cadastro, busca, parcelamento e emissão de NFC-e passaram a usar CPF ou CNPJ conforme o tipo de cliente; a emissão PJ envia CNPJ, inscrição estadual e endereço do destinatário quando cadastrados.
 - A Nuvem Local Fiscal recebeu teste de XML de NFC-e com destinatário CNPJ; a suíte completa passou.
 - Auditoria complementar corrigiu carnê, edição rápida e busca para CPF/CNPJ; a NF-e modelo 55 passou a selecionar CNPJ de PJ e a Nuvem Local Fiscal normaliza e valida o documento do destinatário antes da emissão.
+- A reauditoria foi encerrada com suporte a participante PJ na NF-e manual, dados fiscais completos na NFC-e avulsa, buscas secundárias por CNPJ/nome fantasia, preservação dos campos PJ na mesclagem de duplicados e validação de destinatário também no endpoint de NF-e.
 - `npm run typecheck` passou no backoffice; `npm run typecheck` e `npm test` passaram na Nuvem Local Fiscal.
 
 ## Problemas encontrados ou pendências

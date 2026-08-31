@@ -564,15 +564,19 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Auditoria complementar corrigiu carnê, edição rápida e busca para CPF/CNPJ; a NF-e modelo 55 passou a selecionar CNPJ de PJ e a Nuvem Local Fiscal normaliza e valida o documento do destinatário antes da emissão.
 - A reauditoria foi encerrada com suporte a participante PJ na NF-e manual, dados fiscais completos na NFC-e avulsa, buscas secundárias por CNPJ/nome fantasia, preservação dos campos PJ na mesclagem de duplicados e validação de destinatário também no endpoint de NF-e.
 - `npm run typecheck` passou no backoffice; `npm run typecheck` e `npm test` passaram na Nuvem Local Fiscal.
+- Corrigida a geração da NFC-e: o endereço do destinatário só é enviado quando o código IBGE municipal é válido, evitando XML com `cMun` inválido. A consulta de CEP no cadastro passou a salvar o IBGE devolvido pelo ViaCEP.
+- `npm run typecheck` passou após a correção.
 
 ## Problemas encontrados ou pendências
 
 - O schema PJ foi confirmado no Supabase, inclusive um cliente PJ na store 1; as migrations foram executadas manualmente e ainda precisam ter o histórico reparado antes de um futuro `supabase db push`.
+- Clientes já cadastrados sem código IBGE emitirão NFC-e sem endereço do destinatário até que o CEP seja consultado e o cadastro salvo novamente.
 
 ## Próximos passos
 
-1. Homologar uma NFC-e de cliente PJ com CNPJ válido no ambiente fiscal de homologação. Consumo baixo.
-2. Reparar o histórico remoto das migrations executadas manualmente antes de um futuro `supabase db push`. Consumo baixo.
+1. Publicar a versão pendente 1.02.10 e homologar uma NFC-e de cliente PJ com CNPJ válido no ambiente fiscal de homologação. Consumo baixo.
+2. Para incluir o endereço na nota de um cliente existente, abrir seu cadastro, consultar o CEP e salvar para gravar o código IBGE. Consumo baixo.
+3. Reparar o histórico remoto das migrations executadas manualmente antes de um futuro `supabase db push`. Consumo baixo.
 
 ## Ideias futuras
 

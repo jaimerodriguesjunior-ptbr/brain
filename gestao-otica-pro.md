@@ -566,11 +566,13 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - `npm run typecheck` passou no backoffice; `npm run typecheck` e `npm test` passaram na Nuvem Local Fiscal.
 - Corrigida a geração da NFC-e: o endereço do destinatário só é enviado quando o código IBGE municipal é válido, evitando XML com `cMun` inválido. A consulta de CEP no cadastro passou a salvar o IBGE devolvido pelo ViaCEP.
 - `npm run typecheck` passou após a correção.
+- Em respostas de timeout ou processamento incerto na emissão de NFC-e, o modal passou a orientar explicitamente o operador a abrir as notas fiscais emitidas e consultar o status da nota mais recente antes de uma nova tentativa. O link existente recebe esse contexto somente nesses casos.
 
 ## Problemas encontrados ou pendências
 
 - O schema PJ foi confirmado no Supabase, inclusive um cliente PJ na store 1; as migrations foram executadas manualmente e ainda precisam ter o histórico reparado antes de um futuro `supabase db push`.
 - Clientes já cadastrados sem código IBGE emitirão NFC-e sem endereço do destinatário até que o CEP seja consultado e o cadastro salvo novamente.
+- O bloqueio persistente de reemissão após consulta remota ainda requer uma decisão de fluxo para distinguir erro fiscal definitivo de estado incerto e tratar inutilizações de numeração.
 
 ## Próximos passos
 

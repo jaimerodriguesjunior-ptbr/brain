@@ -602,10 +602,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A identidade do atendimento virtual foi definida como IAra. No modo experimental, ela se apresenta somente quando transfere a conversa para a equipe, sem expor limitações técnicas ao cliente; a alteração foi publicada na `main` no commit `586e8ec`.
 - A análise da conversa real identificou uma regra antiga que silenciava uma pergunta nova sobre prazo por reconhecer apenas o mesmo status da OS. A correção publicada na `main` no commit `8e0876a` restringe o silêncio a repetições literais e direciona prazo, atraso ou antecipação à equipe sem inventar data.
 - O handoff do WhatsApp foi alterado no commit `d8df67d`: o encaminhamento inicial da IAra permanece em contexto por até 48 horas enquanto a equipe ainda não respondeu; uma mensagem humana real ativa uma pausa de uma hora, renovada a cada nova mensagem humana. A correção subsequente isolou esses tempos ao modo experimental: lojas no fluxo legado preservam a pausa de 12 horas.
+- No modo experimental, a IAra passou a reconstruir o contexto com as últimas mensagens persistidas de cliente, IA e equipe (até 12 mensagens dos últimos 7 dias). Imagens não são persistidas, mas um comprovante identificado pela visão é incluído como evento contextual; informações humanas são tratadas como contexto e a situação atual de OS ou parcela continua dependente de consulta ao sistema.
 
 ## Próximos passos
 
-1. Aguardar a Vercel concluir o deploy da `main` com a correção de isolamento do handoff e testar uma cobrança de retorno antes e depois de uma mensagem humana da loja. Consumo médio.
+1. Aguardar a Vercel concluir o deploy da `main` com a memória persistida de WhatsApp e testar uma cobrança de retorno depois de uma resposta humana da loja. Consumo médio.
 2. Testar pelo telefone pessoal mudanças de assunto entre pós-venda, OS, parcelas, endereço e assuntos não atendidos; conferir logs e estados de conversa. Consumo médio.
 3. Avaliar a inclusão de consulta de receitas somente se o atendimento real demonstrar necessidade, preservando as regras de privacidade. Consumo médio.
 

@@ -600,10 +600,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O modo experimental ainda não foi habilitado nem testado em conversa real na loja 1.
 - O primeiro teste real mostrou respostas factuais, porém dois planos da IA usaram nomes alternativos de ferramentas e recaíram no fluxo legado. A correção foi publicada na `main` no commit `b31d6fe`: nomes equivalentes agora são normalizados de forma restrita e CPF, nome ou número de pedido podem consultar OS ou parcelas sem repetir a pergunta de identificação.
 - A identidade do atendimento virtual foi definida como IAra. No modo experimental, ela se apresenta somente quando transfere a conversa para a equipe, sem expor limitações técnicas ao cliente; a alteração foi publicada na `main` no commit `586e8ec`.
+- A análise da conversa real identificou uma regra antiga que silenciava uma pergunta nova sobre prazo por reconhecer apenas o mesmo status da OS. A correção publicada na `main` no commit `8e0876a` restringe o silêncio a repetições literais e direciona prazo, atraso ou antecipação à equipe sem inventar data.
 
 ## Próximos passos
 
-1. Aguardar a Vercel concluir o deploy da `main` com o commit `586e8ec` e testar uma solicitação que exija continuidade humana, confirmando a apresentação única da IAra. Consumo baixo.
+1. Aguardar a Vercel concluir o deploy da `main` com o commit `8e0876a` e repetir uma pergunta de prazo ou antecipação depois de consultar uma OS. Consumo baixo.
 2. Testar pelo telefone pessoal mudanças de assunto entre pós-venda, OS, parcelas, endereço e assuntos não atendidos; conferir logs e estados de conversa. Consumo médio.
 3. Avaliar a inclusão de consulta de receitas somente se o atendimento real demonstrar necessidade, preservando as regras de privacidade. Consumo médio.
 

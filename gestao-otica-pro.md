@@ -598,12 +598,13 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - `npm test` continua com duas falhas preexistentes e não relacionadas ao WhatsApp: expectativas do Electron sobre validação de URL e a URL de produção da Torre.
 - O modo experimental ainda não foi habilitado nem testado em conversa real na loja 1.
+- O primeiro teste real mostrou respostas factuais, porém dois planos da IA usaram nomes alternativos de ferramentas e recaíram no fluxo legado. A correção foi publicada na `main` no commit `b31d6fe`: nomes equivalentes agora são normalizados de forma restrita e CPF, nome ou número de pedido podem consultar OS ou parcelas sem repetir a pergunta de identificação.
 
 ## Próximos passos
 
-1. Publicar a branch experimental no ambiente de teste e ativar “Modo experimental: IA consulta o sistema” na configuração de WhatsApp da loja 1. Consumo médio.
+1. Aguardar a Vercel concluir o deploy da `main` com o commit `b31d6fe` e repetir o teste do CPF ou número de pedido pelo telefone pessoal. Consumo baixo.
 2. Testar pelo telefone pessoal mudanças de assunto entre pós-venda, OS, parcelas, endereço e assuntos não atendidos; conferir logs e estados de conversa. Consumo médio.
-3. Ajustar as ferramentas e o prompt a partir das conversas reais antes de levar a mudança para `main`. Consumo médio.
+3. Avaliar a inclusão de consulta de receitas somente se o atendimento real demonstrar necessidade, preservando as regras de privacidade. Consumo médio.
 
 ## Ideias futuras
 

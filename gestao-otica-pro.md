@@ -584,3 +584,28 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Avaliar consulta automática de CNPJ para preencher razão social e endereço no cadastro PJ.
 
+# Diário - 01/09/2026
+
+## O que foi feito
+
+- Criada a branch `feature/whatsapp-ai-tools-experimental` para evoluir o atendimento de WhatsApp sem alterar a `main`.
+- Implementado, desativado por padrão e configurável por loja, o modo experimental em que a IA planeja consultas internas restritas e responde usando apenas os resultados retornados pelo sistema.
+- O agente pode consultar OS abertas, parcelas abertas e informações da loja; ele pode iniciar o pedido de nota de pós-venda e registrar uma nota de 1 a 5 somente quando existe um pós-venda pendente compatível.
+- O atendimento legado permanece como fallback enquanto o modo experimental não é habilitado. O painel do canal WhatsApp ganhou o controle para ativar o modo.
+- Adicionado teste de contrato que rejeita ferramentas não permitidas. O teste específico e `npm run typecheck` passaram.
+
+## Problemas encontrados ou pendências
+
+- `npm test` continua com duas falhas preexistentes e não relacionadas ao WhatsApp: expectativas do Electron sobre validação de URL e a URL de produção da Torre.
+- O modo experimental ainda não foi habilitado nem testado em conversa real na loja 1.
+
+## Próximos passos
+
+1. Publicar a branch experimental no ambiente de teste e ativar “Modo experimental: IA consulta o sistema” na configuração de WhatsApp da loja 1. Consumo médio.
+2. Testar pelo telefone pessoal mudanças de assunto entre pós-venda, OS, parcelas, endereço e assuntos não atendidos; conferir logs e estados de conversa. Consumo médio.
+3. Ajustar as ferramentas e o prompt a partir das conversas reais antes de levar a mudança para `main`. Consumo médio.
+
+## Ideias futuras
+
+- Persistir um resumo curto de conversa e uma lista de ações pendentes fora do estado temporário para ampliar o contexto sem crescer o prompt indefinidamente.
+

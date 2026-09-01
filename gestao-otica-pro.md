@@ -601,10 +601,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O primeiro teste real mostrou respostas factuais, porém dois planos da IA usaram nomes alternativos de ferramentas e recaíram no fluxo legado. A correção foi publicada na `main` no commit `b31d6fe`: nomes equivalentes agora são normalizados de forma restrita e CPF, nome ou número de pedido podem consultar OS ou parcelas sem repetir a pergunta de identificação.
 - A identidade do atendimento virtual foi definida como IAra. No modo experimental, ela se apresenta somente quando transfere a conversa para a equipe, sem expor limitações técnicas ao cliente; a alteração foi publicada na `main` no commit `586e8ec`.
 - A análise da conversa real identificou uma regra antiga que silenciava uma pergunta nova sobre prazo por reconhecer apenas o mesmo status da OS. A correção publicada na `main` no commit `8e0876a` restringe o silêncio a repetições literais e direciona prazo, atraso ou antecipação à equipe sem inventar data.
+- O handoff do WhatsApp foi alterado no commit `d8df67d`: o encaminhamento inicial da IAra permanece em contexto por até 48 horas enquanto a equipe ainda não respondeu; uma mensagem humana real ativa uma pausa de uma hora, renovada a cada nova mensagem humana.
 
 ## Próximos passos
 
-1. Aguardar a Vercel concluir o deploy da `main` com o commit `8e0876a` e repetir uma pergunta de prazo ou antecipação depois de consultar uma OS. Consumo baixo.
+1. Aguardar a Vercel concluir o deploy da `main` com o commit `d8df67d` e testar uma cobrança de retorno antes e depois de uma mensagem humana da loja. Consumo médio.
 2. Testar pelo telefone pessoal mudanças de assunto entre pós-venda, OS, parcelas, endereço e assuntos não atendidos; conferir logs e estados de conversa. Consumo médio.
 3. Avaliar a inclusão de consulta de receitas somente se o atendimento real demonstrar necessidade, preservando as regras de privacidade. Consumo médio.
 

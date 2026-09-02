@@ -631,6 +631,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Removida a tentativa adicional global de correção de JSON inválido, preservando o fallback seguro já existente.
 - As duas entradas correspondentes foram removidas da versão pendente 1.02.10; as regras exclusivas do modo experimental da loja 1 foram mantidas.
 - `npm run typecheck` passou.
+- A revisão de clientes parecidos passou a manter as mesclagens recentes fechadas por padrão e exibir inicialmente somente os cinco registros mais recentes, com opção de expandir o histórico. A versão pendente `1.02.11` foi aberta para essa melhoria.
 
 ## Problemas encontrados ou pendências
 
@@ -643,6 +644,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 1. Publicar esta reversão na `main` para restaurar o comportamento das lojas que usam o fluxo legado. Consumo baixo.
 2. Manter o modo experimental da loja 1 desativado até definir uma reconstrução menor e isolada. Consumo baixo.
 3. Aplicar a migration de handoff e validar com um encaminhamento automático seguido de resposta humana, confirmando a abertura e o encerramento da pendência no Radar e na Central. Consumo baixo.
+4. Validar visualmente a fila de clientes parecidos, confirmando que o histórico inicia fechado e que a expansão mostra os registros além dos cinco mais recentes. Consumo baixo.
 
 ## Ideias futuras
 

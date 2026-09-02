@@ -606,8 +606,6 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Corrigido o bloqueio que fazia uma resposta automática de status silenciar perguntas novas no modo experimental: apenas a repetição literal da pergunta anterior permanece silenciosa. O agente e a apresentação da IAra em handoff passaram a responder no idioma predominante do cliente, com suporte explícito para português, espanhol e inglês.
 - Handoffs automáticos que ainda alcancem o fluxo legado no modo experimental, incluindo os financeiros, passaram a usar o estado de equipe pendente. Assim, uma pergunta independente, como status da OS após falar de parcelas, continua podendo ser atendida; somente uma mensagem real da equipe inicia a pausa de uma hora.
 - Corrigida a mensagem do handoff financeiro que ainda usava o texto legado: com o modo experimental ativo, a IAra agora se apresenta ao encaminhar esse assunto e informa que continua disponível para dúvidas independentes sobre pedidos e óculos. O fluxo legado permanece inalterado; a simulação segue a mesma regra.
-- O provedor do modo experimental foi temporariamente fixado no OpenAI, usando o padrão `gpt-4.1-nano`, para comparar a aderência do plano de ferramentas. O banco confirmou a configuração correta da loja 1, mas os planos do Gemini estavam retornando JSON inválido; o Gemini pode ser reativado por `WHATSAPP_AI_PROVIDER=gemini`.
-- Quando uma resposta estruturada da IA falha na validação, o WhatsApp agora envia uma única correção ao mesmo provedor com o erro e o schema exigido. A tentativa de correção reaproveita o contexto e os resultados de ferramentas já obtidos, sem repetir consultas ou ações; o fallback permanece como proteção final.
 
 ## Próximos passos
 
@@ -618,4 +616,26 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Ideias futuras
 
 - Persistir um resumo curto de conversa e uma lista de ações pendentes fora do estado temporário para ampliar o contexto sem crescer o prompt indefinidamente.
+
+# Diário - 02/09/2026
+
+## O que foi feito
+
+- Restaurado o comportamento compartilhado da IA de WhatsApp: Gemini volta a ser a primeira tentativa e OpenAI permanece como fallback.
+- Removida a tentativa adicional global de correção de JSON inválido, preservando o fallback seguro já existente.
+- As duas entradas correspondentes foram removidas da versão pendente 1.02.10; as regras exclusivas do modo experimental da loja 1 foram mantidas.
+- `npm run typecheck` passou.
+
+## Problemas encontrados ou pendências
+
+- O modo experimental ainda não está confiável para atendimento real: a conversa pode interpretar mal perguntas comerciais e áudios enviados pela equipe ainda não são transcritos para contexto.
+
+## Próximos passos
+
+1. Publicar esta reversão na `main` para restaurar o comportamento das lojas que usam o fluxo legado. Consumo baixo.
+2. Manter o modo experimental da loja 1 desativado até definir uma reconstrução menor e isolada. Consumo baixo.
+
+## Ideias futuras
+
+- Reconstruir o experimento como atendimento textual independente, com contexto persistido e testes de conversas reais antes de integrar handoffs e fluxos legados.
 

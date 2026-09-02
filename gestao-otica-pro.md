@@ -634,6 +634,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - O modo experimental ainda não está confiável para atendimento real: a conversa pode interpretar mal perguntas comerciais e áudios enviados pela equipe ainda não são transcritos para contexto.
 - A migration de handoff precisa ser aplicada antes de publicar o código, pois as consultas da Central e do Radar passam a selecionar os novos campos persistidos.
+- A publicação direta com `npx vercel --prod` falhou antes do build: o vínculo local `.vercel/project.json` usa o ID `prj_KTnqEJxvUS1cXUi34yRnRl8q4vwi`, que a API respondeu como inexistente, e a criação do deploy foi rejeitada com `invalid_project_name`. O commit `18fdffe` já está na `main`; é necessário reparar o vínculo da Vercel antes de repetir a publicação direta.
 
 ## Próximos passos
 

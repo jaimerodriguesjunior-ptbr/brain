@@ -626,6 +626,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A versão 1.02.10 foi fechada a pedido do usuário com as correções de NFC-e e as melhorias de desempenho da Central WhatsApp; as entradas pendentes referentes à IA experimental foram removidas do histórico de entrega.
 - O histórico exibido no programa passou a mostrar exclusivamente deploys concluídos. A regra foi documentada: implementações novas podem usar caixa alta; correções e melhorias usam escrita normal.
 - Corrigida a abertura indevida da 1.02.11: os ajustes do histórico continuam pertencendo à 1.02.10. O Dashboard passou a derivar sempre a versão da primeira entrada de `RELEASE_HISTORY`, eliminando divergência com o modal mesmo se houver uma pendência interna.
+- O histórico público de versões deve listar somente entregas percebidas pelo usuário; regras internas de versionamento ou apresentação não entram como item de release.
 - Restaurado o comportamento compartilhado da IA de WhatsApp: Gemini volta a ser a primeira tentativa e OpenAI permanece como fallback.
 - Removida a tentativa adicional global de correção de JSON inválido, preservando o fallback seguro já existente.
 - As duas entradas correspondentes foram removidas da versão pendente 1.02.10; as regras exclusivas do modo experimental da loja 1 foram mantidas.

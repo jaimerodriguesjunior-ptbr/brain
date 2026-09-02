@@ -541,6 +541,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A lista de tags NFC do laboratório passou a exibir, no topo do modal, a URL de cadastro da próxima bandeja numerada da loja e um botão para copiar o endereço.
 - O próximo número é calculado a partir do maior identificador `NFC-BANDEJA-xxxxx` cadastrado na loja; a versão pendente foi aberta em `1.02.08`.
 - `npm run typecheck` passou.
+- Otimizada a Central de WhatsApp: a lista não abre uma conversa automaticamente, o histórico é carregado somente ao selecionar uma thread e os modos Automático, IA próxima e Humano atualizam localmente sem nova carga completa.
+- Criada a migration `20260902110000_persist_whatsapp_handoff_status.sql`: o estado pendente de handoff, origem e horários agora são gravados em `whatsapp_conversation_states`, com backfill e índice. A Central e o Radar passaram a ler esse estado persistido, sem revarrer mensagens outbound para classificar pendências.
 
 ## Problemas encontrados ou pendências
 
@@ -629,11 +631,13 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Problemas encontrados ou pendências
 
 - O modo experimental ainda não está confiável para atendimento real: a conversa pode interpretar mal perguntas comerciais e áudios enviados pela equipe ainda não são transcritos para contexto.
+- A migration de handoff precisa ser aplicada antes de publicar o código, pois as consultas da Central e do Radar passam a selecionar os novos campos persistidos.
 
 ## Próximos passos
 
 1. Publicar esta reversão na `main` para restaurar o comportamento das lojas que usam o fluxo legado. Consumo baixo.
 2. Manter o modo experimental da loja 1 desativado até definir uma reconstrução menor e isolada. Consumo baixo.
+3. Aplicar a migration de handoff e validar com um encaminhamento automático seguido de resposta humana, confirmando a abertura e o encerramento da pendência no Radar e na Central. Consumo baixo.
 
 ## Ideias futuras
 

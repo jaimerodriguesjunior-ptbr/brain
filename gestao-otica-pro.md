@@ -605,6 +605,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - No modo experimental, a IAra passou a reconstruir o contexto com as últimas mensagens persistidas de cliente, IA e equipe (até 12 mensagens dos últimos 7 dias). Imagens não são persistidas, mas um comprovante identificado pela visão é incluído como evento contextual; informações humanas são tratadas como contexto e a situação atual de OS ou parcela continua dependente de consulta ao sistema.
 - Corrigido o bloqueio que fazia uma resposta automática de status silenciar perguntas novas no modo experimental: apenas a repetição literal da pergunta anterior permanece silenciosa. O agente e a apresentação da IAra em handoff passaram a responder no idioma predominante do cliente, com suporte explícito para português, espanhol e inglês.
 - Handoffs automáticos que ainda alcancem o fluxo legado no modo experimental, incluindo os financeiros, passaram a usar o estado de equipe pendente. Assim, uma pergunta independente, como status da OS após falar de parcelas, continua podendo ser atendida; somente uma mensagem real da equipe inicia a pausa de uma hora.
+- Corrigida a mensagem do handoff financeiro que ainda usava o texto legado: com o modo experimental ativo, a IAra agora se apresenta ao encaminhar esse assunto e informa que continua disponível para dúvidas independentes sobre pedidos e óculos. O fluxo legado permanece inalterado; a simulação segue a mesma regra.
 
 ## Próximos passos
 

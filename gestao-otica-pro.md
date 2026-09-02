@@ -607,6 +607,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Handoffs automáticos que ainda alcancem o fluxo legado no modo experimental, incluindo os financeiros, passaram a usar o estado de equipe pendente. Assim, uma pergunta independente, como status da OS após falar de parcelas, continua podendo ser atendida; somente uma mensagem real da equipe inicia a pausa de uma hora.
 - Corrigida a mensagem do handoff financeiro que ainda usava o texto legado: com o modo experimental ativo, a IAra agora se apresenta ao encaminhar esse assunto e informa que continua disponível para dúvidas independentes sobre pedidos e óculos. O fluxo legado permanece inalterado; a simulação segue a mesma regra.
 - O provedor do modo experimental foi temporariamente fixado no OpenAI, usando o padrão `gpt-4.1-nano`, para comparar a aderência do plano de ferramentas. O banco confirmou a configuração correta da loja 1, mas os planos do Gemini estavam retornando JSON inválido; o Gemini pode ser reativado por `WHATSAPP_AI_PROVIDER=gemini`.
+- Quando uma resposta estruturada da IA falha na validação, o WhatsApp agora envia uma única correção ao mesmo provedor com o erro e o schema exigido. A tentativa de correção reaproveita o contexto e os resultados de ferramentas já obtidos, sem repetir consultas ou ações; o fallback permanece como proteção final.
 
 ## Próximos passos
 

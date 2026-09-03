@@ -667,10 +667,12 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Problemas encontrados ou pendências
 
 - A migration de preferências de pós-venda precisa ser aplicada junto da publicação antes de usar a nova aba do cadastro; a decisão contextual de lembretes também depende do deploy do app principal.
+- A migration `20260903190000_customer_whatsapp_message_preferences.sql` foi aplicada manualmente e suas colunas foram confirmadas no banco. A versão `1.02.13` foi fechada no histórico e o código foi commitado no MB Optical em `1742de5`.
+- O deploy da Vercel não foi concluído: a primeira tentativa retornou `Not authorized` porque o vínculo local aponta para um projeto/time que a conta autenticada não consegue acessar; a segunda tentativa sem o vínculo retornou erro de nome de projeto. O código e o banco estão prontos, mas o acesso/vínculo da Vercel precisa ser corrigido.
 
 ## Próximos passos
 
-1. Aplicar a migration de preferências de pós-venda e publicar a versão pendente 1.02.13. Consumo baixo.
+1. Corrigir o vínculo/acesso do projeto Vercel `gestao-otica-pro` e publicar o commit `1742de5`. Consumo baixo.
 2. Validar no cadastro de uma loja com automações ativas a aba Mensagens, desmarcando cada opção e confirmando o cancelamento de um job agendado. Consumo médio.
 3. Validar em uma conversa de teste uma frase como “pode parar” logo após um lembrete de parcela. Consumo baixo.
 4. Validar visualmente uma busca por cliente ou venda antiga com um período recente selecionado. Consumo baixo.

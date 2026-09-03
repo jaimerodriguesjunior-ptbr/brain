@@ -650,3 +650,23 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Reconstruir o experimento como atendimento textual independente, com contexto persistido e testes de conversas reais antes de integrar handoffs e fluxos legados.
 
+# Diário - 03/09/2026
+
+## O que foi feito
+
+- O filtro de texto do Histórico de vendas passou a pesquisar vendas de qualquer data, mesmo quando há um período selecionado; os filtros de data continuam funcionando normalmente quando a busca textual está vazia.
+- A melhoria foi registrada na versão pendente `1.02.12`.
+- `npm run typecheck` passou.
+
+## Problemas encontrados ou pendências
+
+- Nenhum problema novo encontrado durante a implementação.
+
+## Próximos passos
+
+1. Validar visualmente uma busca por cliente ou venda antiga com um período recente selecionado. Consumo baixo.
+
+## Ideias futuras
+
+- Avaliar uma indicação visual discreta no campo de busca informando que a pesquisa textual ignora o período selecionado.
+

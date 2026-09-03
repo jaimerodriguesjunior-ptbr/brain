@@ -658,16 +658,21 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A melhoria foi registrada na versão pendente `1.02.12`.
 - `npm run typecheck` passou.
 - Removida permanentemente a venda de teste `13589` da store 1, junto com o cliente de teste `APAGAR AS VENDAS DESSE CLIENTE` e seus vínculos encontrados; a verificação posterior não encontrou resíduos.
+- O bloqueio de lembretes de parcelas no WhatsApp passou a exigir o contexto persistido de um lembrete recente. Respostas livres que indiquem possível cancelamento são avaliadas por uma decisão estruturada da IA; somente uma confirmação clara grava o opt-out, restrito aos lembretes de vencimento.
+- A resposta exata `PARAR` também passou a exigir esse contexto, evitando bloquear outras automações fora da conversa de cobrança. A preferência de uma cliente que solicitou o cancelamento foi gravada diretamente no banco.
+- `npm run typecheck` e o teste direcionado `tests/whatsapp-status-context.test.ts` passaram.
 
 ## Problemas encontrados ou pendências
 
-- Nenhum problema novo encontrado durante a implementação.
+- A decisão contextual depende da publicação do app principal para passar a interpretar novas respostas livres; o bloqueio individual já gravado é respeitado pela automação atual.
 
 ## Próximos passos
 
-1. Validar visualmente uma busca por cliente ou venda antiga com um período recente selecionado. Consumo baixo.
+1. Publicar a versão pendente 1.02.13 e validar em uma conversa de teste uma frase como “pode parar” logo após um lembrete de parcela. Consumo baixo.
+2. Validar visualmente uma busca por cliente ou venda antiga com um período recente selecionado. Consumo baixo.
 
 ## Ideias futuras
 
 - Avaliar uma indicação visual discreta no campo de busca informando que a pesquisa textual ignora o período selecionado.
+- Adicionar uma ação operacional para ativar ou reativar a preferência de lembretes sem depender de uma mensagem do cliente.
 

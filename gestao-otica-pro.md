@@ -661,18 +661,23 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O bloqueio de lembretes de parcelas no WhatsApp passou a exigir o contexto persistido de um lembrete recente. Respostas livres que indiquem possível cancelamento são avaliadas por uma decisão estruturada da IA; somente uma confirmação clara grava o opt-out, restrito aos lembretes de vencimento.
 - A resposta exata `PARAR` também passou a exigir esse contexto, evitando bloquear outras automações fora da conversa de cobrança. A preferência de uma cliente que solicitou o cancelamento foi gravada diretamente no banco.
 - `npm run typecheck` e o teste direcionado `tests/whatsapp-status-context.test.ts` passaram.
+- O cadastro de clientes ganhou a aba condicional “Mensagens”, exibida quando a loja possui a automação correspondente ativa. Ela permite manter ou desmarcar, por telefone, lembretes de parcelas e acompanhamento automático de pós-venda; ambos começam permitidos por padrão e não restringem mensagens manuais.
+- Criada a migration `20260903190000_customer_whatsapp_message_preferences.sql` para persistir a preferência de pós-venda. O job de pós-venda agora consulta essa preferência tanto ao agendar quanto imediatamente antes de enviar.
 
 ## Problemas encontrados ou pendências
 
-- A decisão contextual depende da publicação do app principal para passar a interpretar novas respostas livres; o bloqueio individual já gravado é respeitado pela automação atual.
+- A migration de preferências de pós-venda precisa ser aplicada junto da publicação antes de usar a nova aba do cadastro; a decisão contextual de lembretes também depende do deploy do app principal.
 
 ## Próximos passos
 
-1. Publicar a versão pendente 1.02.13 e validar em uma conversa de teste uma frase como “pode parar” logo após um lembrete de parcela. Consumo baixo.
-2. Validar visualmente uma busca por cliente ou venda antiga com um período recente selecionado. Consumo baixo.
+1. Aplicar a migration de preferências de pós-venda e publicar a versão pendente 1.02.13. Consumo baixo.
+2. Validar no cadastro de uma loja com automações ativas a aba Mensagens, desmarcando cada opção e confirmando o cancelamento de um job agendado. Consumo médio.
+3. Validar em uma conversa de teste uma frase como “pode parar” logo após um lembrete de parcela. Consumo baixo.
+4. Validar visualmente uma busca por cliente ou venda antiga com um período recente selecionado. Consumo baixo.
 
 ## Ideias futuras
 
 - Avaliar uma indicação visual discreta no campo de busca informando que a pesquisa textual ignora o período selecionado.
 - Adicionar uma ação operacional para ativar ou reativar a preferência de lembretes sem depender de uma mensagem do cliente.
+- Incluir preferências de aniversário ou campanhas somente quando esses jobs automáticos existirem, usando o mesmo modelo por loja e telefone.
 

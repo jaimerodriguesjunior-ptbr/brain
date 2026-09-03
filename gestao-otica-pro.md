@@ -657,6 +657,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O filtro de texto do Histórico de vendas passou a pesquisar vendas de qualquer data, mesmo quando há um período selecionado; os filtros de data continuam funcionando normalmente quando a busca textual está vazia.
 - A melhoria foi registrada na versão pendente `1.02.12`.
 - `npm run typecheck` passou.
+- Removida permanentemente a venda de teste `13589` da store 1, junto com o cliente de teste `APAGAR AS VENDAS DESSE CLIENTE` e seus vínculos encontrados; a verificação posterior não encontrou resíduos.
 
 ## Problemas encontrados ou pendências
 

@@ -723,16 +723,18 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - A tabela de parcelas ganhou uma largura mínima horizontal de 1240px, mantendo rolagem em telas menores.
 - A coluna de ações e os botões de comprovante e reversão passaram a não encolher, evitando que o botão Reverter seja cortado.
+- Identificado que o limite externo `max-w-6xl` restringia o quadro a 1152px; ele foi removido para a tabela usar toda a largura disponível.
 - A correção foi registrada em `PENDING_RELEASE_CHANGES` na versão pendente `1.02.15`.
 - `npm run typecheck` e `git diff --check` passaram.
+- Correção publicada na `main` pelo commit `bcd2b69`.
 
 ## Problemas encontrados ou pendências
 
-- Não houve pendência técnica após a validação. A conferência visual no navegador ainda deve ser feita após atualizar a aplicação.
+- A publicação precisa concluir no provedor de hospedagem antes da conferência visual final; hard refresh não aplica alterações que ainda não chegaram à produção.
 
 ## Próximos passos
 
-1. Publicar a versão pendente e conferir a tabela de parcelas em uma tela larga e em uma tela menor. Consumo baixo.
+1. Confirmar que a publicação do commit `bcd2b69` terminou e conferir a tabela de parcelas em uma tela larga e em uma tela menor. Consumo baixo.
 
 ## Ideias futuras
 

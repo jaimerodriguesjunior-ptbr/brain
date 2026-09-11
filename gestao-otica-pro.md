@@ -683,3 +683,58 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Adicionar uma ação operacional para ativar ou reativar a preferência de lembretes sem depender de uma mensagem do cliente.
 - Incluir preferências de aniversário ou campanhas somente quando esses jobs automáticos existirem, usando o mesmo modelo por loja e telefone.
 
+# Diário - 08/09/2026
+
+## O que foi feito
+
+- No tablet de medidas da MB Optical, depois do gabarito, passou a existir o botão Analisar com IA. A chamada não é automática.
+- A YOLO frontal ficou em serviço próprio em `services/lens-segmentation/`, com cópia congelada do `best.pt` (sha256 no `MODEL_SOURCE.txt`). A Torre-NeoSmart não foi alterada.
+- O app emite um token HMAC curto; a foto vai direto à VPS, é apagada depois da inferência e os pontos de aro/ponte/altura podem ser corrigidos na mão.
+- A/B/D continua sendo o aro do OD. Se a coluna da pupila não cruzar a máscara, a altura não muda.
+- Item registrado na versão pendente `1.02.14`.
+- `npm run typecheck` e os testes `tests/front-lens-segmentation.test.ts` e `tests/lens-segment-token.test.ts` passaram.
+- A tela inicial do medidor no tablet ficou com galeria e um unico botao de camera, sem guia DNP e sem grade. `npm run typecheck` passou de novo.
+- A versao `1.02.14` foi fechada no historico em 08/09/2026 com as mudancas acumuladas do tablet de medidas, da analise com IA e do Hub Gerencial. `PENDING_RELEASE_VERSION` e a lista pendente foram limpos.
+- A emissão do token de segmentação passou a exigir sessão autenticada, acesso à loja e correspondência de tenant; a URL do worker aceita HTTPS público e HTTP apenas em localhost.
+- Restauradas as exclusões usuais da Vercel e mantido o peso `best.pt` fora do envio do app; a documentação do proxy agora prevê 15 MB para acomodar a foto em Base64.
+- O worker foi provisionado na VPS em `/opt/lens-segmentation`, sob o usuário sem privilégios `lenssegmentation`, com PyTorch CPU e healthcheck privado em `127.0.0.1:8090`.
+- O Nginx publica somente `https://fiscal.mentebinaria.com/lens-segmentation/v1/segment`; a rota fiscal existente continua em `127.0.0.1:3001` e respondeu health `200` depois da alteração.
+- O preflight CORS da origem `https://gestao-otica-pro.vercel.app` respondeu `204`; origem não autorizada respondeu `403`.
+
+## Problemas encontrados ou pendências
+
+- Sem `LENS_SEGMENT_URL` e `LENS_SEGMENT_INTERNAL_SECRET` no ambiente de produção do app, o botão mostra análise indisponível e o medidor manual segue igual.
+- Não houve validação no tablet físico nem com foto real contra o worker.
+- A sessão Vercel local `gestaooticapro-spec` não possui acesso ao projeto vinculado, então as variáveis de produção ainda não puderam ser conferidas ou atualizadas.
+
+## Próximos passos
+
+1. Configurar no Vercel do app `LENS_SEGMENT_URL=https://fiscal.mentebinaria.com/lens-segmentation` e o mesmo `LENS_SEGMENT_INTERNAL_SECRET` gravado no `.env.local` deste projeto, depois publicar o app. Consumo baixo.
+2. Validar no tablet: sessão autenticada, gabarito, Analisar com IA, arraste posterior, falha da VPS sem apagar pontos. Consumo médio.
+
+## Ideias futuras
+
+- Rate-limit persistente por loja para limitar o uso do worker, mesmo por sessões autenticadas.
+- Atualizar o snapshot do `best.pt` só com cópia consciente e novo sha256.
+
+# Diário - 11/09/2026
+
+## O que foi feito
+
+- A tabela de parcelas ganhou uma largura mínima horizontal de 1240px, mantendo rolagem em telas menores.
+- A coluna de ações e os botões de comprovante e reversão passaram a não encolher, evitando que o botão Reverter seja cortado.
+- A correção foi registrada em `PENDING_RELEASE_CHANGES` na versão pendente `1.02.15`.
+- `npm run typecheck` e `git diff --check` passaram.
+
+## Problemas encontrados ou pendências
+
+- Não houve pendência técnica após a validação. A conferência visual no navegador ainda deve ser feita após atualizar a aplicação.
+
+## Próximos passos
+
+1. Publicar a versão pendente e conferir a tabela de parcelas em uma tela larga e em uma tela menor. Consumo baixo.
+
+## Ideias futuras
+
+- Avaliar uma largura responsiva específica para a coluna de ações caso novos botões sejam adicionados ao quadro.
+

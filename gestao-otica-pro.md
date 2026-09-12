@@ -744,6 +744,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## O que foi feito
 
+- Falha de NFC-e da Ocular e da Center com `ECONNREFUSED 200.189.124.39:443` foi diagnosticada como webservice de produção da NFC-e da SEFAZ/PR fora do ar; a nuvem local continuava no ar. O número 1423 da Ocular já estava reservado.
+- A mensagem operacional dessas falhas de comunicação com a SEFAZ passou a ser: não foi possível falar com a SEFAZ, a nota não foi autorizada, tente novamente mais tarde. O detalhe técnico permanece só no botão de detalhes.
 - O catálogo global misto OMEGALUX / PRO LIFE foi separado em duas versões publicadas: OMEGALUX Julho 2026, com três famílias, e HOYA Dezembro 2025 com PRO LIFE Julho 2026, com a Hoya integral e a família PRO LIFE VI.
 - A Hoya original permaneceu inalterada nas lojas reais. Somente a loja fictícia Otica Globo 1, usada pela Neosmart, recebeu as duas versões novas; a versão mista foi desativada e arquivada, sem exclusão.
 - O banco passou a impedir ativações de catálogos que não estejam publicados. O app e o script administrativo também recusam essas ativações, e as interfaces operacionais ocultam versões não publicadas.
@@ -753,6 +755,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Problemas encontrados ou pendências
 
+- A SEFAZ/PR NFC-e de produção ainda recusava a porta 443 no momento da conferência; emitir de novo na Ocular pularia do 1423 para o 1424.
+- A mensagem amigável da SEFAZ ficou no código local da 1.02.15; `npm run typecheck` passou, sem conferência visual no navegador desta sessão.
 - A auditoria externa informava 43 grades OmegaLux, mas o banco confirmou 33: 14 da OMEGALUX 4K, 13 da DIGITAL e 6 da IN. As 44 ofertas sem grade da tabela mista continuam sendo uma limitação preexistente.
 - A suíte completa continua com duas falhas preexistentes do Electron: expectativa antiga de validação de caminho IPC e URL de produção diferente da configurada para a Neosmart.
 - As proteções de interface e servidor estão no código local da versão pendente 1.02.15 e ainda dependem do próximo deploy; a proteção equivalente no banco já está ativa.
@@ -761,9 +765,10 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 ## Próximos passos
 
 1. Incluir as mudanças locais no próximo commit/deploy da versão 1.02.15 e validar visualmente as três opções de tabela. Consumo baixo.
-2. Validar a sincronização do catálogo operacional no repositório `torre-neosmart` usando a loja fictícia 7. Consumo médio.
-3. Corrigir as 44 ofertas sem grade em uma tarefa separada, com conferência das fontes. Consumo médio.
-4. Reparar o histórico remoto de migrations antes de voltar a usar `supabase db push`. Consumo baixo.
+2. Depois do deploy, conferir na lista fiscal da Ocular que a NFC-e 1423 mostra o aviso amigável da SEFAZ, e não o ECONNREFUSED. Consumo baixo.
+3. Validar a sincronização do catálogo operacional no repositório `torre-neosmart` usando a loja fictícia 7. Consumo médio.
+4. Corrigir as 44 ofertas sem grade em uma tarefa separada, com conferência das fontes. Consumo médio.
+5. Reparar o histórico remoto de migrations antes de voltar a usar `supabase db push`. Consumo baixo.
 
 ## Ideias futuras
 

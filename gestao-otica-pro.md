@@ -740,3 +740,32 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Avaliar uma largura responsiva específica para a coluna de ações caso novos botões sejam adicionados ao quadro.
 
+# Diário - 12/09/2026
+
+## O que foi feito
+
+- O catálogo global misto OMEGALUX / PRO LIFE foi separado em duas versões publicadas: OMEGALUX Julho 2026, com três famílias, e HOYA Dezembro 2025 com PRO LIFE Julho 2026, com a Hoya integral e a família PRO LIFE VI.
+- A Hoya original permaneceu inalterada nas lojas reais. Somente a loja fictícia Otica Globo 1, usada pela Neosmart, recebeu as duas versões novas; a versão mista foi desativada e arquivada, sem exclusão.
+- O banco passou a impedir ativações de catálogos que não estejam publicados. O app e o script administrativo também recusam essas ativações, e as interfaces operacionais ocultam versões não publicadas.
+- A preferência de IA da loja fictícia foi remapeada para OMEGALUX com peso 5 e HOYA com PRO LIFE com peso 3.
+- A clonagem e a publicação foram executadas em transações com dry-run prévio. A auditoria final confirmou 23 famílias/547 ofertas na HOYA com PRO LIFE e 3 famílias/65 ofertas na OMEGALUX.
+- `npm run typecheck`, lint direcionado e a auditoria final do banco passaram. A primeira etapa da suíte registrou 69 testes aprovados e a segunda 32 aprovados.
+
+## Problemas encontrados ou pendências
+
+- A auditoria externa informava 43 grades OmegaLux, mas o banco confirmou 33: 14 da OMEGALUX 4K, 13 da DIGITAL e 6 da IN. As 44 ofertas sem grade da tabela mista continuam sendo uma limitação preexistente.
+- A suíte completa continua com duas falhas preexistentes do Electron: expectativa antiga de validação de caminho IPC e URL de produção diferente da configurada para a Neosmart.
+- As proteções de interface e servidor estão no código local da versão pendente 1.02.15 e ainda dependem do próximo deploy; a proteção equivalente no banco já está ativa.
+- O histórico remoto de migrations está vazio, apesar das migrations terem sido aplicadas diretamente pelo PostgreSQL; isso deve ser reparado antes de usar `supabase db push`.
+
+## Próximos passos
+
+1. Incluir as mudanças locais no próximo commit/deploy da versão 1.02.15 e validar visualmente as três opções de tabela. Consumo baixo.
+2. Validar a sincronização do catálogo operacional no repositório `torre-neosmart` usando a loja fictícia 7. Consumo médio.
+3. Corrigir as 44 ofertas sem grade em uma tarefa separada, com conferência das fontes. Consumo médio.
+4. Reparar o histórico remoto de migrations antes de voltar a usar `supabase db push`. Consumo baixo.
+
+## Ideias futuras
+
+- Separar no modelo o fabricante comercial do grupo de exclusão de ativação, caso outras combinações de tabelas surjam no futuro.
+

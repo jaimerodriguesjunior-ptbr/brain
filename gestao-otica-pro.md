@@ -780,16 +780,16 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - O watchdog de conexão e a reconciliação de mensagens da automação WhatsApp passaram a consultar os canais Evolution ativos do app e operar por instância, com cooldown próprio. O ping auditado da tela de loja vazia permaneceu restrito à Loja 1.
 - A publicação do app respondeu com as lojas 1 a 5 ativas. O container `whatsapp_automation` foi atualizado isoladamente na VPS, com cópia de segurança do arquivo anterior. Logs confirmaram scans das cinco lojas e recuperação de entradas ausentes na Loja 2.
-- A versão 1.02.15 foi registrada no histórico após a publicação; o próximo patch ainda não foi aberto. `npm run typecheck`, `npm run build`, checagem de sintaxe Node e healthcheck do serviço passaram.
+- A versão 1.02.15 continua pendente, sem entrada nova em `RELEASE_HISTORY`; os textos internos sobre catálogos, geometrias e Torre foram removidos do registro. A política de fechamento foi documentada em `RELEASE_VERSIONING_POLICY.md`: somente o comando literal "mude a versão" autoriza mover textos para o histórico. `npm run typecheck`, `npm run build`, checagem de sintaxe Node e healthcheck do serviço passaram.
 
 ## Problemas encontrados ou pendências
 
-- A CLI Vercel local continua sem acesso à equipe do projeto; a publicação do app ocorreu pela integração Git. Não foi observada uma queda real da Loja 2 após a atualização, então a recuperação automática de conexão ainda não foi exercitada em produção.
+- A CLI Vercel local continua sem acesso à equipe do projeto; o novo deploy do app foi disparado pela integração Git após o commit `d83fa9d`. Não foi observada uma queda real da Loja 2 após a atualização, então a recuperação automática de conexão ainda não foi exercitada em produção.
 
 ## Próximos passos
 
 1. Acompanhar os logs do watchdog e os estados da Evolution por alguns dias, especialmente na Loja 2, sem forçar desconexão de produção. Consumo baixo.
-2. Conferir no Dashboard que a versão 1.02.15 está visível depois da publicação do commit de fechamento. Consumo baixo.
+2. Conferir no Dashboard que o número publicado permanece inalterado e que os textos internos não aparecem no histórico após o deploy. Consumo baixo.
 
 ## Ideias futuras
 

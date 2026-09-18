@@ -795,3 +795,31 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Exibir um resumo operacional por instância das verificações e reinícios do watchdog, caso o volume de lojas cresça.
 
+# Diário - 18/09/2026
+
+## O que foi feito
+
+- Iniciada na branch `feature/whatsapp-ia-conversation-redesign` a implementação isolada do novo orquestrador da IAra, sem alterar o fluxo que atualmente responde aos clientes.
+- Foram criados contratos estritos para memória, estados independentes, classificação estruturada, decisão canônica e humanização controlada.
+- A regra de controle humano foi codificada com bloqueio de 2 horas desde a última mensagem do funcionário, preservação do contexto após a expiração e prioridade permanente para `force_human`.
+- Foi criada a fundação de persistência do redesign: resumo por conversa, mensagens literais individuais e idempotentes, janela das 10 mais recentes e turnos que referenciam as mensagens sem concatená-las.
+- O plano `WHATSAPP_IA_REDESIGN_PLAN.md` passou a registrar claramente o que já está implementado e que a fundação ainda não está conectada ao webhook.
+- `npm run typecheck`, `git diff --check` e os 11 testes específicos do redesign passaram. A etapa TypeScript da suíte completa também passou com 81 testes.
+
+## Problemas encontrados ou pendências
+
+- A migration da nova memória foi criada, mas ainda não foi aplicada a nenhum banco.
+- A nova persistência ainda não recebe eventos reais nem executa em modo sombra; o roteador legado continua sendo o único que responde.
+- A suíte completa mantém duas falhas preexistentes em testes do Electron: uma expectativa antiga sobre validação de caminho IPC e a URL antiga esperada para produção.
+
+## Próximos passos
+
+1. Criar o adaptador de ingestão em modo sombra para espelhar mensagens recebidas, enviadas pela IA e enviadas por funcionário, sem responder ao cliente. Consumo médio.
+2. Implementar o fechamento seguro da janela curta e a criação atômica dos turnos, com deduplicação por mensagem do provedor. Consumo médio.
+3. Aplicar a migration em ambiente de desenvolvimento e validar persistência, ordenação e isolamento por loja/canal. Consumo baixo.
+4. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real. Consumo alto.
+
+## Ideias futuras
+
+- Exibir na Central de WhatsApp a memória estruturada, as mensagens do turno e o motivo da decisão quando o modo sombra estiver operacional.
+

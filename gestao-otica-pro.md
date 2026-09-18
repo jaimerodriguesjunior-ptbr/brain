@@ -807,19 +807,21 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Falhas do armazenamento novo são tratadas de forma fail-open para a captura: ficam registradas no servidor, mas não interrompem nem modificam a resposta do fluxo legado.
 - O encerramento da janela curta passou a criar atomicamente um turno `ready` e seus vínculos com as mensagens. A chave por último `provider_message_id` torna retries idempotentes e rejeita colisões com conteúdo diferente.
 - O limite de 10 mensagens foi mantido somente para o contexto da IA; um turno preserva até 50 mensagens literais para auditoria.
+- A migration `20260918150000_whatsapp_conversation_memory.sql` foi aplicada manualmente pelo usuário e validada via service role: as quatro tabelas estavam acessíveis e vazias, e a RPC atômica existia e rejeitou corretamente uma conversa inexistente sem gravar dados.
+- O levantamento somente leitura dos canais ativos mostrou todas as lojas ainda em `legacy`; a loja 3, Otica Prisma 5, teve o menor volume recente, com 60 inbounds em 7 dias, e é a candidata técnica mais conservadora para o primeiro piloto.
 - O plano `WHATSAPP_IA_REDESIGN_PLAN.md` passou a registrar claramente o que já está implementado e que a fundação ainda não está conectada ao webhook.
 - `npm run typecheck`, `git diff --check` e os 11 testes específicos do redesign passaram. A etapa TypeScript da suíte completa também passou com 81 testes.
 
 ## Problemas encontrados ou pendências
 
-- A migration da nova memória foi criada, mas ainda não foi aplicada a nenhum banco.
+- Nenhuma loja foi ativada em `shadow`; falta a escolha explícita da loja piloto e o código desta branch ainda precisa ser publicado antes de esperar capturas reais.
 - A nova persistência possui pontos de captura reais, mas nenhuma loja foi colocada em `shadow` nesta sessão; o roteador legado continua sendo o único que responde.
 - A suíte completa mantém duas falhas preexistentes em testes do Electron: uma expectativa antiga sobre validação de caminho IPC e a URL antiga esperada para produção.
 
 ## Próximos passos
 
-1. Aplicar a migration em ambiente de desenvolvimento e validar persistência, ordenação, atomicidade e isolamento por loja/canal. Consumo baixo.
-2. Ativar `shadow` em apenas uma loja piloto depois da migration e auditar as mensagens gravadas sem envio pelo redesign. Consumo baixo.
+1. Publicar o código da branch e ativar `shadow` em uma única loja escolhida, preferencialmente a loja 3 pelo menor volume recente. Consumo baixo.
+2. Auditar mensagens, turnos, ordenação, atomicidade e isolamento da loja piloto sem envio pelo redesign. Consumo baixo.
 3. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real. Consumo alto.
 
 ## Ideias futuras

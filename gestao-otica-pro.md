@@ -805,6 +805,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Foi criada a fundação de persistência do redesign: resumo por conversa, mensagens literais individuais e idempotentes, janela das 10 mais recentes e turnos que referenciam as mensagens sem concatená-las.
 - O modo sombra foi conectado às entradas reais e às confirmações de saída: mensagens agregadas voltam a ser separadas, anexos entram sem base64 e saídas distinguem IA de funcionário. A ativação é explícita por loja e `legacy` permanece como padrão.
 - Falhas do armazenamento novo são tratadas de forma fail-open para a captura: ficam registradas no servidor, mas não interrompem nem modificam a resposta do fluxo legado.
+- O encerramento da janela curta passou a criar atomicamente um turno `ready` e seus vínculos com as mensagens. A chave por último `provider_message_id` torna retries idempotentes e rejeita colisões com conteúdo diferente.
+- O limite de 10 mensagens foi mantido somente para o contexto da IA; um turno preserva até 50 mensagens literais para auditoria.
 - O plano `WHATSAPP_IA_REDESIGN_PLAN.md` passou a registrar claramente o que já está implementado e que a fundação ainda não está conectada ao webhook.
 - `npm run typecheck`, `git diff --check` e os 11 testes específicos do redesign passaram. A etapa TypeScript da suíte completa também passou com 81 testes.
 
@@ -816,10 +818,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Implementar o fechamento seguro da janela curta e a criação atômica dos turnos, com deduplicação por mensagem do provedor. Consumo médio.
-2. Aplicar a migration em ambiente de desenvolvimento e validar persistência, ordenação e isolamento por loja/canal. Consumo baixo.
-3. Ativar `shadow` em apenas uma loja piloto depois da migration e auditar as mensagens gravadas sem envio pelo redesign. Consumo baixo.
-4. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real. Consumo alto.
+1. Aplicar a migration em ambiente de desenvolvimento e validar persistência, ordenação, atomicidade e isolamento por loja/canal. Consumo baixo.
+2. Ativar `shadow` em apenas uma loja piloto depois da migration e auditar as mensagens gravadas sem envio pelo redesign. Consumo baixo.
+3. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real. Consumo alto.
 
 ## Ideias futuras
 

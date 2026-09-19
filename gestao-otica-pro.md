@@ -820,10 +820,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A branch foi integrada por fast-forward à `main` e publicada. A Vercel confirmou os deploys dos commits `ea4dfaa` (redesign) e `c2bbf95` (correção do registro de release). A nota de release que descrevia a política de expediente como funcional para clientes foi removida, pois ela ainda é somente uma regra do núcleo em modo sombra.
 - O primeiro teste real posterior ao deploy na Loja 1 confirmou a captura das três mensagens individuais, na ordem correta, em uma conversa `shadow`. A criação do turno falhou de forma fail-open porque o PostgreSQL devolveu `timestamptz` com `+00:00` e o contrato interno exigia UTC terminado em `Z`.
 - A normalização do horário persistido foi implementada e testada no caso real; os 24 testes direcionados e o typecheck passaram. A correção foi publicada na `main` no commit `7a9bc57`, com deploy de produção confirmado pela Vercel.
+- A repetição real na Loja 1 confirmou o fluxo ponta a ponta da captura sombra: três mensagens novas foram preservadas separadamente e criaram um turno `ready` com três vínculos nas posições 0, 1 e 2. O turno registrou a janela de agregação de 20 segundos e permaneceu sem processamento ou envio, como previsto para `shadow`.
 
 ## Problemas encontrados ou pendências
 
-- O modo sombra da Loja 1 está ativo no banco e o app publicado já inclui a captura e a correção do turno; ainda falta a validação ponta a ponta com novas mensagens, pois as mensagens usadas antes da correção não são reprocessadas.
+- O modo sombra da Loja 1 está ativo no banco, e a captura de mensagens e criação de turno foram validadas ponta a ponta. Ainda faltam validar a memória com uma saída automática e uma saída humana, sem ativar envio pelo redesign.
 - A política de expediente já está codificada e testada no núcleo isolado, mas ainda não responde clientes: enquanto a Loja 1 estiver em `shadow`, o roteador legado continua sendo o único que envia respostas.
 - A suíte completa mantém duas falhas preexistentes em testes do Electron: uma expectativa antiga sobre validação de caminho IPC e a URL antiga esperada para produção.
 - A primeira chamada de uma instância aquecida ainda consulta o modo da loja; chamadas seguintes por até 60 segundos reutilizam o resultado. Em instâncias serverless frias o cache recomeça, sem alterar respostas.

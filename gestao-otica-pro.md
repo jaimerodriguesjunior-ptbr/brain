@@ -810,19 +810,20 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A migration `20260918150000_whatsapp_conversation_memory.sql` foi aplicada manualmente pelo usuário e validada via service role: as quatro tabelas estavam acessíveis e vazias, e a RPC atômica existia e rejeitou corretamente uma conversa inexistente sem gravar dados.
 - O levantamento somente leitura dos canais ativos mostrou todas as lojas ainda em `legacy`; a loja 3, Otica Prisma 5, teve o menor volume recente, com 60 inbounds em 7 dias, e é a candidata técnica mais conservadora para o primeiro piloto.
 - O usuário escolheu a Loja 1, Ótica Prisma Guaíra, para acompanhar pessoalmente o piloto. O commit `1c9c6bf` foi publicado e a branch passou a rastrear `origin/feature/whatsapp-ia-conversation-redesign`.
+- O usuário confirmou estar no novo deploy de produção em `https://gestao-otica-pro.vercel.app/dashboard/loja/1`. A Loja 1 foi ativada em `shadow` diretamente em `stores.settings`; as lojas 2 a 5 foram verificadas e permaneceram em `legacy`.
 - O plano `WHATSAPP_IA_REDESIGN_PLAN.md` passou a registrar claramente o que já está implementado e que a fundação ainda não está conectada ao webhook.
 - `npm run typecheck`, `git diff --check` e os 11 testes específicos do redesign passaram. A etapa TypeScript da suíte completa também passou com 81 testes.
 
 ## Problemas encontrados ou pendências
 
-- Nenhuma loja foi ativada em `shadow`; falta a escolha explícita da loja piloto e o código desta branch ainda precisa ser publicado antes de esperar capturas reais.
+- O modo sombra da Loja 1 está ativo, mas ainda falta gerar e auditar uma conversa nova para confirmar a captura ponta a ponta no deploy.
 - A nova persistência possui pontos de captura reais, mas nenhuma loja foi colocada em `shadow` nesta sessão; o roteador legado continua sendo o único que responde.
 - A suíte completa mantém duas falhas preexistentes em testes do Electron: uma expectativa antiga sobre validação de caminho IPC e a URL antiga esperada para produção.
 
 ## Próximos passos
 
-1. Integrar/publicar a branch no ambiente do app e só depois ativar `shadow` na Loja 1. Consumo baixo.
-2. Auditar mensagens, turnos, ordenação, atomicidade e isolamento da Loja 1 sem envio pelo redesign. Consumo baixo.
+1. Enviar uma conversa de teste para a Loja 1 e auditar mensagens, turnos, ordenação, atomicidade e isolamento, sem envio pelo redesign. Consumo baixo.
+2. Confirmar também uma resposta automática e uma resposta humana na memória sombra. Consumo baixo.
 3. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real. Consumo alto.
 
 ## Ideias futuras

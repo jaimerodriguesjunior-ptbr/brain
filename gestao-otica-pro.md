@@ -809,6 +809,7 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O limite de 10 mensagens foi mantido somente para o contexto da IA; um turno preserva até 50 mensagens literais para auditoria.
 - A migration `20260918150000_whatsapp_conversation_memory.sql` foi aplicada manualmente pelo usuário e validada via service role: as quatro tabelas estavam acessíveis e vazias, e a RPC atômica existia e rejeitou corretamente uma conversa inexistente sem gravar dados.
 - O levantamento somente leitura dos canais ativos mostrou todas as lojas ainda em `legacy`; a loja 3, Otica Prisma 5, teve o menor volume recente, com 60 inbounds em 7 dias, e é a candidata técnica mais conservadora para o primeiro piloto.
+- O usuário escolheu a Loja 1, Ótica Prisma Guaíra, para acompanhar pessoalmente o piloto. O commit `1c9c6bf` foi publicado e a branch passou a rastrear `origin/feature/whatsapp-ia-conversation-redesign`.
 - O plano `WHATSAPP_IA_REDESIGN_PLAN.md` passou a registrar claramente o que já está implementado e que a fundação ainda não está conectada ao webhook.
 - `npm run typecheck`, `git diff --check` e os 11 testes específicos do redesign passaram. A etapa TypeScript da suíte completa também passou com 81 testes.
 
@@ -820,8 +821,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Publicar o código da branch e ativar `shadow` em uma única loja escolhida, preferencialmente a loja 3 pelo menor volume recente. Consumo baixo.
-2. Auditar mensagens, turnos, ordenação, atomicidade e isolamento da loja piloto sem envio pelo redesign. Consumo baixo.
+1. Integrar/publicar a branch no ambiente do app e só depois ativar `shadow` na Loja 1. Consumo baixo.
+2. Auditar mensagens, turnos, ordenação, atomicidade e isolamento da Loja 1 sem envio pelo redesign. Consumo baixo.
 3. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real. Consumo alto.
 
 ## Ideias futuras

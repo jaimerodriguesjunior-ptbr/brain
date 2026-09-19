@@ -814,19 +814,21 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O plano `WHATSAPP_IA_REDESIGN_PLAN.md` passou a registrar claramente o que já está implementado e que a fundação ainda não está conectada ao webhook.
 - Foi aprovada e implementada no contrato do redesign a política de expediente como modificador do handoff: respostas automáticas seguras continuam fora do horário; somente decisões que dependem de funcionário passam a informar a próxima abertura real da agenda.
 - O contrato distingue encaminhamento durante o expediente (`during_open_hours`) de encaminhamento para a próxima abertura (`when_store_opens`). O humanizador deve preservar a identificação da IAra, a necessidade de funcionário e o horário, e agenda sem próxima abertura calculável não pode gerar prazo inventado.
+- Uma conversa real de teste na Loja 1 chegou ao legado com as três mensagens corretamente agrupadas em um único inbound, mas não criou memória nem turno do redesign. A Loja 1 continuava em `shadow` e o canal conectado; a causa confirmada foi o deploy de produção em `origin/main` não conter ainda o commit `1c9c6bf` da captura sombra.
 - `npm run typecheck`, `git diff --check` e os 22 testes específicos do redesign passaram. A etapa TypeScript da suíte completa também passou com 81 testes.
 
 ## Problemas encontrados ou pendências
 
-- O modo sombra da Loja 1 está ativo, mas ainda falta gerar e auditar uma conversa nova para confirmar a captura ponta a ponta no deploy.
+- O modo sombra da Loja 1 está ativo no banco, mas a captura ponta a ponta não pode ser validada enquanto o app publicado não incluir a branch do redesign. O teste no deploy atual confirmou somente o agrupamento do legado.
 - A política de expediente já está codificada e testada no núcleo isolado, mas ainda não responde clientes: enquanto a Loja 1 estiver em `shadow`, o roteador legado continua sendo o único que envia respostas.
 - A suíte completa mantém duas falhas preexistentes em testes do Electron: uma expectativa antiga sobre validação de caminho IPC e a URL antiga esperada para produção.
 
 ## Próximos passos
 
-1. Enviar uma conversa de teste para a Loja 1 e auditar mensagens, turnos, ordenação, atomicidade e isolamento, sem envio pelo redesign. Consumo baixo.
-2. Confirmar também uma resposta automática e uma resposta humana na memória sombra. Consumo baixo.
-3. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real, e aplicar a política de expediente depois da decisão operacional. Consumo alto.
+1. Atualizar a branch do redesign com a `origin/main`, validar a integração e publicar um deploy que contenha a captura sombra. Consumo baixo.
+2. Repetir a conversa de teste na Loja 1 e auditar mensagens, turnos, ordenação, atomicidade e isolamento, sem envio pelo redesign. Consumo baixo.
+3. Confirmar também uma resposta automática e uma resposta humana na memória sombra. Consumo baixo.
+4. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real, e aplicar a política de expediente depois da decisão operacional. Consumo alto.
 
 ## Ideias futuras
 

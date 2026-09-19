@@ -828,6 +828,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - O processador reivindica turnos condicionalmente, exclui da memória respostas do legado posteriores ao fechamento do turno e grava classificação, decisão, motivo e diagnóstico em `metadata`, sempre com `sendsMessage: false`.
 - Foi criada a rota interna protegida `/api/whatsapp/redesign/process-shadow`, sem qualquer dependência do envio de outbound. O checklist temporário das seis etapas ficou em `WHATSAPP_IA_REDESIGN_IMPLEMENTATION_STEPS_TEMP.md`, com a etapa 1 em andamento.
 - A validação local passou com typecheck, lint direcionado, build de produção e 28 testes específicos do redesign.
+- O commit `66e9a1d` foi publicado na `main` e o novo endpoint protegido entrou
+  em produção. A primeira execução restrita à Loja 1 encontrou e processou três
+  turnos, sem falhas: dois `store_hours` com `answer_store_hours` e um
+  `vision_exam` com `human_handoff` e confiança 0,98. Todos registraram
+  `sendsMessage: false`.
 
 ## Problemas encontrados ou pendências
 
@@ -838,9 +843,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Publicar o processador sombra e executar a rota interna para um novo turno real da Loja 1. Consumo baixo.
-2. Conferir no `metadata` do turno a classificação, a decisão canônica, o motivo, o horário aplicado e `sendsMessage: false`. Consumo baixo.
-3. Repetir a validação com mudança de assunto e com anexo antes de concluir a etapa 1. Consumo médio.
+1. Repetir a validação com mudança de assunto e com anexo antes de concluir a etapa 1. Consumo médio.
+2. Conferir se o contexto temporal de uma retomada não incorpora a resposta posterior do legado. Consumo baixo.
+3. Ao iniciar a etapa 2, riscar a etapa 1 no checklist temporário. Consumo baixo.
 
 ## Ideias futuras
 

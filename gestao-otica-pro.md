@@ -833,11 +833,20 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   turnos, sem falhas: dois `store_hours` com `answer_store_hours` e um
   `vision_exam` com `human_handoff` e confiança 0,98. Todos registraram
   `sendsMessage: false`.
+- Antes da pausa dos testes, a configuração da Loja 1 foi devolvida ao modo
+  `legacy`, que é o fluxo normal de produção. A grade de horário foi conferida
+  novamente e ficou com sexta-feira até 18:00; nenhuma outra parte da
+  configuração foi alterada.
 
 ## Problemas encontrados ou pendências
 
-- O modo sombra da Loja 1 está ativo no banco, e a captura de mensagens, criação de turno, saída automática e saída humana foram validadas ponta a ponta. O próximo passo é iniciar o processamento sombra do turno, ainda sem ativar envio pelo redesign.
-- A política de expediente já está codificada e testada no núcleo isolado, mas ainda não responde clientes: enquanto a Loja 1 estiver em `shadow`, o roteador legado continua sendo o único que envia respostas.
+- A captura de mensagens, criação de turno, saída automática e saída humana da
+  Loja 1 foram validadas ponta a ponta em sombra, mas o modo sombra foi
+  desativado ao final dos testes. A loja está novamente em `legacy` para operar
+  normalmente até a retomada dos testes.
+- A política de expediente já está codificada e testada no núcleo isolado, mas
+  continua sem responder clientes pelo redesign enquanto a loja estiver em
+  `legacy`.
 - A suíte completa mantém duas falhas preexistentes em testes do Electron: uma expectativa antiga sobre validação de caminho IPC e a URL antiga esperada para produção.
 - A primeira chamada de uma instância aquecida ainda consulta o modo da loja; chamadas seguintes por até 60 segundos reutilizam o resultado. Em instâncias serverless frias o cache recomeça, sem alterar respostas.
 

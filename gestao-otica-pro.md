@@ -823,6 +823,11 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - A repetição real na Loja 1 confirmou o fluxo ponta a ponta da captura sombra: três mensagens novas foram preservadas separadamente e criaram um turno `ready` com três vínculos nas posições 0, 1 e 2. O turno registrou a janela de agregação de 20 segundos e permaneceu sem processamento ou envio, como previsto para `shadow`.
 - A Loja 1 foi aberta temporariamente pela própria configuração para o teste. Após o operador usar `IA próxima`, uma pergunta de horário recebeu resposta do fluxo legado e foi registrada no redesign como saída `assistant` confirmada. A auditoria do payload confirmou que o sistema decidiu a resposta canônica com os horários cadastrados e o Gemini 2.5 Flash apenas a humanizou com política de não acrescentar fatos; o redesign não decidiu nem enviou a mensagem.
 - Uma mensagem manual enviada pela Central na mesma conversa foi registrada no redesign como saída `human` com tipo `operator_manual`. A separação ponta a ponta entre cliente, resposta automática e funcionário está validada em modo sombra.
+- Foi iniciado o processamento dos turnos `ready` em sombra. O classificador novo recebe o resumo, até 10 mensagens e o turno atual, devolvendo somente intenção, confiança, relação de assunto, pedido de humano, anexo e entidades.
+- A decisão operacional permanece no sistema: horário e endereço usam fatos oficiais; assuntos sensíveis geram proposta canônica de handoff com identificação da IAra; o expediente modifica somente quando o funcionário poderá continuar.
+- O processador reivindica turnos condicionalmente, exclui da memória respostas do legado posteriores ao fechamento do turno e grava classificação, decisão, motivo e diagnóstico em `metadata`, sempre com `sendsMessage: false`.
+- Foi criada a rota interna protegida `/api/whatsapp/redesign/process-shadow`, sem qualquer dependência do envio de outbound. O checklist temporário das seis etapas ficou em `WHATSAPP_IA_REDESIGN_IMPLEMENTATION_STEPS_TEMP.md`, com a etapa 1 em andamento.
+- A validação local passou com typecheck, lint direcionado, build de produção e 28 testes específicos do redesign.
 
 ## Problemas encontrados ou pendências
 
@@ -833,9 +838,9 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 ## Próximos passos
 
-1. Enviar novas mensagens de teste para a Loja 1 e auditar mensagens, turnos, ordenação, atomicidade e isolamento, sem envio pelo redesign. Consumo baixo.
-2. Confirmar também uma resposta automática e uma resposta humana na memória sombra. Consumo baixo.
-3. Implementar o primeiro classificador estruturado sobre a memória persistida, ainda sem envio real, e aplicar a política de expediente depois da decisão operacional. Consumo alto.
+1. Publicar o processador sombra e executar a rota interna para um novo turno real da Loja 1. Consumo baixo.
+2. Conferir no `metadata` do turno a classificação, a decisão canônica, o motivo, o horário aplicado e `sendsMessage: false`. Consumo baixo.
+3. Repetir a validação com mudança de assunto e com anexo antes de concluir a etapa 1. Consumo médio.
 
 ## Ideias futuras
 

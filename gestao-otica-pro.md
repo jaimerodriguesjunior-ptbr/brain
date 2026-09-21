@@ -860,3 +860,30 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Exibir na Central de WhatsApp a memória estruturada, as mensagens do turno e o motivo da decisão quando o modo sombra estiver operacional.
 
+# Diário - 21/09/2026
+
+## O que foi feito
+
+- O perfil 3D da lente no relatório público passou a centralizar o volume
+  renderizado e reduzir a escala apenas quando necessário para caber no quadro.
+- A escala física das telas técnicas foi preservada; o ajuste responsivo é
+  ativado exclusivamente pelo relatório do cliente.
+- A mudança foi registrada na versão pendente `1.02.15`.
+- O typecheck e os seis testes dos contratos web da Torre passaram.
+
+## Problemas encontrados ou pendências
+
+- A correção ainda precisa ser publicada e conferida visualmente no relatório
+  público que revelou o recorte da lente.
+- O lint geral continua bloqueado por uma falha preexistente de configuração
+  do ESLint 9 ao serializar uma estrutura circular.
+
+## Próximos passos
+
+1. Publicar a versão pendente e conferir o enquadramento em celular. Consumo baixo.
+2. Validar o giro completo de 0 a 360 graus sem recorte. Consumo baixo.
+
+## Ideias futuras
+
+- Criar um ensaio visual automatizado do canvas 3D em larguras de celular.
+

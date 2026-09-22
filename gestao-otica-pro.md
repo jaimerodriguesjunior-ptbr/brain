@@ -887,3 +887,30 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Criar um ensaio visual automatizado do canvas 3D em larguras de celular.
 
+# Diário - 22/09/2026
+
+## O que foi feito
+
+- O processador de turnos do redesign passou a conferir o modo atual da loja
+  depois de reivindicar o turno. Quando a conversa antiga está em `shadow`, mas
+  a loja já voltou para `legacy`, o turno é devolvido a `ready` e é ignorado sem
+  chamar a IA, sem gravar falha e sem enviar mensagem.
+- Foi acrescentado um teste específico para essa transição, garantindo que o
+  classificador não é chamado. O typecheck e os 29 testes do redesign passaram.
+
+## Problemas encontrados ou pendências
+
+- A Loja 1 segue em `legacy` durante o expediente. Mudança de assunto e anexo
+  ainda precisam ser validados em sombra antes de concluir a etapa 1.
+
+## Próximos passos
+
+1. Quando a loja fechar, habilitar temporariamente `shadow` na Loja 1 e testar
+   mudança de assunto e anexo. Consumo médio.
+2. Conferir os turnos e devolver a loja a `legacy` ao fim do teste. Consumo baixo.
+
+## Ideias futuras
+
+- Recuperar de forma auditável turnos abandonados em `processing`, sem permitir
+  duplicidade de processamento.
+

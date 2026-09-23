@@ -929,19 +929,24 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   como `store_hours`/`answer_store_hours`, com `sendsMessage: false` e sem falha.
   O legado registrou essa entrada como ignorada porque a conversa tinha
   `human_pause` ativo após mensagem enviada pelo celular da loja.
+- A pergunta real sobre endereço e a foto com legenda chegaram como turnos
+  distintos da Loja 1. Ambos foram processados em sombra sem falha nem envio:
+  endereço = `store_location`/`change_topic` com proposta de resposta oficial;
+  foto = `attachment`/`change_topic` com proposta de revisão humana.
 
 ## Problemas encontrados ou pendências
 
-- Mudança de assunto e anexo ainda não foram enviados nem validados. A memória
-  nova continuou em `ai_active` e não refletiu a pausa humana anterior à
-  ativação de `shadow`; essa sincronização deve ser tratada na etapa 2.
+- A memória nova continuou em `ai_active` e não refletiu a pausa humana
+  anterior à ativação de `shadow`; essa sincronização deve ser tratada na
+  etapa 2. Falta fechar a validação do contexto temporal de retomada antes de
+  encerrar formalmente a etapa 1.
 - A correção do decisor está apenas no código local e não foi publicada. O modo
   `shadow` em produção continua sem enviar respostas pelo redesign.
 
 ## Próximos passos
 
-1. Enviar mensagens de teste para a Loja 1, processar somente os turnos novos
-   em sombra e conferir mudança de assunto e anexo. Consumo médio.
+1. Conferir se o contexto temporal de uma retomada não incorpora resposta
+   posterior do legado. Consumo baixo.
 2. Validar a correção local antes de publicá-la e encerrar a etapa 1 apenas após
    as evidências reais; então riscar a etapa 1 ao iniciar a etapa 2. Consumo médio.
 

@@ -950,23 +950,31 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   mais barato. O comando completo passou com typecheck e 38 testes; a consulta
   opcional de um turno real da Loja 1 confirmou `human_active` e corte temporal,
   sem escrever no banco ou chamar IA.
+- Preparada migration local para consolidar assunto e anexo no resumo canônico
+  na mesma transação da finalização do turno, com serialização por conversa e
+  replay em ordem. Eventos persistidos distinguem mensagem humana confirmada,
+  liberação explícita e handoff efetivamente enviado. O contexto de turnos
+  antigos passou a ser reconstruído até seu fechamento. Typecheck e 42 testes
+  direcionados passaram. A revisão da migration corrigiu o array vazio de
+  assuntos secundários e exigiu saída confirmada para eventos vinculados a
+  mensagem; a migration ainda não foi aplicada nem publicada.
 
 ## Problemas encontrados ou pendências
 
-- A memória canônica nova ainda não grava o resumo consolidado. A reconciliação
-  local da pausa legada depende de o registro ainda existir; eventos antigos já
-  removidos não são recuperados por essa leitura. Falta a persistência ordenada
-  e os eventos explícitos de assumir/liberar atendimento.
+- A gravação do resumo e dos eventos de controle depende da migration nova, que
+  ainda não foi validada em PostgreSQL. A reconciliação da pausa legada depende
+  de o registro antigo ainda existir. A liberação explícita ainda não tem
+  controle na Central.
 - A correção do decisor está apenas no código local e não foi publicada. O modo
   `shadow` em produção continua sem enviar respostas pelo redesign.
 
 ## Próximos passos
 
-1. Integrar a consolidação de memória com persistência ordenada e segura,
-   separando handoff proposto, mensagem enviada e assunção humana. Consumo alto.
-2. Definir e testar os eventos explícitos de assumir/liberar atendimento,
-   preservando a distinção entre handoff proposto e humano ativo. Consumo médio.
-3. Validar a correção local antes de publicá-la. Consumo médio.
+1. Aplicar e testar a migration em banco isolado, incluindo concorrência,
+   idempotência e eventos fora de ordem. Consumo médio.
+2. Conectar a liberação explícita ao controle operacional e validar a pausa
+   renovável de duas horas. Consumo médio.
+3. Validar o comportamento de ponta a ponta antes da publicação. Consumo médio.
 
 ## Ideias futuras
 

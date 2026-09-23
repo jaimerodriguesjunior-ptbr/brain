@@ -914,3 +914,34 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Recuperar de forma auditável turnos abandonados em `processing`, sem permitir
   duplicidade de processamento.
 
+# Diário - 23/09/2026
+
+## O que foi feito
+
+- A Loja 1 foi alterada de `legacy` para `shadow` no campo de modo do redesign em
+  `stores.settings`, para continuar as validações da etapa 1 com o fluxo antigo
+  respondendo aos clientes.
+- O decisor local do redesign passou a priorizar pedido explícito de atendente,
+  anexo e classificação de baixa confiança antes de propor respostas de horário
+  ou endereço. O plano e o checklist temporário foram atualizados sem concluir
+  a etapa 1. Os 30 testes do contrato do redesign e o typecheck passaram.
+
+## Problemas encontrados ou pendências
+
+- Ainda não chegaram os turnos reais de teste de mudança de assunto e anexo;
+  não há validação de produção desses cenários nesta sessão até o momento.
+- A correção do decisor está apenas no código local e não foi publicada. O modo
+  `shadow` em produção continua sem enviar respostas pelo redesign.
+
+## Próximos passos
+
+1. Enviar mensagens de teste para a Loja 1, processar somente os turnos novos
+   em sombra e conferir mudança de assunto e anexo. Consumo médio.
+2. Validar a correção local antes de publicá-la e encerrar a etapa 1 apenas após
+   as evidências reais; então riscar a etapa 1 ao iniciar a etapa 2. Consumo médio.
+
+## Ideias futuras
+
+- Criar um controle operacional para inspecionar turnos do redesign em sombra
+  sem depender de consulta manual ao banco.
+

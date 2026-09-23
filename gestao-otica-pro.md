@@ -933,22 +933,28 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   distintos da Loja 1. Ambos foram processados em sombra sem falha nem envio:
   endereço = `store_location`/`change_topic` com proposta de resposta oficial;
   foto = `attachment`/`change_topic` com proposta de revisão humana.
+- Três turnos reais com saídas posteriores do legado foram recarregados: o
+  contexto entregue ao redesign terminou no fechamento de cada turno. A etapa
+  1 foi concluída no checklist e a etapa 2 iniciada. Foi criada a consolidação
+  pura de assuntos e anexos, sem persistência ou handoff efetivo. Typecheck e
+  33 testes direcionados passaram.
 
 ## Problemas encontrados ou pendências
 
 - A memória nova continuou em `ai_active` e não refletiu a pausa humana
   anterior à ativação de `shadow`; essa sincronização deve ser tratada na
-  etapa 2. Falta fechar a validação do contexto temporal de retomada antes de
-  encerrar formalmente a etapa 1.
+  etapa 2. A nova consolidação ainda não grava o resumo nem reconcilia os
+  eventos humanos anteriores à ativação da sombra.
 - A correção do decisor está apenas no código local e não foi publicada. O modo
   `shadow` em produção continua sem enviar respostas pelo redesign.
 
 ## Próximos passos
 
-1. Conferir se o contexto temporal de uma retomada não incorpora resposta
-   posterior do legado. Consumo baixo.
-2. Validar a correção local antes de publicá-la e encerrar a etapa 1 apenas após
-   as evidências reais; então riscar a etapa 1 ao iniciar a etapa 2. Consumo médio.
+1. Integrar a consolidação de memória com persistência ordenada e segura,
+   separando handoff proposto, mensagem enviada e assunção humana. Consumo alto.
+2. Reconciliar atividade humana anterior ao início da captura sombra, sem
+   interferir no atendimento legado. Consumo médio.
+3. Validar a correção local antes de publicá-la. Consumo médio.
 
 ## Ideias futuras
 

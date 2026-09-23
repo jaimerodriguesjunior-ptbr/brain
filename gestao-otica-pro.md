@@ -944,6 +944,12 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   recuperar `human_active` na leitura local. O processador registra a proposta
   de resumo no próprio turno, sem alterar a memória canônica. Typecheck e 37
   testes direcionados passaram; nada foi publicado.
+- Preparado replay determinístico do resumo por turnos processados, com teste
+  de chegada fora de ordem, repetição e preservação do controle humano. Foram
+  criados comandos locais de validação e um roteiro para revisão por modelo
+  mais barato. O comando completo passou com typecheck e 38 testes; a consulta
+  opcional de um turno real da Loja 1 confirmou `human_active` e corte temporal,
+  sem escrever no banco ou chamar IA.
 
 ## Problemas encontrados ou pendências
 

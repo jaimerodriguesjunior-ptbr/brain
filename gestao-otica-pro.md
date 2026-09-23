@@ -938,13 +938,19 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   1 foi concluída no checklist e a etapa 2 iniciada. Foi criada a consolidação
   pura de assuntos e anexos, sem persistência ou handoff efetivo. Typecheck e
   33 testes direcionados passaram.
+- Na etapa 2, a leitura de turno passou a considerar saídas humanas capturadas
+  e pausas legadas de origem manual comprovada, reconstruindo a pausa de duas
+  horas no instante do turno. Os turnos reais de teste da Loja 1 passaram a
+  recuperar `human_active` na leitura local. O processador registra a proposta
+  de resumo no próprio turno, sem alterar a memória canônica. Typecheck e 37
+  testes direcionados passaram; nada foi publicado.
 
 ## Problemas encontrados ou pendências
 
-- A memória nova continuou em `ai_active` e não refletiu a pausa humana
-  anterior à ativação de `shadow`; essa sincronização deve ser tratada na
-  etapa 2. A nova consolidação ainda não grava o resumo nem reconcilia os
-  eventos humanos anteriores à ativação da sombra.
+- A memória canônica nova ainda não grava o resumo consolidado. A reconciliação
+  local da pausa legada depende de o registro ainda existir; eventos antigos já
+  removidos não são recuperados por essa leitura. Falta a persistência ordenada
+  e os eventos explícitos de assumir/liberar atendimento.
 - A correção do decisor está apenas no código local e não foi publicada. O modo
   `shadow` em produção continua sem enviar respostas pelo redesign.
 
@@ -952,8 +958,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 1. Integrar a consolidação de memória com persistência ordenada e segura,
    separando handoff proposto, mensagem enviada e assunção humana. Consumo alto.
-2. Reconciliar atividade humana anterior ao início da captura sombra, sem
-   interferir no atendimento legado. Consumo médio.
+2. Definir e testar os eventos explícitos de assumir/liberar atendimento,
+   preservando a distinção entre handoff proposto e humano ativo. Consumo médio.
 3. Validar a correção local antes de publicá-la. Consumo médio.
 
 ## Ideias futuras

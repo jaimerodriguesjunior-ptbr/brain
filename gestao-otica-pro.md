@@ -957,7 +957,10 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   antigos passou a ser reconstruído até seu fechamento. Typecheck e 42 testes
   direcionados passaram. A revisão da migration corrigiu o array vazio de
   assuntos secundários e exigiu saída confirmada para eventos vinculados a
-  mensagem; a migration ainda não foi aplicada nem publicada.
+  mensagem; a migration ainda não foi aplicada nem publicada. Em seguida, o
+  SQL completo foi executado no PostgreSQL Supabase em transação revertida; a
+  execução passou e nenhum DDL ficou persistido. A aplicação definitiva e os
+  testes funcionais ainda faltam.
 
 ## Problemas encontrados ou pendências
 

@@ -925,11 +925,16 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   anexo e classificação de baixa confiança antes de propor respostas de horário
   ou endereço. O plano e o checklist temporário foram atualizados sem concluir
   a etapa 1. Os 30 testes do contrato do redesign e o typecheck passaram.
+- Uma pergunta real sobre o horário foi capturada e processada apenas em sombra
+  como `store_hours`/`answer_store_hours`, com `sendsMessage: false` e sem falha.
+  O legado registrou essa entrada como ignorada porque a conversa tinha
+  `human_pause` ativo após mensagem enviada pelo celular da loja.
 
 ## Problemas encontrados ou pendências
 
-- Ainda não chegaram os turnos reais de teste de mudança de assunto e anexo;
-  não há validação de produção desses cenários nesta sessão até o momento.
+- Mudança de assunto e anexo ainda não foram enviados nem validados. A memória
+  nova continuou em `ai_active` e não refletiu a pausa humana anterior à
+  ativação de `shadow`; essa sincronização deve ser tratada na etapa 2.
 - A correção do decisor está apenas no código local e não foi publicada. O modo
   `shadow` em produção continua sem enviar respostas pelo redesign.
 

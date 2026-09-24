@@ -984,3 +984,36 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Criar um controle operacional para inspecionar turnos do redesign em sombra
   sem depender de consulta manual ao banco.
 
+# Diário - 24/09/2026
+
+## O que foi feito
+
+- Configurado na VPS um processamento agendado a cada cinco minutos, limitado
+  à Loja 1 e a um turno por execução. A credencial fica em arquivo protegido;
+  não foram enviados testes nem mensagens pelo WhatsApp.
+- A execução recuperou um turno sombra abandonado em `processing` e o processou
+  sem envio. A Loja 1 ficou com 16 turnos processados e nenhum pendente,
+  processando ou falho; todos os processados registram `sendsMessage: false`.
+- Implementada no código local a recuperação automática de turnos sombra
+  `processing` há mais de dez minutos, com teste de regressão. Os 43 testes do
+  redesign e o typecheck passaram. A alteração ainda aguarda deploy.
+
+## Problemas encontrados ou pendências
+
+- Até o deploy do código local, a rotina agendada não terá a recuperação
+  automática de turnos abandonados; o endpoint ativo ainda processa a fila
+  normal dentro do limite configurado.
+- A Loja 1 está parada, então a amostra sombra não cresce até haver novas
+  mensagens nela. Nenhuma chamada de teste foi enviada.
+
+## Próximos passos
+
+1. Fazer commit e push das quatro alterações do projeto e aguardar o deploy.
+2. Depois do deploy, verificar a recuperação automática e revisar novas
+   classificações sombra quando houver tráfego real na Loja 1.
+
+## Ideias futuras
+
+- Expor métricas agregadas do job sombra (recuperados, processados e falhos)
+  sem registrar telefones, conteúdo de mensagens ou credenciais.
+

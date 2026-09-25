@@ -997,20 +997,30 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Implementada no código local a recuperação automática de turnos sombra
   `processing` há mais de dez minutos, com teste de regressão. Os 43 testes do
   redesign e o typecheck passaram. A alteração ainda aguarda deploy.
+- A etapa 3 do redesign foi concluída com comparação agregada e quatro cenários
+  reais na Loja 1. A etapa 4 foi autorizada e preparada localmente: o piloto
+  pode responder horário, endereço/mapa e pedido isolado pela chave Pix oficial,
+  somente na Loja 1 e mediante flag explícita. O código continua desligado por
+  padrão. Os 48 testes do redesign e o typecheck passaram nesta preparação.
 
 ## Problemas encontrados ou pendências
 
-- Até o deploy do código local, a rotina agendada não terá a recuperação
-  automática de turnos abandonados; o endpoint ativo ainda processa a fila
-  normal dentro do limite configurado.
-- A Loja 1 está parada, então a amostra sombra não cresce até haver novas
-  mensagens nela. Nenhuma chamada de teste foi enviada.
+- O código da etapa 4 ainda não foi publicado. Confirmar o estado do deploy e
+  da recuperação automática antes de ativar o piloto.
+- A etapa 4 ainda não foi publicada nem ativada. Não há validação de envio real
+  do piloto; a flag da Loja 1 não foi alterada nesta preparação.
 
 ## Próximos passos
 
-1. Fazer commit e push das quatro alterações do projeto e aguardar o deploy.
-2. Depois do deploy, verificar a recuperação automática e revisar novas
-   classificações sombra quando houver tráfego real na Loja 1.
+1. Fazer commit e push das alterações pendentes do projeto e confirmar o deploy.
+   Consumo de IA: baixo.
+2. Verificar a recuperação automática de turnos e as novas classificações
+   sombra da Loja 1. Consumo de IA: baixo.
+3. Depois do deploy, ativar somente a flag da
+   Loja 1 e testar uma resposta por assunto seguro, além dos bloqueios de
+   pedido humano e anexo. Consumo de IA: médio.
+4. Se ocorrer divergência, desligar a flag da Loja 1; as próximas entradas
+   voltam ao roteador anterior. Consumo de IA: baixo.
 
 ## Ideias futuras
 

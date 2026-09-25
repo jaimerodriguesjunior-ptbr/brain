@@ -1012,18 +1012,22 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 - Depois da ativação, a checagem agregada encontrou uma entrada processada e
   exatamente uma saída `answer_store_hours`/`store_hours` com status enviado.
   Não foram consultados nem exibidos telefone, texto da conversa ou valor Pix.
+- A segunda mensagem de teste recebeu exatamente uma saída
+  `answer_store_location`/`store_location`. O turno sombra estava `ready` e
+  ainda aguardava o processamento agendado. A consulta manteve saída agregada.
 
 ## Problemas encontrados ou pendências
 
-- O caso de horário passou; ainda faltam endereço/mapa, Pix, pedido humano,
-  anexo e teste de reversão para concluir a etapa 4.
+- Horário e endereço/mapa passaram quanto à resposta única. Ainda falta o
+  processamento sombra do segundo turno, além de Pix, pedido humano, anexo e
+  teste de reversão para concluir a etapa 4.
 - O estado Ready do deploy foi informado pelo usuário; ainda não houve
   confirmação independente de que o commit específico está no ambiente ativo.
 
 ## Próximos passos
 
-1. Validar endereço/mapa e pedido isolado pela chave Pix oficial com mensagens
-   reais e conferência agregada. Consumo de IA: médio.
+1. Confirmar o processamento sombra do turno de endereço/mapa e validar pedido
+   isolado pela chave Pix oficial com conferência agregada. Consumo de IA: médio.
 2. Validar pedido humano, anexo e a reversão desligando a flag; depois reativá-la
    caso os resultados estejam corretos. Consumo de IA: médio.
 3. Confirmar o deploy específico, verificar recuperação automática e

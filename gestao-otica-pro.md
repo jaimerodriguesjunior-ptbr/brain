@@ -996,29 +996,34 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   processando ou falho; todos os processados registram `sendsMessage: false`.
 - Implementada no código local a recuperação automática de turnos sombra
   `processing` há mais de dez minutos, com teste de regressão. Os 43 testes do
-  redesign e o typecheck passaram. A alteração ainda aguarda deploy.
+  redesign e o typecheck passaram naquela preparação.
 - A etapa 3 do redesign foi concluída com comparação agregada e quatro cenários
   reais na Loja 1. A etapa 4 foi autorizada e preparada localmente: o piloto
   pode responder horário, endereço/mapa e pedido isolado pela chave Pix oficial,
-  somente na Loja 1 e mediante flag explícita. O código continua desligado por
-  padrão. Os 48 testes do redesign e o typecheck passaram nesta preparação.
+  somente na Loja 1 e mediante flag explícita, desligada por padrão. Os 48
+  testes do redesign e o typecheck passaram nesta preparação.
+- O usuário informou que o deploy da etapa 4 ficou Ready. Foram conferidos no
+  banco apenas indicadores da Loja 1: modo sombra, automação e canal ativos e
+  dados oficiais de horário, endereço e Pix presentes. A flag do piloto foi
+  ativada e confirmada por nova leitura. Foi preparado um comando local de
+  status, ativação e reversão sem imprimir valores ou credenciais; o typecheck
+  passou após essa alteração.
 
 ## Problemas encontrados ou pendências
 
-- O código da etapa 4 ainda não foi publicado. Confirmar o estado do deploy e
-  da recuperação automática antes de ativar o piloto.
-- A etapa 4 ainda não foi publicada nem ativada. Não há validação de envio real
-  do piloto; a flag da Loja 1 não foi alterada nesta preparação.
+- Ainda não houve mensagem real após a ativação para confirmar que o piloto
+  gerou uma única resposta correta; a etapa 4 continua em andamento.
+- O estado Ready do deploy foi informado pelo usuário; ainda não houve
+  confirmação independente de que o commit específico está no ambiente ativo.
 
 ## Próximos passos
 
-1. Fazer commit e push das alterações pendentes do projeto e confirmar o deploy.
-   Consumo de IA: baixo.
-2. Verificar a recuperação automática de turnos e as novas classificações
-   sombra da Loja 1. Consumo de IA: baixo.
-3. Depois do deploy, ativar somente a flag da
-   Loja 1 e testar uma resposta por assunto seguro, além dos bloqueios de
-   pedido humano e anexo. Consumo de IA: médio.
+1. Testar uma mensagem real enviada pelo número de teste à Loja 1 e conferir
+   no banco se houve exatamente uma saída do piloto. Consumo de IA: baixo.
+2. Validar endereço/mapa, chave Pix oficial, pedido humano e anexo, sem expor
+   conteúdo de clientes. Consumo de IA: médio.
+3. Confirmar o deploy específico, verificar a recuperação automática e as
+   classificações sombra recentes. Consumo de IA: baixo.
 4. Se ocorrer divergência, desligar a flag da Loja 1; as próximas entradas
    voltam ao roteador anterior. Consumo de IA: baixo.
 

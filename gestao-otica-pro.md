@@ -990,7 +990,8 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
 
 - Configurado na VPS um processamento agendado a cada cinco minutos, limitado
   à Loja 1 e a um turno por execução. A credencial fica em arquivo protegido;
-  não foram enviados testes nem mensagens pelo WhatsApp.
+  naquele momento ainda não tinham sido enviados testes nem mensagens pelo
+  WhatsApp.
 - A execução recuperou um turno sombra abandonado em `processing` e o processou
   sem envio. A Loja 1 ficou com 16 turnos processados e nenhum pendente,
   processando ou falho; todos os processados registram `sendsMessage: false`.
@@ -1008,23 +1009,26 @@ Nao e necessario recomecar todos os testes ou reconstruir casos existentes. Os t
   ativada e confirmada por nova leitura. Foi preparado um comando local de
   status, ativação e reversão sem imprimir valores ou credenciais; o typecheck
   passou após essa alteração.
+- Depois da ativação, a checagem agregada encontrou uma entrada processada e
+  exatamente uma saída `answer_store_hours`/`store_hours` com status enviado.
+  Não foram consultados nem exibidos telefone, texto da conversa ou valor Pix.
 
 ## Problemas encontrados ou pendências
 
-- Ainda não houve mensagem real após a ativação para confirmar que o piloto
-  gerou uma única resposta correta; a etapa 4 continua em andamento.
+- O caso de horário passou; ainda faltam endereço/mapa, Pix, pedido humano,
+  anexo e teste de reversão para concluir a etapa 4.
 - O estado Ready do deploy foi informado pelo usuário; ainda não houve
   confirmação independente de que o commit específico está no ambiente ativo.
 
 ## Próximos passos
 
-1. Testar uma mensagem real enviada pelo número de teste à Loja 1 e conferir
-   no banco se houve exatamente uma saída do piloto. Consumo de IA: baixo.
-2. Validar endereço/mapa, chave Pix oficial, pedido humano e anexo, sem expor
-   conteúdo de clientes. Consumo de IA: médio.
-3. Confirmar o deploy específico, verificar a recuperação automática e as
+1. Validar endereço/mapa e pedido isolado pela chave Pix oficial com mensagens
+   reais e conferência agregada. Consumo de IA: médio.
+2. Validar pedido humano, anexo e a reversão desligando a flag; depois reativá-la
+   caso os resultados estejam corretos. Consumo de IA: médio.
+3. Confirmar o deploy específico, verificar recuperação automática e
    classificações sombra recentes. Consumo de IA: baixo.
-4. Se ocorrer divergência, desligar a flag da Loja 1; as próximas entradas
+4. Se ocorrer divergência, manter desligada a flag da Loja 1; as próximas entradas
    voltam ao roteador anterior. Consumo de IA: baixo.
 
 ## Ideias futuras

@@ -69,3 +69,26 @@
 ### Ideias futuras
 
 - Adicionar métricas de tamanho e duração das gravações no Supabase para detectar crescimento antes de atingir limites de conexão.
+
+## 2026-10-27
+
+### O que foi feito
+
+- Criado `CORRECAO_NFSE_NACIONAL_HOMOLOGACAO_2026-10.md` e incluído link de leitura obrigatória no início do README do Apoio Contábil. Um aviso equivalente foi escrito no consumidor Autoelétrica.
+- Documentada a rejeição E1235 da DPS nacional em homologação: o gerador da Nuvem Local usava um esquema anterior ao pacote oficial de 20/10/2026.
+- Publicada a correção da API compartilhada no commit `5051b13`: finalidade regular antes de `cLocEmi`, NBS/código interno antes da descrição e validação XSD separada por ambiente. O fluxo de produção manteve o formato anteriormente utilizado.
+- Na VPS, checagem de tipos e compilação passaram; 177 testes passaram e 9 foram ignorados, sem falhas. Serviço ativo, sem reinícios automáticos, e saúde interna e pública confirmadas como `ready`.
+
+### Problemas encontrados ou pendências
+
+- Ainda falta validar uma emissão controlada em homologação pelo próprio Apoio Contábil e pela Autoelétrica após a publicação. Nenhuma nota fiscal foi emitida durante esse deploy.
+- A correção do esquema não comprova que os parâmetros cadastrais e fiscais de todas as empresas estão corretos; futuras rejeições devem ser diagnosticadas pelo código específico retornado.
+
+### Próximos passos
+
+1. Baixo consumo de IA: após autorização do teste, validar uma emissão nacional em homologação por aplicativo e conferir status final, identificador, XML e DANFSe.
+2. Médio consumo de IA: validar o lote do Apoio Contábil, preservando empresa/ambiente, competência e a consulta de DPS já recebidas.
+
+### Ideias futuras
+
+- Manter alertas para novas versões de XSD de homologação e regressões com XML assinado por ambiente.

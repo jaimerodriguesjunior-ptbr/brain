@@ -76,8 +76,9 @@
 
 - Criado `CORRECAO_NFSE_NACIONAL_HOMOLOGACAO_2026-10.md` e incluído link de leitura obrigatória no início do README do Apoio Contábil. Um aviso equivalente foi escrito no consumidor Autoelétrica.
 - Documentada a rejeição E1235 da DPS nacional em homologação: o gerador da Nuvem Local usava um esquema anterior ao pacote oficial de 20/10/2026.
-- Publicada a correção da API compartilhada no commit `5051b13`: finalidade regular antes de `cLocEmi`, NBS/código interno antes da descrição e validação XSD separada por ambiente. O fluxo de produção manteve o formato anteriormente utilizado.
-- Na VPS, checagem de tipos e compilação passaram; 177 testes passaram e 9 foram ignorados, sem falhas. Serviço ativo, sem reinícios automáticos, e saúde interna e pública confirmadas como `ready`.
+- Publicada a correção da API compartilhada no commit ativo `ddf209a`: finalidade regular antes de `cLocEmi`, NBS/código interno antes da descrição e validação XSD separada por ambiente. O fluxo de produção manteve o formato anteriormente utilizado.
+- Identificado override do systemd: a instância ativa usa `/opt/nuvem-local-fiscal-piloto`. A publicação inicial em `/opt/nuvem-local-fiscal` não atualizava o processo ativo; a publicação foi corrigida preservando recovery e observação OG. Na VPS ativa, tipos e compilação passaram; 225 testes passaram e 9 foram ignorados, sem falhas. Serviço ativo e `/ready` HTTP 200, incluindo recovery e observação OG prontos.
+- A API recebeu cadastro de novas empresas com A1 e senha, protegido pela permissão opt-in `empresa-cadastro`, habilitada apenas para a integração NF FACIL nesta alteração. Não foram enviados certificados reais nem emitidas notas.
 
 ### Problemas encontrados ou pendências
 
